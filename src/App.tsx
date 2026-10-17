@@ -211,25 +211,20 @@ export default function App() {
             )}
           </main>
 
-          {/* Floating Luxury Glass Dock */}
+          {/* Floating Luxury Frosted Glass Capsule Dock */}
           <nav
+            className="glass-capsule-dock"
             style={{
               position: 'fixed',
-              bottom: '14px',
+              bottom: '16px',
               left: '16px',
               right: '16px',
-              maxWidth: '440px',
+              maxWidth: '430px',
               margin: '0 auto',
               display: 'flex',
               justifyContent: 'space-around',
               alignItems: 'center',
-              padding: '6px 8px',
-              background: 'var(--glass-bg-primary)',
-              backdropFilter: 'var(--glass-blur)',
-              WebkitBackdropFilter: 'var(--glass-blur)',
-              border: '1px solid var(--glass-border-yellow)',
-              borderRadius: '26px',
-              boxShadow: '0 16px 36px rgba(0, 0, 0, 0.7), 0 0 24px rgba(250, 204, 21, 0.1)',
+              padding: '7px 10px',
               zIndex: 30,
             }}
           >
@@ -248,9 +243,13 @@ export default function App() {
                     setActiveTab(tab.id as any);
                   }}
                   style={{
-                    background: isActive ? 'rgba(250, 204, 21, 0.12)' : 'transparent',
-                    border: isActive ? '1px solid rgba(250, 204, 21, 0.35)' : '1px solid transparent',
-                    borderRadius: '20px',
+                    background: isActive
+                      ? 'linear-gradient(135deg, rgba(250, 204, 21, 0.22) 0%, rgba(245, 158, 11, 0.1) 100%)'
+                      : 'transparent',
+                    border: isActive
+                      ? '1px solid rgba(250, 204, 21, 0.45)'
+                      : '1px solid transparent',
+                    borderRadius: '24px',
                     color: isActive ? '#FEF08A' : '#94A3B8',
                     fontWeight: 900,
                     fontSize: '0.88rem',
@@ -259,10 +258,14 @@ export default function App() {
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    padding: '6px 18px',
+                    padding: '6px 20px',
                     gap: '4px',
-                    boxShadow: isActive ? '0 0 16px rgba(250, 204, 21, 0.25)' : 'none',
-                    transition: 'all 0.15s cubic-bezier(0.16, 1, 0.3, 1)',
+                    boxShadow: isActive
+                      ? '0 0 20px rgba(250, 204, 21, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.4)'
+                      : 'none',
+                    backdropFilter: isActive ? 'blur(10px)' : 'none',
+                    WebkitBackdropFilter: isActive ? 'blur(10px)' : 'none',
+                    transition: 'all 0.18s cubic-bezier(0.16, 1, 0.3, 1)',
                   }}
                 >
                   <FrostedIcon

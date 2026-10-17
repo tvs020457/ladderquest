@@ -72,15 +72,12 @@ export const LearnStep: React.FC<LearnStepProps> = ({
       {/* Mascot Presentation */}
       <Mascot mood="idle" size={90} />
 
-      {/* Interactive Concept Card */}
+      {/* Interactive Frosted Glass Concept Card */}
       <div
+        className="glass-card-yellow"
         style={{
           width: '100%',
-          backgroundColor: 'var(--color-bg-secondary)',
-          borderRadius: '20px',
           padding: '24px 20px',
-          border: '2px solid var(--color-bg-tertiary)',
-          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)',
           display: 'flex',
           flexDirection: 'column',
           gap: '12px',

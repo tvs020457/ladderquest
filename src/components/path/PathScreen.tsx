@@ -112,7 +112,9 @@ export const PathScreen: React.FC<PathScreenProps> = ({
           style={{
             position: 'fixed',
             inset: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.75)',
+            backgroundColor: 'rgba(0, 0, 0, 0.72)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -122,14 +124,13 @@ export const PathScreen: React.FC<PathScreenProps> = ({
           onClick={() => setPreviewLevel(null)}
         >
           <div
+            className="glass-panel"
             style={{
-              backgroundColor: 'var(--color-bg-secondary)',
-              borderRadius: '20px',
               padding: '24px 20px',
               width: '100%',
               maxWidth: '380px',
-              border: '2px solid var(--color-bg-tertiary)',
-              boxShadow: '0 12px 36px rgba(0, 0, 0, 0.7)',
+              border: '1.5px solid var(--glass-border-yellow)',
+              boxShadow: 'var(--glass-shadow-glow)',
               display: 'flex',
               flexDirection: 'column',
               gap: '14px',

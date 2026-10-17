@@ -60,7 +60,9 @@ export const ExportImportModal: React.FC<ExportImportModalProps> = ({
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.75)',
+        backgroundColor: 'rgba(0, 0, 0, 0.72)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -70,13 +72,13 @@ export const ExportImportModal: React.FC<ExportImportModalProps> = ({
       onClick={onClose}
     >
       <div
+        className="glass-panel"
         style={{
-          backgroundColor: 'var(--color-bg-secondary)',
-          borderRadius: '20px',
           padding: '24px 20px',
           width: '100%',
           maxWidth: '400px',
-          border: '2px solid var(--color-bg-tertiary)',
+          border: '1.5px solid var(--glass-border-yellow)',
+          boxShadow: 'var(--glass-shadow-glow)',
           display: 'flex',
           flexDirection: 'column',
           gap: '16px',

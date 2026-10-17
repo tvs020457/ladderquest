@@ -15,15 +15,15 @@ export const MachineDisplay: React.FC<MachineDisplayProps> = ({
 }) => {
   return (
     <div
+      className="glass-card"
       style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         gap: '24px',
         padding: '12px 16px',
-        backgroundColor: 'var(--color-bg-secondary)',
-        borderRadius: '16px',
-        border: '1px solid var(--color-bg-tertiary)',
+        border: '1px solid var(--glass-border-yellow)',
+        boxShadow: 'var(--glass-shadow-sm)',
         width: '100%',
         maxWidth: '480px',
         margin: '8px 0',
