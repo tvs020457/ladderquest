@@ -41,23 +41,23 @@ export const QuestsTab: React.FC<QuestsTabProps> = ({
       style={{
         width: '100%',
         maxWidth: '440px',
-        padding: '16px 16px 90px 16px',
+        padding: '24px 20px 110px 20px',
         display: 'flex',
         flexDirection: 'column',
-        gap: '16px',
+        gap: '20px',
       }}
     >
       <div>
         <h2 style={{ fontSize: '1.4rem', fontWeight: 900, color: '#F8FAFC' }}>
           Daily Quests
         </h2>
-        <p style={{ color: '#94a3b8', fontSize: '0.88rem', marginTop: '2px' }}>
+        <p style={{ color: '#94a3b8', fontSize: '0.88rem', marginTop: '4px' }}>
           Refreshes at midnight (<span style={{ color: '#FEF08A' }}>{quests.date}</span>)
         </p>
       </div>
 
       {/* Daily Quests List */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         {quests.items.map((q) => {
           const pct = Math.min(100, Math.round((q.progress / q.target) * 100));
           return (
@@ -99,10 +99,8 @@ export const QuestsTab: React.FC<QuestsTabProps> = ({
                     style={{
                       width: `${pct}%`,
                       height: '100%',
-                      background: q.done
-                        ? 'linear-gradient(90deg, #10B981, #34D399)'
-                        : 'linear-gradient(90deg, #F59E0B, #FACC15)',
-                      boxShadow: q.done ? '0 0 8px #10B981' : '0 0 8px #FACC15',
+                      background: q.done ? '#10B981' : '#FACC15',
+                      boxShadow: q.done ? '0 0 8px rgba(16, 185, 129, 0.4)' : '0 0 8px rgba(250, 204, 21, 0.4)',
                       transition: 'width 0.3s ease',
                     }}
                   />
@@ -225,8 +223,8 @@ export const QuestsTab: React.FC<QuestsTabProps> = ({
               style={{
                 width: `${Math.min(100, (weekly.progress / weekly.target) * 100)}%`,
                 height: '100%',
-                background: 'linear-gradient(90deg, #F59E0B, #FACC15)',
-                boxShadow: '0 0 8px rgba(250, 204, 21, 0.5)',
+                background: '#FACC15',
+                boxShadow: '0 0 8px rgba(250, 204, 21, 0.4)',
               }}
             />
           </div>

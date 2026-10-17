@@ -18,10 +18,10 @@ export const UnitBanner: React.FC<UnitBannerProps> = ({
       className="glass-card"
       style={{
         width: '100%',
-        padding: '18px 22px',
-        margin: '24px 0 16px 0',
-        borderLeft: `5px solid ${accentColor}`,
-        boxShadow: `0 12px 32px rgba(0, 0, 0, 0.45), 0 0 20px rgba(250, 204, 21, 0.08)`,
+        padding: '22px 24px',
+        margin: '32px 0 24px 0',
+        borderLeft: `4px solid ${accentColor}`,
+        boxShadow: 'var(--glass-shadow-sm)',
         position: 'relative',
         overflow: 'hidden',
       }}

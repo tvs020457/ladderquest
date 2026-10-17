@@ -47,46 +47,40 @@ export const FrostedIcon: React.FC<FrostedIconProps> = ({
   children,
 }) => {
   const variant = yellow !== undefined ? (yellow ? 'yellow' : 'neutral') : propVariant;
-  // Color presets for frosted glass inner tints and specular reflections
+  // Color presets for frosted glass inner tints (pure flat colors, zero gradients)
   const themeColors = {
     yellow: {
       border: active ? 'rgba(250, 204, 21, 0.7)' : 'rgba(250, 204, 21, 0.35)',
-      bg: active
-        ? 'linear-gradient(135deg, rgba(250, 204, 21, 0.28) 0%, rgba(245, 158, 11, 0.12) 100%)'
-        : 'linear-gradient(135deg, rgba(250, 204, 21, 0.15) 0%, rgba(28, 28, 32, 0.5) 100%)',
-      glow: active
-        ? '0 0 16px rgba(250, 204, 21, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.5)'
-        : '0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.3)',
+      bg: active ? 'rgba(250, 204, 21, 0.22)' : 'rgba(250, 204, 21, 0.08)',
+      glow: active ? '0 0 16px rgba(250, 204, 21, 0.45)' : '0 4px 12px rgba(0, 0, 0, 0.3)',
       svgFill: '#FEF08A',
       svgStroke: '#FACC15',
     },
     amber: {
       border: active ? 'rgba(245, 158, 11, 0.7)' : 'rgba(245, 158, 11, 0.35)',
-      bg: 'linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(180, 83, 9, 0.12) 100%)',
-      glow: active
-        ? '0 0 14px rgba(245, 158, 11, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.4)'
-        : '0 4px 10px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.25)',
+      bg: active ? 'rgba(245, 158, 11, 0.22)' : 'rgba(245, 158, 11, 0.08)',
+      glow: active ? '0 0 14px rgba(245, 158, 11, 0.4)' : '0 4px 10px rgba(0, 0, 0, 0.3)',
       svgFill: '#FDE68A',
       svgStroke: '#F59E0B',
     },
     emerald: {
       border: active ? 'rgba(16, 185, 129, 0.7)' : 'rgba(16, 185, 129, 0.35)',
-      bg: 'linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(4, 120, 87, 0.12) 100%)',
-      glow: '0 0 12px rgba(16, 185, 129, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.4)',
+      bg: active ? 'rgba(16, 185, 129, 0.22)' : 'rgba(16, 185, 129, 0.08)',
+      glow: '0 0 12px rgba(16, 185, 129, 0.35)',
       svgFill: '#A7F3D0',
       svgStroke: '#10B981',
     },
     cyan: {
       border: 'rgba(56, 189, 248, 0.4)',
-      bg: 'linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(28, 28, 32, 0.5) 100%)',
-      glow: '0 0 12px rgba(56, 189, 248, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.35)',
+      bg: 'rgba(56, 189, 248, 0.14)',
+      glow: '0 0 12px rgba(56, 189, 248, 0.3)',
       svgFill: '#BAE6FD',
       svgStroke: '#38BDF8',
     },
     neutral: {
-      border: 'rgba(255, 255, 255, 0.14)',
-      bg: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(28, 28, 32, 0.5) 100%)',
-      glow: '0 4px 10px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.2)',
+      border: 'rgba(255, 255, 255, 0.12)',
+      bg: 'rgba(255, 255, 255, 0.06)',
+      glow: '0 4px 10px rgba(0, 0, 0, 0.3)',
       svgFill: '#F8FAFC',
       svgStroke: '#94A3B8',
     },
@@ -349,20 +343,6 @@ export const FrostedIcon: React.FC<FrostedIconProps> = ({
         ...style,
       }}
     >
-      {/* Specular curved gloss highlight across top edge of glass */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: '46%',
-          background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.02) 100%)',
-          borderTopLeftRadius: 'inherit',
-          borderTopRightRadius: 'inherit',
-          pointerEvents: 'none',
-        }}
-      />
       {/* Inner Icon */}
       <div
         style={{

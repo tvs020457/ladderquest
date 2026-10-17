@@ -37,14 +37,14 @@ export const LevelNode: React.FC<LevelNodeProps> = ({
   let textColor = '#64748B';
 
   if (isCurrent) {
-    bg = 'linear-gradient(135deg, #FEF08A 0%, #FACC15 50%, #EAB308 100%)';
-    border = '2.5px solid #FFFFFF';
-    shadow = '0 6px 0 #A16207, 0 16px 32px rgba(250, 204, 21, 0.45)';
+    bg = '#FACC15';
+    border = '2px solid #FFFFFF';
+    shadow = '0 6px 0 #A16207, 0 16px 32px rgba(250, 204, 21, 0.3)';
     textColor = '#18181B';
   } else if (isCompleted) {
-    bg = 'linear-gradient(135deg, rgba(250, 204, 21, 0.18), rgba(245, 158, 11, 0.08))';
-    border = '2px solid rgba(250, 204, 21, 0.75)';
-    shadow = '0 6px 0 rgba(161, 98, 7, 0.5), 0 8px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
+    bg = 'rgba(250, 204, 21, 0.12)';
+    border = '1.5px solid rgba(250, 204, 21, 0.6)';
+    shadow = '0 6px 0 rgba(161, 98, 7, 0.3), 0 8px 20px rgba(0, 0, 0, 0.4)';
     textColor = '#FEF08A';
   }
 
@@ -55,7 +55,7 @@ export const LevelNode: React.FC<LevelNodeProps> = ({
         flexDirection: 'column',
         alignItems: 'center',
         transform: `translateX(${offsetPercent}px)`,
-        margin: '14px 0',
+        margin: '22px 0',
         transition: 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
       }}
     >
@@ -79,14 +79,14 @@ export const LevelNode: React.FC<LevelNodeProps> = ({
       {isCurrent && (
         <div
           style={{
-            background: 'linear-gradient(90deg, #F59E0B, #FACC15)',
+            background: '#FACC15',
             color: '#18181B',
             fontSize: '0.72rem',
             fontWeight: 900,
-            padding: '3px 10px',
+            padding: '4px 12px',
             borderRadius: '10px',
-            marginBottom: '4px',
-            boxShadow: '0 0 14px rgba(250, 204, 21, 0.8)',
+            marginBottom: '6px',
+            boxShadow: '0 0 14px rgba(250, 204, 21, 0.6)',
             letterSpacing: '0.06em',
           }}
         >
@@ -122,21 +122,6 @@ export const LevelNode: React.FC<LevelNodeProps> = ({
         }}
         aria-label={`Level ${id} (${status})`}
       >
-        {/* Specular curved gloss reflection */}
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: '48%',
-            background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%)',
-            borderTopLeftRadius: '50%',
-            borderTopRightRadius: '50%',
-            pointerEvents: 'none',
-          }}
-        />
-
         {isLocked ? (
           <FrostedIcon name="lock" size={36} iconSize={18} variant="neutral" />
         ) : (

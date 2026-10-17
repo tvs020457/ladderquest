@@ -45,7 +45,7 @@ export const InputPanel: React.FC<InputPanelProps> = ({
         const isEnergized = isNC ? currentVal === 1 : currentVal === 1;
 
         const btnBg = isEnergized
-          ? 'linear-gradient(135deg, rgba(250, 204, 21, 0.22), rgba(245, 158, 11, 0.14))'
+          ? 'rgba(250, 204, 21, 0.18)'
           : 'rgba(28, 28, 32, 0.72)';
         const btnBorder = isEnergized
           ? 'rgba(250, 204, 21, 0.8)'

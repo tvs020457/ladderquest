@@ -66,11 +66,8 @@ export const Header: React.FC<HeaderProps> = ({
           style={{
             fontSize: '1.2rem',
             fontWeight: 900,
-            background: 'linear-gradient(135deg, #FEF08A, #FACC15, #F59E0B)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            filter: 'drop-shadow(0 0 10px rgba(250, 204, 21, 0.4))',
-            letterSpacing: '0.01em',
+            color: '#FACC15',
+            letterSpacing: '0.02em',
           }}
         >
           LadderQuest

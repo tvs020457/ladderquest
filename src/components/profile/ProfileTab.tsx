@@ -56,10 +56,10 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
       style={{
         width: '100%',
         maxWidth: '440px',
-        padding: '16px 16px 90px 16px',
+        padding: '24px 20px 110px 20px',
         display: 'flex',
         flexDirection: 'column',
-        gap: '16px',
+        gap: '20px',
       }}
     >
       {/* Profile Header & Mascot Showcase */}
@@ -177,7 +177,7 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
                   padding: '10px 6px',
                   borderRadius: '16px',
                   background: isEquipped
-                    ? 'linear-gradient(135deg, rgba(250, 204, 21, 0.22), rgba(245, 158, 11, 0.14))'
+                    ? 'rgba(250, 204, 21, 0.18)'
                     : 'rgba(28, 28, 32, 0.7)',
                   border: isEquipped ? '1.5px solid #FACC15' : '1px solid var(--glass-border)',
                   color: isEquipped ? '#FEF08A' : '#94a3b8',

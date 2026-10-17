@@ -12,11 +12,6 @@ html, body {
   height: 100%;
   overflow-x: hidden;
   background-color: var(--color-bg-primary);
-  background-image: 
-    radial-gradient(circle at 50% 0%, rgba(250, 204, 21, 0.07) 0%, transparent 65%),
-    radial-gradient(circle at 15% 25%, rgba(255, 255, 255, 0.02) 0%, transparent 45%),
-    radial-gradient(circle at 85% 75%, rgba(245, 158, 11, 0.04) 0%, transparent 50%);
-  background-attachment: fixed;
   color: var(--color-text-primary);
   font-family: var(--font-family);
   font-size: 16px;
@@ -41,7 +36,7 @@ button, a, input, select, [role="button"] {
 }
 
 /* ==========================================================================
-   GLASSMORPHISM UTILITIES
+   MINIMALIST LUXURY FROSTED GLASS (SOLID FLAT TINTS - NO GRADIENTS)
    ========================================================================== */
 
 .glass-card {
@@ -56,19 +51,8 @@ button, a, input, select, [role="button"] {
   transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glass-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 45%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 100%);
-  pointer-events: none;
-}
-
 .glass-card-yellow {
-  background: rgba(36, 36, 42, 0.72);
+  background: rgba(36, 36, 42, 0.75);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-border-yellow);
@@ -76,17 +60,6 @@ button, a, input, select, [role="button"] {
   border-radius: 20px;
   position: relative;
   overflow: hidden;
-}
-
-.glass-card-yellow::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 45%;
-  background: linear-gradient(180deg, rgba(250, 204, 21, 0.12) 0%, rgba(250, 204, 21, 0) 100%);
-  pointer-events: none;
 }
 
 .glass-panel {
@@ -98,42 +71,29 @@ button, a, input, select, [role="button"] {
   border-radius: 24px;
 }
 
-/* Frosted Glass Floating Capsule Dock */
+/* Frosted Glass Floating Capsule Dock - Pure Flat Frosted Glass */
 .glass-capsule-dock {
-  background: linear-gradient(135deg, rgba(38, 38, 44, 0.72) 0%, rgba(26, 26, 30, 0.82) 100%);
-  backdrop-filter: blur(28px) saturate(210%);
-  -webkit-backdrop-filter: blur(28px) saturate(210%);
-  border: 1.5px solid var(--glass-border-yellow);
-  border-radius: 32px;
+  background: rgba(28, 28, 32, 0.82);
+  backdrop-filter: blur(28px) saturate(200%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  border: 1px solid var(--glass-border-yellow);
+  border-radius: 36px;
   box-shadow: 0 20px 48px -4px rgba(0, 0, 0, 0.8), 
-              0 0 28px rgba(250, 204, 21, 0.15), 
-              inset 0 1.5px 1px rgba(255, 255, 255, 0.28),
-              inset 0 -1px 1px rgba(0, 0, 0, 0.5);
+              0 0 24px rgba(250, 204, 21, 0.12), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.12);
   position: relative;
   overflow: hidden;
-}
-
-.glass-capsule-dock::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 10%;
-  right: 10%;
-  height: 48%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 100%);
-  border-radius: 32px 32px 0 0;
-  pointer-events: none;
 }
 
 .glass-icon-tile {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   border-radius: 12px;
   position: relative;
   overflow: hidden;
@@ -141,9 +101,9 @@ button, a, input, select, [role="button"] {
 }
 
 .glass-icon-tile-yellow {
-  background: linear-gradient(135deg, rgba(250, 204, 21, 0.22) 0%, rgba(245, 158, 11, 0.08) 100%);
-  border: 1px solid rgba(250, 204, 21, 0.45);
-  box-shadow: 0 4px 16px rgba(250, 204, 21, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+  background: rgba(250, 204, 21, 0.12);
+  border: 1px solid rgba(250, 204, 21, 0.35);
+  box-shadow: 0 4px 16px rgba(250, 204, 21, 0.2);
 }
 
 .glass-icon-tile-round {
@@ -151,14 +111,14 @@ button, a, input, select, [role="button"] {
 }
 
 /* ==========================================================================
-   BUTTERY SMOOTH 3D PRESSABLE BUTTONS
+   MINIMALIST LUXURY SOLID FLAT BUTTONS (NO GRADIENTS)
    ========================================================================== */
 
 .pressable-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 22px;
+  padding: 14px 24px;
   border-radius: var(--btn-border-radius);
   font-weight: 800;
   border: none;
@@ -172,53 +132,53 @@ button, a, input, select, [role="button"] {
 }
 
 .pressable-btn:hover {
-  filter: brightness(1.08);
+  filter: brightness(1.05);
   transform: translateY(-1px);
 }
 
 .pressable-btn:active {
-  transform: translateY(3px) scale(0.985);
+  transform: translateY(2px) scale(0.99);
 }
 
-/* Primary Electric Yellow Button */
+/* Primary Flat Electric Yellow Button */
 .pressable-btn-primary {
-  background: linear-gradient(180deg, #FDE047 0%, #EAB308 100%);
-  color: #0F172A;
-  box-shadow: 0 4px 0 var(--color-1-dark), 0 8px 24px rgba(234, 179, 8, 0.35);
+  background: #FACC15;
+  color: #121214;
+  box-shadow: 0 4px 0 #A16207, 0 8px 24px rgba(250, 204, 21, 0.25);
   font-weight: 900;
 }
 .pressable-btn-primary:active {
-  box-shadow: 0 1px 0 var(--color-1-dark), 0 2px 8px rgba(234, 179, 8, 0.2);
+  box-shadow: 0 1px 0 #A16207;
 }
 
-/* Success Emerald Button */
+/* Success Flat Emerald Button */
 .pressable-btn-success {
-  background: linear-gradient(180deg, #34D399 0%, #059669 100%);
+  background: #10B981;
   color: #022C22;
-  box-shadow: 0 4px 0 var(--color-3-dark), 0 8px 20px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 0 var(--color-3-dark), 0 8px 20px rgba(16, 185, 129, 0.25);
   font-weight: 900;
 }
 .pressable-btn-success:active {
   box-shadow: 0 1px 0 var(--color-3-dark);
 }
 
-/* Danger Button */
+/* Danger Flat Button */
 .pressable-btn-danger {
-  background: linear-gradient(180deg, #F87171 0%, #DC2626 100%);
+  background: #EF4444;
   color: #FFFFFF;
-  box-shadow: 0 4px 0 var(--color-error-dark), 0 8px 20px rgba(239, 68, 68, 0.3);
+  box-shadow: 0 4px 0 var(--color-error-dark), 0 8px 20px rgba(239, 68, 68, 0.25);
 }
 .pressable-btn-danger:active {
   box-shadow: 0 1px 0 var(--color-error-dark);
 }
 
-/* Secondary Glassmorphic Button */
+/* Secondary Frosted Glass Button */
 .pressable-btn-secondary {
-  background: rgba(30, 41, 59, 0.7);
+  background: rgba(38, 38, 44, 0.7);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   color: var(--color-text-primary);
-  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
   border: 1px solid var(--glass-border-light);
 }
 .pressable-btn-secondary:hover {

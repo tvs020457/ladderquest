@@ -296,10 +296,11 @@ export const LevelShell: React.FC<LevelShellProps> = ({
       <main
         style={{
           flex: 1,
-          padding: '12px 14px',
+          padding: '20px 18px 40px 18px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          gap: '16px',
         }}
       >
         {step === 1 && (
@@ -327,7 +328,7 @@ export const LevelShell: React.FC<LevelShellProps> = ({
         )}
 
         {step === 3 && (
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
             {/* Story & Reset */}
             <div style={{ width: '100%' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

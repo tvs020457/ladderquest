@@ -53,10 +53,11 @@ export const PathScreen: React.FC<PathScreenProps> = ({
       style={{
         width: '100%',
         maxWidth: '440px',
-        padding: '8px 16px 80px 16px',
+        padding: '24px 20px 110px 20px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        gap: '24px',
       }}
     >
       {UNITS.map((unit, unitIdx) => {

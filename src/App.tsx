@@ -244,10 +244,10 @@ export default function App() {
                   }}
                   style={{
                     background: isActive
-                      ? 'linear-gradient(135deg, rgba(250, 204, 21, 0.22) 0%, rgba(245, 158, 11, 0.1) 100%)'
+                      ? 'rgba(250, 204, 21, 0.16)'
                       : 'transparent',
                     border: isActive
-                      ? '1px solid rgba(250, 204, 21, 0.45)'
+                      ? '1px solid rgba(250, 204, 21, 0.4)'
                       : '1px solid transparent',
                     borderRadius: '24px',
                     color: isActive ? '#FEF08A' : '#94A3B8',
@@ -258,10 +258,10 @@ export default function App() {
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    padding: '6px 20px',
+                    padding: '8px 22px',
                     gap: '4px',
                     boxShadow: isActive
-                      ? '0 0 20px rgba(250, 204, 21, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.4)'
+                      ? '0 0 20px rgba(250, 204, 21, 0.25)'
                       : 'none',
                     backdropFilter: isActive ? 'blur(10px)' : 'none',
                     WebkitBackdropFilter: isActive ? 'blur(10px)' : 'none',
