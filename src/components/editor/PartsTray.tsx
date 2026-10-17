@@ -119,7 +119,7 @@ export const PartsTray: React.FC<PartsTrayProps> = ({
                 minHeight: '54px',
                 borderRadius: '14px',
                 background: isSelected
-                  ? '#FACC15'
+                  ? '#EAB308'
                   : 'rgba(28, 28, 32, 0.75)',
                 color: isSelected ? '#18181B' : '#f8fafc',
                 border: isSelected ? '2px solid #FFFFFF' : '1px solid var(--glass-border)',

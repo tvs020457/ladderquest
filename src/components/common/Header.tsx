@@ -67,7 +67,7 @@ export const Header: React.FC<HeaderProps> = ({
           style={{
             fontSize: '1.2rem',
             fontWeight: 900,
-            color: '#FACC15',
+            color: '#EAB308',
             letterSpacing: '0.02em',
           }}
         >

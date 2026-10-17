@@ -37,15 +37,15 @@ export const LevelNode: React.FC<LevelNodeProps> = ({
   let textColor = '#64748B';
 
   if (isCurrent) {
-    bg = '#FACC15';
+    bg = '#EAB308';
     border = '2px solid #FFFFFF';
-    shadow = '0 6px 0 #A16207, 0 16px 32px rgba(250, 204, 21, 0.3)';
+    shadow = '0 6px 0 #854D0E, 0 16px 32px rgba(234, 179, 8, 0.2)';
     textColor = '#18181B';
   } else if (isCompleted) {
-    bg = 'rgba(250, 204, 21, 0.12)';
-    border = '1.5px solid rgba(250, 204, 21, 0.6)';
-    shadow = '0 6px 0 rgba(161, 98, 7, 0.3), 0 8px 20px rgba(0, 0, 0, 0.4)';
-    textColor = '#FEF08A';
+    bg = 'rgba(234, 179, 8, 0.1)';
+    border = '1.5px solid rgba(234, 179, 8, 0.45)';
+    shadow = '0 6px 0 rgba(133, 77, 14, 0.25), 0 8px 20px rgba(0, 0, 0, 0.4)';
+    textColor = '#FDE68A';
   }
 
   return (
@@ -66,7 +66,7 @@ export const LevelNode: React.FC<LevelNodeProps> = ({
             display: 'flex',
             gap: '2px',
             marginBottom: '4px',
-            filter: 'drop-shadow(0 0 6px rgba(250, 204, 21, 0.6))',
+            filter: 'drop-shadow(0 0 4px rgba(234, 179, 8, 0.35))',
           }}
         >
           {Array.from({ length: Math.max(1, stars) }).map((_, i) => (
@@ -79,14 +79,14 @@ export const LevelNode: React.FC<LevelNodeProps> = ({
       {isCurrent && (
         <div
           style={{
-            background: '#FACC15',
+            background: '#EAB308',
             color: '#18181B',
             fontSize: '0.72rem',
             fontWeight: 900,
             padding: '4px 12px',
             borderRadius: '10px',
             marginBottom: '6px',
-            boxShadow: '0 0 14px rgba(250, 204, 21, 0.6)',
+            boxShadow: '0 0 12px rgba(234, 179, 8, 0.35)',
             letterSpacing: '0.06em',
           }}
         >

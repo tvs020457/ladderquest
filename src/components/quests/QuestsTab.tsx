@@ -77,7 +77,7 @@ export const QuestsTab: React.FC<QuestsTabProps> = ({
                 <span style={{ fontWeight: 800, fontSize: '0.95rem', color: '#f8fafc' }}>
                   {q.title}
                 </span>
-                <span style={{ fontWeight: 900, fontSize: '0.85rem', color: '#FACC15' }}>
+                <span style={{ fontWeight: 900, fontSize: '0.85rem', color: '#EAB308' }}>
                   +{q.xpReward} XP
                 </span>
               </div>
@@ -99,8 +99,8 @@ export const QuestsTab: React.FC<QuestsTabProps> = ({
                     style={{
                       width: `${pct}%`,
                       height: '100%',
-                      background: q.done ? '#10B981' : '#FACC15',
-                      boxShadow: q.done ? '0 0 8px rgba(16, 185, 129, 0.4)' : '0 0 8px rgba(250, 204, 21, 0.4)',
+                      background: q.done ? '#10B981' : '#EAB308',
+                      boxShadow: q.done ? '0 0 8px rgba(16, 185, 129, 0.4)' : '0 0 8px rgba(234, 179, 8, 0.3)',
                       transition: 'width 0.3s ease',
                     }}
                   />
@@ -209,7 +209,7 @@ export const QuestsTab: React.FC<QuestsTabProps> = ({
           <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#FACC15', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
             Weekly Goal (Starts Mon {weekly.weekStart})
           </span>
-          <span style={{ fontWeight: 900, fontSize: '0.85rem', color: '#FACC15' }}>
+          <span style={{ fontWeight: 900, fontSize: '0.85rem', color: '#EAB308' }}>
             +{weekly.xpReward} XP
           </span>
         </div>
@@ -223,8 +223,8 @@ export const QuestsTab: React.FC<QuestsTabProps> = ({
               style={{
                 width: `${Math.min(100, (weekly.progress / weekly.target) * 100)}%`,
                 height: '100%',
-                background: '#FACC15',
-                boxShadow: '0 0 8px rgba(250, 204, 21, 0.4)',
+                background: '#EAB308',
+                boxShadow: '0 0 8px rgba(234, 179, 8, 0.3)',
               }}
             />
           </div>

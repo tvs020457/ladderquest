@@ -269,11 +269,11 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
                 cx={lCoord.x}
                 cy={lCoord.y}
                 r="6"
-                fill={isLSelected ? '#FACC15' : '#EAB308'}
+                fill={isLSelected ? '#FDE68A' : '#EAB308'}
                 stroke="#18181B"
                 strokeWidth="2"
                 style={{
-                  filter: isLSelected ? 'drop-shadow(0 0 8px #FACC15)' : 'none',
+                  filter: isLSelected ? 'drop-shadow(0 0 6px #EAB308)' : 'none',
                 }}
               />
               {/* Minimum 44x44px touch hit target */}

@@ -3,15 +3,15 @@
      LADDERQUEST LUXURY GLASSMORPHISM + ELECTRIC YELLOW THEME
      ========================================================================== */
 
-  /* Primary Electric Yellow Palette */
-  --color-1: #FACC15;              /* Radiant Electric Yellow */
-  --color-1-light: #FEF08A;        /* Champagne Sunlight Highlight */
-  --color-1-dark: #A16207;         /* Deep Burnished Gold Base */
+  /* Primary Refined Champagne Gold Palette (Soft & Non-Disturbing) */
+  --color-1: #EAB308;              /* Soft Warm Muted Gold (not blinding) */
+  --color-1-light: #FDE68A;        /* Gentle Warm Cream */
+  --color-1-dark: #854D0E;         /* Deep Warm Bronze Base */
 
-  /* Secondary Amber & Golden Accent */
-  --color-2: #F59E0B;              /* Rich Warm Amber */
-  --color-2-light: #FDE68A;        /* Soft Amber Tint */
-  --color-2-dark: #B45309;         /* Bronze / Amber Shadow */
+  /* Secondary Warm Amber Accent */
+  --color-2: #D97706;              /* Muted Amber */
+  --color-2-light: #FEF3C7;        /* Soft Amber Cream */
+  --color-2-dark: #78350F;         /* Deep Bronze */
 
   /* Feedback Emerald Green (Pass / Verification) */
   --color-3: #10B981;              /* Pure Emerald */
@@ -24,17 +24,17 @@
   --glass-bg-card: rgba(30, 30, 36, 0.82);
   --glass-bg-elevated: rgba(40, 40, 48, 0.90);
   
-  --glass-border: rgba(255, 255, 255, 0.16);
-  --glass-border-light: rgba(255, 255, 255, 0.25);
-  --glass-border-yellow: rgba(250, 204, 21, 0.55);
-  --glass-border-glow: rgba(250, 204, 21, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-border-light: rgba(255, 255, 255, 0.22);
+  --glass-border-yellow: rgba(234, 179, 8, 0.35);
+  --glass-border-glow: rgba(234, 179, 8, 0.5);
 
-  --glass-blur: blur(28px) saturate(220%);
-  --glass-blur-heavy: blur(36px) saturate(240%);
+  --glass-blur: blur(28px) saturate(180%);
+  --glass-blur-heavy: blur(36px) saturate(200%);
 
-  --glass-shadow: 0 16px 40px -6px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.18);
-  --glass-shadow-glow: 0 16px 44px -4px rgba(250, 204, 21, 0.35), 0 0 1px rgba(250, 204, 21, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-  --glass-shadow-sm: 0 8px 24px -2px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  --glass-shadow: 0 16px 40px -6px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  --glass-shadow-glow: 0 16px 44px -4px rgba(234, 179, 8, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  --glass-shadow-sm: 0 8px 24px -2px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 
   /* Deep Luxury Dark Grey Surfaces */
   --color-bg-primary: #0D0D10;     /* Rich Ink-Dark Grey for Supreme Contrast */
@@ -46,13 +46,13 @@
   --color-text-primary: #F8FAFC;
   --color-text-secondary: #94A3B8;
   --color-text-muted: #64748B;
-  --color-text-yellow: #FEF08A;
+  --color-text-yellow: #FDE68A;
 
-  /* Powered Wire Neon Gold Current */
-  --color-accent-amber: #FACC15;
-  --color-accent-amber-glow: rgba(250, 204, 21, 0.85);
+  /* Powered Wire Warm Gold Current */
+  --color-accent-amber: #EAB308;
+  --color-accent-amber-glow: rgba(234, 179, 8, 0.55);
   --color-accent-blue: #38BDF8;
-  --color-accent-indigo: #F59E0B;
+  --color-accent-indigo: #D97706;
 
   /* Diagnostic Feedback */
   --color-success: #10B981;

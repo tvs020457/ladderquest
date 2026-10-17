@@ -50,18 +50,18 @@ export const FrostedIcon: React.FC<FrostedIconProps> = ({
   // Color presets for frosted glass inner tints (pure flat colors, zero gradients)
   const themeColors = {
     yellow: {
-      border: active ? 'rgba(250, 204, 21, 0.7)' : 'rgba(250, 204, 21, 0.35)',
-      bg: active ? 'rgba(250, 204, 21, 0.22)' : 'rgba(250, 204, 21, 0.08)',
-      glow: active ? '0 0 16px rgba(250, 204, 21, 0.45)' : '0 4px 12px rgba(0, 0, 0, 0.3)',
-      svgFill: '#FEF08A',
-      svgStroke: '#FACC15',
+      border: active ? 'rgba(234, 179, 8, 0.6)' : 'rgba(234, 179, 8, 0.28)',
+      bg: active ? 'rgba(234, 179, 8, 0.16)' : 'rgba(234, 179, 8, 0.06)',
+      glow: active ? '0 0 12px rgba(234, 179, 8, 0.35)' : '0 4px 12px rgba(0, 0, 0, 0.3)',
+      svgFill: '#FDE68A',
+      svgStroke: '#EAB308',
     },
     amber: {
-      border: active ? 'rgba(245, 158, 11, 0.7)' : 'rgba(245, 158, 11, 0.35)',
-      bg: active ? 'rgba(245, 158, 11, 0.22)' : 'rgba(245, 158, 11, 0.08)',
-      glow: active ? '0 0 14px rgba(245, 158, 11, 0.4)' : '0 4px 10px rgba(0, 0, 0, 0.3)',
-      svgFill: '#FDE68A',
-      svgStroke: '#F59E0B',
+      border: active ? 'rgba(217, 119, 6, 0.6)' : 'rgba(217, 119, 6, 0.28)',
+      bg: active ? 'rgba(217, 119, 6, 0.16)' : 'rgba(217, 119, 6, 0.06)',
+      glow: active ? '0 0 12px rgba(217, 119, 6, 0.3)' : '0 4px 10px rgba(0, 0, 0, 0.3)',
+      svgFill: '#FEF3C7',
+      svgStroke: '#D97706',
     },
     emerald: {
       border: active ? 'rgba(16, 185, 129, 0.7)' : 'rgba(16, 185, 129, 0.35)',

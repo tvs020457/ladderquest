@@ -107,9 +107,9 @@ button, a, input, select, [role="button"] {
 }
 
 .glass-icon-tile-yellow {
-  background: rgba(250, 204, 21, 0.12);
-  border: 1px solid rgba(250, 204, 21, 0.35);
-  box-shadow: 0 4px 16px rgba(250, 204, 21, 0.2);
+  background: rgba(234, 179, 8, 0.12);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  box-shadow: 0 4px 14px rgba(234, 179, 8, 0.15);
 }
 
 .glass-icon-tile-round {
@@ -146,15 +146,15 @@ button, a, input, select, [role="button"] {
   transform: translateY(2px) scale(0.99);
 }
 
-/* Primary Flat Electric Yellow Button */
+/* Primary Flat Champagne Gold Button */
 .pressable-btn-primary {
-  background: #FACC15;
+  background: #EAB308;
   color: #121214;
-  box-shadow: 0 4px 0 #A16207, 0 8px 24px rgba(250, 204, 21, 0.25);
+  box-shadow: 0 4px 0 #854D0E, 0 8px 24px rgba(234, 179, 8, 0.2);
   font-weight: 900;
 }
 .pressable-btn-primary:active {
-  box-shadow: 0 1px 0 #A16207;
+  box-shadow: 0 1px 0 #854D0E;
 }
 
 /* Success Flat Emerald Button */
