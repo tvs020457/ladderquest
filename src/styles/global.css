@@ -48,39 +48,45 @@ button, a, input, select, [role="button"] {
   border-radius: 20px;
   position: relative;
   overflow: hidden;
-  transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(250, 204, 21, 0.35);
+  box-shadow: 0 20px 48px -6px rgba(0, 0, 0, 0.9), 0 0 1px rgba(250, 204, 21, 0.5);
 }
 
 .glass-card-yellow {
-  background: rgba(36, 36, 42, 0.75);
+  background: rgba(38, 38, 46, 0.82);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border-yellow);
+  border: 1.5px solid var(--glass-border-yellow);
   box-shadow: var(--glass-shadow-glow);
   border-radius: 20px;
   position: relative;
   overflow: hidden;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-panel {
   background: var(--glass-bg-primary);
   backdrop-filter: var(--glass-blur-heavy);
   -webkit-backdrop-filter: var(--glass-blur-heavy);
-  border: 1px solid var(--glass-border);
+  border: 1.5px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
   border-radius: 24px;
 }
 
-/* Frosted Glass Floating Capsule Dock - Pure Flat Frosted Glass */
+/* Frosted Glass Floating Capsule Dock - Luminous Floating Pop */
 .glass-capsule-dock {
-  background: rgba(28, 28, 32, 0.82);
-  backdrop-filter: blur(28px) saturate(200%);
-  -webkit-backdrop-filter: blur(28px) saturate(200%);
-  border: 1px solid var(--glass-border-yellow);
+  background: rgba(24, 24, 28, 0.88);
+  backdrop-filter: blur(32px) saturate(240%);
+  -webkit-backdrop-filter: blur(32px) saturate(240%);
+  border: 1.5px solid var(--glass-border-yellow);
   border-radius: 36px;
-  box-shadow: 0 20px 48px -4px rgba(0, 0, 0, 0.8), 
-              0 0 24px rgba(250, 204, 21, 0.12), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 54px -4px rgba(0, 0, 0, 0.92), 
+              0 0 32px rgba(250, 204, 21, 0.22), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.22);
   position: relative;
   overflow: hidden;
 }
