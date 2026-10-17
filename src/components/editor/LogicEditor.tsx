@@ -6,6 +6,8 @@ import {
   ConditionBranch,
 } from '../../engine/types';
 import { LevelInputDef, LevelOutputDef } from '../../levels/types';
+import { sound } from '../../utils/sound';
+import { haptics } from '../../utils/haptics';
 
 interface LogicEditorProps {
   rungs: Rung[];
@@ -49,6 +51,9 @@ export const LogicEditor: React.FC<LogicEditorProps> = ({
   ) => {
     if (!selectedElement) return;
 
+    sound.playWireConnect();
+    haptics.snap();
+
     const newRungs = JSON.parse(JSON.stringify(rungs)) as Rung[];
     const isCoil = ['OTE', 'OTL', 'OTU', 'TON', 'TOF', 'CTU', 'RES'].includes(selectedElement);
 
@@ -86,6 +91,8 @@ export const LogicEditor: React.FC<LogicEditorProps> = ({
     instIdx: number,
     isOutput: boolean
   ) => {
+    sound.playWireDisconnect();
+    haptics.disconnect();
     const newRungs = JSON.parse(JSON.stringify(rungs)) as Rung[];
     if (isOutput) {
       newRungs[rungIdx].outputs.splice(instIdx, 1);
@@ -98,6 +105,8 @@ export const LogicEditor: React.FC<LogicEditorProps> = ({
 
   const handleUpdateTag = (tag: string) => {
     if (!editingInstruction) return;
+    sound.playTap();
+    haptics.tap();
     const { rungIdx, branchIdx, instIdx, isOutput } = editingInstruction;
     const newRungs = JSON.parse(JSON.stringify(rungs)) as Rung[];
 
@@ -119,10 +128,13 @@ export const LogicEditor: React.FC<LogicEditorProps> = ({
         gap: '12px',
         width: '100%',
         maxWidth: '480px',
-        backgroundColor: 'var(--color-bg-canvas)',
-        borderRadius: '16px',
-        border: '2px solid var(--color-bg-tertiary)',
-        padding: '16px 10px',
+        background: 'var(--glass-bg-primary)',
+        backdropFilter: 'var(--glass-blur)',
+        WebkitBackdropFilter: 'var(--glass-blur)',
+        borderRadius: '20px',
+        border: '1px solid var(--glass-border-yellow)',
+        boxShadow: '0 16px 36px rgba(0, 0, 0, 0.65), 0 0 20px rgba(250, 204, 21, 0.08)',
+        padding: '16px 12px',
         position: 'relative',
         userSelect: 'none',
       }}
@@ -136,11 +148,14 @@ export const LogicEditor: React.FC<LogicEditorProps> = ({
               alignItems: 'center',
               position: 'relative',
               minHeight: '74px',
-              borderLeft: '4px solid var(--color-1)', // Left power rail L
-              borderRight: '4px solid #64748b', // Right neutral rail R
+              borderLeft: '4px solid #FACC15', // Left power rail L (24V)
+              borderRight: '4px solid #64748B', // Right neutral rail R (0V)
+              boxShadow: 'inset 4px 0 10px rgba(250, 204, 21, 0.25)',
               padding: '8px 12px',
-              backgroundColor: 'var(--color-bg-secondary)',
-              borderRadius: '8px',
+              background: 'rgba(15, 23, 42, 0.75)',
+              borderTop: '1px solid rgba(255, 255, 255, 0.06)',
+              borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+              borderRadius: '12px',
             }}
           >
             {/* Branches Area (Left side) */}

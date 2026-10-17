@@ -5,6 +5,8 @@ import { ExportImportModal } from './ExportImportModal';
 import { CloudSyncModal } from './CloudSyncModal';
 import { Mascot } from '../common/Mascot';
 import { Button } from '../common/Button';
+import { sound } from '../../utils/sound';
+import { haptics } from '../../utils/haptics';
 
 interface ProfileTabProps {
   progress: UserProgressV1;
@@ -21,6 +23,8 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
 }) => {
   const [showBackupModal, setShowBackupModal] = useState(false);
   const [showCloudSyncModal, setShowCloudSyncModal] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(() => !sound.isMuted());
+  const [hapticsEnabled, setHapticsEnabled] = useState(() => haptics.isEnabled());
   const streak = progress.streak;
 
   const BADGES = [
@@ -30,12 +34,30 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
     { id: 'streak_30', title: 'Logic Master', desc: '30-Day Streak', icon: '👑' },
   ];
 
+  const handleToggleSound = (enabled: boolean) => {
+    sound.setMuted(!enabled);
+    setSoundEnabled(enabled);
+    if (enabled) {
+      sound.playTap();
+    }
+    haptics.tap();
+  };
+
+  const handleToggleHaptics = (enabled: boolean) => {
+    haptics.setEnabled(enabled);
+    setHapticsEnabled(enabled);
+    if (enabled) {
+      haptics.snap();
+    }
+    sound.playTap();
+  };
+
   return (
     <div
       style={{
         width: '100%',
         maxWidth: '440px',
-        padding: '12px 16px 80px 16px',
+        padding: '16px 16px 90px 16px',
         display: 'flex',
         flexDirection: 'column',
         gap: '16px',
@@ -43,14 +65,12 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
     >
       {/* Profile Header & Mascot Showcase */}
       <div
+        className="glass-card-yellow"
         style={{
-          backgroundColor: 'var(--color-bg-secondary)',
-          borderRadius: '20px',
-          padding: '20px',
-          border: '1px solid var(--color-bg-tertiary)',
+          padding: '22px',
           display: 'flex',
           alignItems: 'center',
-          gap: '16px',
+          gap: '18px',
         }}
       >
         <Mascot
@@ -59,12 +79,12 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
           cosmetic={(progress.cosmetics.equipped as any) || 'none'}
         />
         <div>
-          <h2 style={{ fontSize: '1.3rem', fontWeight: 900, color: '#ffffff' }}>PLC Learner</h2>
-          <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
-            <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--color-1)' }}>
+          <h2 style={{ fontSize: '1.35rem', fontWeight: 900, color: '#ffffff' }}>PLC Technician</h2>
+          <div style={{ display: 'flex', gap: '10px', marginTop: '6px' }}>
+            <span style={{ fontSize: '0.88rem', fontWeight: 900, color: '#FEF08A' }}>
               ⚡ {progress.xp} Total XP
             </span>
-            <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--color-2)' }}>
+            <span style={{ fontSize: '0.88rem', fontWeight: 900, color: '#F59E0B' }}>
               🔥 {streak.current} Days
             </span>
           </div>
@@ -206,21 +226,47 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
         </div>
       </div>
 
-      {/* Settings & Privacy */}
+      {/* Sensory & App Settings */}
       <div
+        className="glass-card"
         style={{
-          backgroundColor: 'var(--color-bg-secondary)',
-          borderRadius: '16px',
-          padding: '16px',
-          border: '1px solid var(--color-bg-tertiary)',
+          padding: '18px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '12px',
+          gap: '14px',
         }}
       >
         <h4 style={{ fontSize: '1rem', fontWeight: 900, color: '#ffffff' }}>
-          Settings
+          Sensory & Tactile Settings
         </h4>
+
+        {/* Sound Effects Toggle */}
+        <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
+          <div>
+            <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#e2e8f0' }}>Zero-Latency Sound FX 🔊</div>
+            <div style={{ fontSize: '0.78rem', color: '#94a3b8' }}>Synthesized clicks, relay clacks, and victory fanfares</div>
+          </div>
+          <input
+            type="checkbox"
+            checked={soundEnabled}
+            onChange={(e) => handleToggleSound(e.target.checked)}
+            style={{ width: '22px', height: '22px', accentColor: '#FACC15' }}
+          />
+        </label>
+
+        {/* Tactile Haptics Toggle */}
+        <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
+          <div>
+            <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#e2e8f0' }}>Tactile Haptics (Taptics) 📳</div>
+            <div style={{ fontSize: '0.78rem', color: '#94a3b8' }}>Vibrations on wire placement, taps, and pass/fail</div>
+          </div>
+          <input
+            type="checkbox"
+            checked={hapticsEnabled}
+            onChange={(e) => handleToggleHaptics(e.target.checked)}
+            style={{ width: '22px', height: '22px', accentColor: '#FACC15' }}
+          />
+        </label>
 
         {/* Hide Streak Toggle (Honest anti-pressure design rule from Part 9.8) */}
         <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
@@ -237,7 +283,7 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
                 hideStreakUi: e.target.checked,
               })
             }
-            style={{ width: '20px', height: '20px', accentColor: 'var(--color-1)' }}
+            style={{ width: '22px', height: '22px', accentColor: '#FACC15' }}
           />
         </label>
       </div>
@@ -247,7 +293,11 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
         variant="primary"
         size="md"
         fullWidth
-        onClick={() => setShowCloudSyncModal(true)}
+        onClick={() => {
+          sound.playTap();
+          haptics.tap();
+          setShowCloudSyncModal(true);
+        }}
       >
         ☁️ Supabase Cloud Sync
       </Button>
@@ -257,7 +307,11 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
         variant="secondary"
         size="md"
         fullWidth
-        onClick={() => setShowBackupModal(true)}
+        onClick={() => {
+          sound.playTap();
+          haptics.tap();
+          setShowBackupModal(true);
+        }}
       >
         💾 Backup & Transfer Progress
       </Button>

@@ -1,46 +1,71 @@
 :root {
-  /* User-Specified Triadic Palette */
-  --color-1: #65AABB;       /* Soft Cyan-Teal */
-  --color-2: #BB65AA;       /* Vivid Orchid-Magenta */
-  --color-3: #AABB65;       /* Fresh Olive-Lime */
+  /* ==========================================================================
+     LADDERQUEST LUXURY GLASSMORPHISM + ELECTRIC YELLOW THEME
+     ========================================================================== */
 
-  /* Button 3D Shadow and Highlight Shades */
-  --color-1-dark: #3a7584;
-  --color-1-light: #8ec3cf;
-  --color-2-dark: #833974;
-  --color-2-light: #cf84c0;
-  --color-3-dark: #6e7c35;
-  --color-3-light: #c5d38c;
+  /* Primary Electric Yellow Palette */
+  --color-1: #FACC15;              /* Radiant Electric Yellow */
+  --color-1-light: #FEF08A;        /* Champagne Sunlight Highlight */
+  --color-1-dark: #A16207;         /* Deep Burnished Gold Base */
 
-  /* UI Surfaces (Harmonized with palette: deep midnight teal-slate) */
-  --color-bg-primary: #0d161a;
-  --color-bg-secondary: #17242a;
-  --color-bg-tertiary: #23353e;
-  --color-bg-canvas: #091013;
+  /* Secondary Amber & Golden Accent */
+  --color-2: #F59E0B;              /* Rich Warm Amber */
+  --color-2-light: #FDE68A;        /* Soft Amber Tint */
+  --color-2-dark: #B45309;         /* Bronze / Amber Shadow */
 
-  /* Typography */
-  --color-text-primary: #f8fafc;
-  --color-text-secondary: #9db5be;
-  --color-text-muted: #67848f;
+  /* Feedback Emerald Green (Pass / Verification) */
+  --color-3: #10B981;              /* Pure Emerald */
+  --color-3-light: #6EE7B7;
+  --color-3-dark: #047857;
 
-  /* Primary Brand Roles mapped to the 3 colors */
-  --color-accent-amber: var(--color-2);        /* Glowing powered wires, active tags */
-  --color-accent-amber-glow: var(--color-2-light);
-  --color-accent-blue: var(--color-1);         /* Power rails, primary buttons, badges */
-  --color-accent-indigo: var(--color-2);
+  /* Glassmorphism Design Tokens */
+  --glass-bg-primary: rgba(15, 23, 42, 0.68);
+  --glass-bg-secondary: rgba(30, 41, 59, 0.62);
+  --glass-bg-card: rgba(18, 26, 43, 0.72);
+  --glass-bg-elevated: rgba(30, 41, 59, 0.85);
+  
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-light: rgba(255, 255, 255, 0.14);
+  --glass-border-yellow: rgba(250, 204, 21, 0.28);
+  --glass-border-glow: rgba(250, 204, 21, 0.5);
 
-  /* Feedback Colors */
-  --color-success: var(--color-3);             /* #AABB65 for pass, completed stars, checkmarks */
-  --color-success-dark: var(--color-3-dark);
-  --color-success-light: #f0f5dc;
-  --color-error: #ef4444;                      /* Diagnostic red for failures */
-  --color-error-dark: #dc2626;
-  --color-error-light: #fee2e2;
-  --color-warning: var(--color-2);
+  --glass-blur: blur(20px) saturate(180%);
+  --glass-blur-heavy: blur(28px) saturate(200%);
 
-  /* Duolingo-style 3D Pressable Button Tokens */
+  --glass-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  --glass-shadow-glow: 0 16px 40px -4px rgba(250, 204, 21, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  --glass-shadow-sm: 0 8px 20px -2px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  /* Deep Luxury Obsidian Surfaces */
+  --color-bg-primary: #080C14;     /* Infinite Deep Cosmic Navy-Black */
+  --color-bg-secondary: rgba(18, 26, 43, 0.72);
+  --color-bg-tertiary: rgba(30, 41, 59, 0.6);
+  --color-bg-canvas: #05080E;      /* Rich Obsidian for Schematics */
+
+  /* Luxury Typography */
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
+  --color-text-yellow: #FEF08A;
+
+  /* Powered Wire Neon Gold Current */
+  --color-accent-amber: #FACC15;
+  --color-accent-amber-glow: rgba(250, 204, 21, 0.85);
+  --color-accent-blue: #38BDF8;
+  --color-accent-indigo: #F59E0B;
+
+  /* Diagnostic Feedback */
+  --color-success: #10B981;
+  --color-success-dark: #047857;
+  --color-success-light: #D1FAE5;
+  --color-error: #EF4444;
+  --color-error-dark: #B91C1C;
+  --color-error-light: #FEE2E2;
+  --color-warning: #F59E0B;
+
+  /* Button Tokens */
   --btn-border-bottom-width: 4px;
-  --btn-border-radius: 14px;
+  --btn-border-radius: 16px;
   --touch-target-min: 44px;
 
   /* Spacing */
@@ -50,7 +75,7 @@
   --space-lg: 24px;
   --space-xl: 32px;
 
-  /* Typography */
-  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-  --font-mono: 'SF Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  /* Fonts */
+  --font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'SF Mono', Monaco, Consolas, 'Liberation Mono', monospace;
 }

@@ -14,6 +14,8 @@ import { gradeCircuit, gradeRungs, GradingResult } from '../../engine/grader';
 import { circuitToRungs } from '../../engine/circuitToRungs';
 import { PlcSimulator } from '../../engine/scanCycle';
 import { Rung, InstructionType } from '../../engine/types';
+import { sound } from '../../utils/sound';
+import { haptics } from '../../utils/haptics';
 
 interface LevelShellProps {
   level: LevelDefinition;
@@ -103,6 +105,8 @@ export const LevelShell: React.FC<LevelShellProps> = ({
   };
 
   const handleReset = () => {
+    sound.playTap();
+    haptics.tap();
     if (isWriteMode) {
       setRungs([
         {
@@ -118,6 +122,8 @@ export const LevelShell: React.FC<LevelShellProps> = ({
   };
 
   const handleAddRung = () => {
+    sound.playWireConnect();
+    haptics.snap();
     setRungs((prev) => [
       ...prev,
       {
@@ -130,12 +136,15 @@ export const LevelShell: React.FC<LevelShellProps> = ({
 
   const handleAddBranch = () => {
     if (rungs.length === 0) return;
+    sound.playWireConnect();
+    haptics.snap();
     const newRungs = JSON.parse(JSON.stringify(rungs)) as Rung[];
     newRungs[newRungs.length - 1].branches.push([]);
     setRungs(newRungs);
   };
 
   const handleRun = () => {
+    sound.playRelayClick();
     let res: GradingResult;
     if (isWriteMode) {
       const elementsCount = rungs.reduce(
@@ -155,11 +164,18 @@ export const LevelShell: React.FC<LevelShellProps> = ({
     setGradeResult(res);
     setIsSheetOpen(true);
     if (res.passed) {
+      sound.playSuccess();
+      haptics.success();
       onPass(res.starsEarned, res.xpEarned);
+    } else {
+      sound.playFail();
+      haptics.error();
     }
   };
 
   const handleUnlockHint = () => {
+    sound.playTap();
+    haptics.tap();
     if (hintsRevealed < 3) {
       setHintsRevealed((prev) => prev + 1);
     }
@@ -178,55 +194,70 @@ export const LevelShell: React.FC<LevelShellProps> = ({
         backgroundColor: 'var(--color-bg-primary)',
       }}
     >
-      {/* Top Navigation & 3-Step Progress Bar */}
+      {/* Top Navigation & 3-Step Progress Bar with Frosted Glass */}
       <header
         style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '8px',
-          padding: '12px 16px 8px 16px',
-          backgroundColor: 'var(--color-bg-secondary)',
-          borderBottom: '1px solid var(--color-bg-tertiary)',
+          gap: '10px',
+          padding: '14px 16px 10px 16px',
+          background: 'var(--glass-bg-primary)',
+          backdropFilter: 'var(--glass-blur)',
+          WebkitBackdropFilter: 'var(--glass-blur)',
+          borderBottom: '1px solid var(--glass-border-yellow)',
+          position: 'sticky',
+          top: 0,
+          zIndex: 40,
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           {/* Back Button */}
           <button
-            onClick={onExit}
+            onClick={() => {
+              sound.playTap();
+              haptics.tap();
+              onExit();
+            }}
             style={{
-              background: 'none',
-              border: 'none',
-              color: '#94a3b8',
-              fontSize: '1.2rem',
+              background: 'rgba(255, 255, 255, 0.06)',
+              border: '1px solid var(--glass-border)',
+              borderRadius: '10px',
+              color: '#FEF08A',
+              fontSize: '1.1rem',
               fontWeight: 900,
               cursor: 'pointer',
-              padding: '4px',
-              minHeight: 'auto',
-              minWidth: 'auto',
+              padding: '4px 10px',
+              minHeight: '36px',
+              minWidth: '36px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'transform 0.1s ease',
             }}
             aria-label="Back to path"
           >
             ←
           </button>
 
-          <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#e2e8f0' }}>
-            Level {level.id}: {level.title}
+          <span style={{ fontSize: '0.9rem', fontWeight: 900, color: '#F8FAFC', letterSpacing: '0.01em' }}>
+            Level {level.id}: <span style={{ color: '#FACC15' }}>{level.title}</span>
           </span>
 
           {/* Hint Button */}
           <button
             onClick={handleUnlockHint}
             style={{
-              background: hintsRevealed > 0 ? 'var(--color-2-dark)' : 'var(--color-bg-tertiary)',
-              border: hintsRevealed > 0 ? '1px solid var(--color-2)' : '1px solid var(--color-bg-tertiary)',
-              color: '#ffffff',
+              background: hintsRevealed > 0 ? 'rgba(245, 158, 11, 0.2)' : 'rgba(255, 255, 255, 0.06)',
+              border: hintsRevealed > 0 ? '1px solid #F59E0B' : '1px solid var(--glass-border)',
+              color: hintsRevealed > 0 ? '#FEF08A' : '#e2e8f0',
               fontSize: '0.8rem',
               fontWeight: 800,
               cursor: 'pointer',
-              padding: '4px 10px',
+              padding: '6px 12px',
               borderRadius: '12px',
-              minHeight: 'auto',
-              minWidth: 'auto',
+              minHeight: '36px',
+              boxShadow: hintsRevealed > 0 ? '0 0 10px rgba(245, 158, 11, 0.3)' : 'none',
+              transition: 'transform 0.1s ease',
             }}
           >
             💡 Hint ({hintsRevealed}/3)
@@ -234,7 +265,7 @@ export const LevelShell: React.FC<LevelShellProps> = ({
         </div>
 
         {/* 3-Segment Step Progress Bar */}
-        <div style={{ display: 'flex', gap: '6px', width: '100%' }}>
+        <div style={{ display: 'flex', gap: '8px', width: '100%' }}>
           {[1, 2, 3].map((s) => {
             const isCompleted = step > s;
             const isCurrent = step === s;
@@ -248,9 +279,10 @@ export const LevelShell: React.FC<LevelShellProps> = ({
                   backgroundColor: isCompleted
                     ? 'var(--color-success)'
                     : isCurrent
-                    ? 'var(--color-2)'
-                    : 'var(--color-bg-tertiary)',
-                  transition: 'background-color 0.3s ease',
+                    ? '#FACC15'
+                    : 'rgba(255, 255, 255, 0.1)',
+                  boxShadow: isCurrent ? '0 0 8px rgba(250, 204, 21, 0.8)' : 'none',
+                  transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
                 }}
               />
             );
@@ -273,14 +305,22 @@ export const LevelShell: React.FC<LevelShellProps> = ({
             cards={level.learn}
             levelTitle={level.title}
             concept={level.concept}
-            onComplete={() => setStep(2)}
+            onComplete={() => {
+              sound.playTap();
+              haptics.tap();
+              setStep(2);
+            }}
           />
         )}
 
         {step === 2 && (
           <GuidedTryStep
             level={level}
-            onComplete={() => setStep(3)}
+            onComplete={() => {
+              sound.playTap();
+              haptics.tap();
+              setStep(3);
+            }}
           />
         )}
 

@@ -1,4 +1,6 @@
 import React from 'react';
+import { sound } from '../../utils/sound';
+import { haptics } from '../../utils/haptics';
 
 export type NodeStatus = 'locked' | 'current' | 'completed';
 
@@ -21,21 +23,28 @@ export const LevelNode: React.FC<LevelNodeProps> = ({
   const isCurrent = status === 'current';
   const isCompleted = status === 'completed';
 
-  let bgColor = '#17242a';
-  let shadowColor = '#0d161a';
-  let textColor = '#64748b';
-  let borderColor = '#23353e';
+  const handleClick = () => {
+    if (isLocked) return;
+    sound.playTap();
+    haptics.tap();
+    onClick(id);
+  };
+
+  let bg = 'rgba(15, 23, 42, 0.65)';
+  let border = '1px solid rgba(255, 255, 255, 0.07)';
+  let shadow = '0 6px 0 #05080E, 0 8px 16px rgba(0, 0, 0, 0.4)';
+  let textColor = '#64748B';
 
   if (isCurrent) {
-    bgColor = 'var(--color-2)';
-    shadowColor = 'var(--color-2-dark)';
-    textColor = '#ffffff';
-    borderColor = 'var(--color-2-light)';
+    bg = 'linear-gradient(135deg, #FEF08A 0%, #FACC15 50%, #EAB308 100%)';
+    border = '2.5px solid #FFFFFF';
+    shadow = '0 6px 0 #A16207, 0 16px 32px rgba(250, 204, 21, 0.45)';
+    textColor = '#05080E';
   } else if (isCompleted) {
-    bgColor = 'var(--color-3)';
-    shadowColor = 'var(--color-3-dark)';
-    textColor = '#0d161a';
-    borderColor = 'var(--color-3-light)';
+    bg = 'linear-gradient(135deg, rgba(250, 204, 21, 0.16), rgba(245, 158, 11, 0.06))';
+    border = '2px solid rgba(250, 204, 21, 0.75)';
+    shadow = '0 6px 0 rgba(161, 98, 7, 0.5), 0 8px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15)';
+    textColor = '#FEF08A';
   }
 
   return (
@@ -46,28 +55,36 @@ export const LevelNode: React.FC<LevelNodeProps> = ({
         alignItems: 'center',
         transform: `translateX(${offsetPercent}px)`,
         margin: '14px 0',
-        transition: 'transform 0.2s ease',
+        transition: 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
       }}
     >
       {/* Stars earned for completed node */}
       {isCompleted && (
-        <div style={{ fontSize: '0.85rem', marginBottom: '4px', letterSpacing: '2px' }}>
+        <div
+          style={{
+            fontSize: '0.88rem',
+            marginBottom: '4px',
+            letterSpacing: '2px',
+            filter: 'drop-shadow(0 0 6px rgba(250, 204, 21, 0.6))',
+          }}
+        >
           {'⭐'.repeat(Math.max(1, stars))}
         </div>
       )}
 
-      {/* Pulsing indicator tag for active level */}
+      {/* Pulsing START badge for active level */}
       {isCurrent && (
         <div
           style={{
-            backgroundColor: 'var(--color-2)',
-            color: '#ffffff',
+            background: 'linear-gradient(90deg, #F59E0B, #FACC15)',
+            color: '#05080E',
             fontSize: '0.72rem',
             fontWeight: 900,
-            padding: '2px 8px',
+            padding: '3px 10px',
             borderRadius: '10px',
             marginBottom: '4px',
-            boxShadow: '0 2px 8px rgba(187, 101, 170, 0.5)',
+            boxShadow: '0 0 14px rgba(250, 204, 21, 0.8)',
+            letterSpacing: '0.06em',
           }}
         >
           START
@@ -77,30 +94,32 @@ export const LevelNode: React.FC<LevelNodeProps> = ({
       {/* Circular Node Button */}
       <button
         disabled={isLocked}
-        onClick={() => onClick(id)}
+        onClick={handleClick}
         style={{
-          width: '68px',
-          height: '68px',
+          width: '70px',
+          height: '70px',
           borderRadius: '50%',
-          backgroundColor: bgColor,
-          boxShadow: `0 6px 0 ${shadowColor}`,
-          border: `3px solid ${borderColor}`,
+          background: bg,
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          boxShadow: shadow,
+          border: border,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '1.4rem',
+          fontSize: '1.45rem',
           fontWeight: 900,
           color: textColor,
           cursor: isLocked ? 'not-allowed' : 'pointer',
           userSelect: 'none',
           position: 'relative',
-          transition: 'transform 0.08s ease, filter 0.15s ease',
+          transition: 'transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.15s ease',
           outline: 'none',
         }}
         aria-label={`Level ${id} (${status})`}
       >
         {isLocked ? (
-          <span style={{ fontSize: '1.2rem', opacity: 0.6 }}>🔒</span>
+          <span style={{ fontSize: '1.2rem', opacity: 0.5 }}>🔒</span>
         ) : (
           <span>{id}</span>
         )}

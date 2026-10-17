@@ -17,6 +17,8 @@ import { generateDailyChallenge } from './engine/progress/dailyChallenge';
 import { CloudSyncModal } from './components/profile/CloudSyncModal';
 import { getCurrentSession, subscribeToAuthChanges, AuthUserSummary } from './engine/supabase/auth';
 import { fetchRemoteProgress, uploadRemoteProgress, mergeProgress } from './engine/supabase/progressSync';
+import { sound } from './utils/sound';
+import { haptics } from './utils/haptics';
 
 export default function App() {
   const allLevels = useMemo(() => getAllLoadedLevels(), []);
@@ -262,77 +264,65 @@ export default function App() {
             )}
           </main>
 
-          {/* Bottom Tab Bar */}
+          {/* Floating Luxury Glass Dock */}
           <nav
             style={{
               position: 'fixed',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              maxWidth: '480px',
+              bottom: '14px',
+              left: '16px',
+              right: '16px',
+              maxWidth: '440px',
               margin: '0 auto',
               display: 'flex',
               justifyContent: 'space-around',
-              padding: '10px 0',
-              backgroundColor: 'var(--color-bg-secondary)',
-              borderTop: '2px solid var(--color-bg-tertiary)',
-              zIndex: 10,
+              alignItems: 'center',
+              padding: '6px 8px',
+              background: 'var(--glass-bg-primary)',
+              backdropFilter: 'var(--glass-blur)',
+              WebkitBackdropFilter: 'var(--glass-blur)',
+              border: '1px solid var(--glass-border-yellow)',
+              borderRadius: '26px',
+              boxShadow: '0 16px 36px rgba(0, 0, 0, 0.7), 0 0 24px rgba(250, 204, 21, 0.1)',
+              zIndex: 30,
             }}
           >
-            <button
-              onClick={() => setActiveTab('path')}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: activeTab === 'path' ? 'var(--color-1)' : 'var(--color-text-secondary)',
-                fontWeight: 800,
-                fontSize: '0.92rem',
-                cursor: 'pointer',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '2px',
-              }}
-            >
-              <span>🗺️</span>
-              <span>Path</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('quests')}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: activeTab === 'quests' ? 'var(--color-1)' : 'var(--color-text-secondary)',
-                fontWeight: 800,
-                fontSize: '0.92rem',
-                cursor: 'pointer',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '2px',
-              }}
-            >
-              <span>🎯</span>
-              <span>Quests</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('profile')}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: activeTab === 'profile' ? 'var(--color-1)' : 'var(--color-text-secondary)',
-                fontWeight: 800,
-                fontSize: '0.92rem',
-                cursor: 'pointer',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '2px',
-              }}
-            >
-              <span>👤</span>
-              <span>Profile</span>
-            </button>
+            {[
+              { id: 'path', label: 'Path', icon: '🗺️' },
+              { id: 'quests', label: 'Quests', icon: '🎯' },
+              { id: 'profile', label: 'Profile', icon: '👤' },
+            ].map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => {
+                    sound.playTap();
+                    haptics.tap();
+                    setActiveTab(tab.id as any);
+                  }}
+                  style={{
+                    background: isActive ? 'rgba(250, 204, 21, 0.14)' : 'transparent',
+                    border: isActive ? '1px solid rgba(250, 204, 21, 0.4)' : '1px solid transparent',
+                    borderRadius: '20px',
+                    color: isActive ? '#FEF08A' : '#94A3B8',
+                    fontWeight: 900,
+                    fontSize: '0.88rem',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '8px 24px',
+                    gap: '2px',
+                    boxShadow: isActive ? '0 0 16px rgba(250, 204, 21, 0.25)' : 'none',
+                    transition: 'all 0.15s cubic-bezier(0.16, 1, 0.3, 1)',
+                  }}
+                >
+                  <span style={{ fontSize: '1.25rem' }}>{tab.icon}</span>
+                  <span style={{ fontSize: '0.78rem', letterSpacing: '0.02em' }}>{tab.label}</span>
+                </button>
+              );
+            })}
           </nav>
 
           {/* Supabase Cloud Sync Modal */}

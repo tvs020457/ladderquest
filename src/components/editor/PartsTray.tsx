@@ -1,5 +1,7 @@
 import React from 'react';
 import { InstructionType } from '../../engine/types';
+import { sound } from '../../utils/sound';
+import { haptics } from '../../utils/haptics';
 
 interface PartsTrayProps {
   allowedElements: InstructionType[];
@@ -28,34 +30,42 @@ export const PartsTray: React.FC<PartsTrayProps> = ({
     RES: { symbol: '—(R)—', name: 'Reset Block', standard: 'IEC 61131-3' },
   };
 
+  const handleSelect = (elem: InstructionType) => {
+    sound.playTap();
+    haptics.tap();
+    onSelectElement(selectedElement === elem ? null : elem);
+  };
+
   return (
     <div
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '8px',
+        gap: '10px',
         width: '100%',
         maxWidth: '480px',
-        backgroundColor: 'var(--color-bg-secondary)',
-        borderRadius: '16px',
-        padding: '12px 10px',
-        border: '1px solid var(--color-bg-tertiary)',
-        boxShadow: '0 -4px 16px rgba(0, 0, 0, 0.4)',
+        background: 'var(--glass-bg-primary)',
+        backdropFilter: 'var(--glass-blur)',
+        WebkitBackdropFilter: 'var(--glass-blur)',
+        borderRadius: '20px',
+        padding: '14px 12px',
+        border: '1px solid var(--glass-border-yellow)',
+        boxShadow: '0 -8px 24px rgba(0, 0, 0, 0.5), 0 0 16px rgba(250, 204, 21, 0.08)',
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '0.8rem', fontWeight: 900, color: '#FEF08A', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
             Parts Tray
           </span>
           <span
             style={{
               fontSize: '0.62rem',
               fontWeight: 800,
-              backgroundColor: 'rgba(101, 170, 187, 0.15)',
-              color: 'var(--color-1)',
-              border: '1px solid var(--color-1)',
-              padding: '1px 6px',
+              backgroundColor: 'rgba(250, 204, 21, 0.12)',
+              color: '#FACC15',
+              border: '1px solid rgba(250, 204, 21, 0.4)',
+              padding: '2px 6px',
               borderRadius: '6px',
             }}
           >
@@ -64,11 +74,15 @@ export const PartsTray: React.FC<PartsTrayProps> = ({
         </div>
         {selectedElement && (
           <button
-            onClick={() => onSelectElement(null)}
+            onClick={() => {
+              sound.playTap();
+              haptics.tap();
+              onSelectElement(null);
+            }}
             style={{
               background: 'none',
               border: 'none',
-              color: 'var(--color-2)',
+              color: '#F59E0B',
               fontSize: '0.78rem',
               fontWeight: 800,
               cursor: 'pointer',
@@ -99,29 +113,33 @@ export const PartsTray: React.FC<PartsTrayProps> = ({
           return (
             <button
               key={elem}
-              onClick={() => onSelectElement(isSelected ? null : elem)}
+              onClick={() => handleSelect(elem)}
               style={{
-                minWidth: '76px',
-                minHeight: '52px',
-                borderRadius: '12px',
-                backgroundColor: isSelected ? 'var(--color-2)' : '#0d161a',
-                color: isSelected ? '#ffffff' : '#f8fafc',
-                border: isSelected ? '2px solid var(--color-2-light)' : '1px solid #23353e',
+                minWidth: '78px',
+                minHeight: '54px',
+                borderRadius: '14px',
+                background: isSelected
+                  ? 'linear-gradient(135deg, #FEF08A, #FACC15, #EAB308)'
+                  : 'rgba(15, 23, 42, 0.75)',
+                color: isSelected ? '#05080E' : '#f8fafc',
+                border: isSelected ? '2px solid #FFFFFF' : '1px solid var(--glass-border)',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
                 cursor: 'pointer',
                 flexShrink: 0,
-                boxShadow: isSelected ? '0 3px 0 var(--color-2-dark)' : '0 3px 0 #091013',
-                transition: 'transform 0.08s ease, background-color 0.1s ease',
+                boxShadow: isSelected
+                  ? '0 0 16px rgba(250, 204, 21, 0.6), 0 4px 0 #A16207'
+                  : '0 4px 0 rgba(0, 0, 0, 0.4)',
+                transition: 'transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.15s ease',
               }}
               aria-label={`Select ${info.name}`}
             >
-              <span style={{ fontSize: '0.9rem', fontWeight: 900, fontFamily: 'monospace' }}>
+              <span style={{ fontSize: '0.92rem', fontWeight: 900, fontFamily: 'monospace' }}>
                 {info.symbol}
               </span>
-              <span style={{ fontSize: '0.68rem', fontWeight: 700, opacity: 0.9, marginTop: '2px' }}>
+              <span style={{ fontSize: '0.68rem', fontWeight: 800, opacity: isSelected ? 1 : 0.8, marginTop: '2px' }}>
                 {elem}
               </span>
             </button>
@@ -131,14 +149,18 @@ export const PartsTray: React.FC<PartsTrayProps> = ({
         {/* Structural Actions: Add Branch / Add Rung */}
         {onAddBranch && (
           <button
-            onClick={onAddBranch}
+            onClick={() => {
+              sound.playWireConnect();
+              haptics.snap();
+              onAddBranch();
+            }}
             style={{
-              minWidth: '68px',
-              minHeight: '52px',
-              borderRadius: '12px',
-              backgroundColor: 'var(--color-bg-canvas)',
-              color: 'var(--color-1)',
-              border: '1px dashed var(--color-1)',
+              minWidth: '72px',
+              minHeight: '54px',
+              borderRadius: '14px',
+              backgroundColor: 'rgba(250, 204, 21, 0.08)',
+              color: '#FEF08A',
+              border: '1.5px dashed rgba(250, 204, 21, 0.5)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -147,21 +169,25 @@ export const PartsTray: React.FC<PartsTrayProps> = ({
               flexShrink: 0,
             }}
           >
-            <span style={{ fontSize: '1rem', fontWeight: 900 }}>⤹</span>
-            <span style={{ fontSize: '0.68rem', fontWeight: 700 }}>+ Branch</span>
+            <span style={{ fontSize: '1.1rem', fontWeight: 900 }}>⤹</span>
+            <span style={{ fontSize: '0.68rem', fontWeight: 800 }}>+ Branch</span>
           </button>
         )}
 
         {onAddRung && (
           <button
-            onClick={onAddRung}
+            onClick={() => {
+              sound.playWireConnect();
+              haptics.snap();
+              onAddRung();
+            }}
             style={{
-              minWidth: '68px',
-              minHeight: '52px',
-              borderRadius: '12px',
-              backgroundColor: 'var(--color-bg-canvas)',
-              color: 'var(--color-1)',
-              border: '1px dashed var(--color-1)',
+              minWidth: '72px',
+              minHeight: '54px',
+              borderRadius: '14px',
+              backgroundColor: 'rgba(250, 204, 21, 0.08)',
+              color: '#FEF08A',
+              border: '1.5px dashed rgba(250, 204, 21, 0.5)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -170,8 +196,8 @@ export const PartsTray: React.FC<PartsTrayProps> = ({
               flexShrink: 0,
             }}
           >
-            <span style={{ fontSize: '1rem', fontWeight: 900 }}>+</span>
-            <span style={{ fontSize: '0.68rem', fontWeight: 700 }}>+ Rung</span>
+            <span style={{ fontSize: '1.1rem', fontWeight: 900 }}>+</span>
+            <span style={{ fontSize: '0.68rem', fontWeight: 800 }}>+ Rung</span>
           </button>
         )}
       </div>

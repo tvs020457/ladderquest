@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { PlacedPart, WireDef } from '../../levels/types';
 import { LOAD_TYPES, getPartTerminals } from '../../engine/connectionChecker';
+import { sound } from '../../utils/sound';
+import { haptics } from '../../utils/haptics';
 
 export interface WiringCanvasProps {
   parts: PlacedPart[];
@@ -133,11 +135,15 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
   const handleTerminalTap = (termId: string) => {
     if (!selectedTerminal) {
       setSelectedTerminal(termId);
+      sound.playTap();
+      haptics.tap();
       return;
     }
 
     if (selectedTerminal === termId) {
       setSelectedTerminal(null);
+      sound.playTap();
+      haptics.tap();
       return;
     }
 
@@ -162,9 +168,20 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
         from,
         to,
       });
+      sound.playWireConnect();
+      haptics.snap();
+    } else {
+      sound.playTap();
+      haptics.tap();
     }
 
     setSelectedTerminal(null);
+  };
+
+  const handleWireClick = (wireId: string) => {
+    onRemoveWire(wireId);
+    sound.playWireDisconnect();
+    haptics.disconnect();
   };
 
   return (
@@ -174,8 +191,9 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
         width: '100%',
         maxWidth: '480px',
         backgroundColor: 'var(--color-bg-canvas)',
-        borderRadius: '16px',
-        border: '2px solid var(--color-bg-tertiary)',
+        borderRadius: '20px',
+        border: '1px solid var(--glass-border-yellow)',
+        boxShadow: '0 16px 36px rgba(0, 0, 0, 0.65), 0 0 24px rgba(250, 204, 21, 0.08)',
         overflow: 'hidden',
         touchAction: 'none',
         userSelect: 'none',
@@ -189,24 +207,25 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
       >
         {/* Background Grid Dots */}
         <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-          <circle cx="2" cy="2" r="1" fill="#17242a" />
+          <circle cx="2" cy="2" r="1" fill="#1e293b" />
         </pattern>
         <rect width="360" height={canvasHeight} fill="url(#grid)" />
 
-        {/* Left Power Rail (L) */}
+        {/* Left Power Rail (L: 24V DC / Hot) */}
         <line
           x1={railLX}
           y1={20}
           x2={railLX}
           y2={canvasHeight - 20}
-          stroke="#65AABB"
+          stroke="#FACC15"
           strokeWidth="4"
           strokeLinecap="round"
+          style={{ filter: 'drop-shadow(0 0 6px rgba(250, 204, 21, 0.6))' }}
         />
         <text
           x={railLX}
           y={15}
-          fill="#65AABB"
+          fill="#FEF08A"
           fontSize="11"
           fontWeight="900"
           textAnchor="middle"
@@ -214,7 +233,7 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
           L (24V)
         </text>
 
-        {/* Right Neutral Rail (R) */}
+        {/* Right Neutral Rail (R: 0V) */}
         <line
           x1={railRX}
           y1={20}
@@ -227,7 +246,7 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
         <text
           x={railRX}
           y={15}
-          fill="#64748b"
+          fill="#94a3b8"
           fontSize="11"
           fontWeight="900"
           textAnchor="middle"
@@ -250,9 +269,12 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
                 cx={lCoord.x}
                 cy={lCoord.y}
                 r="6"
-                fill={isLSelected ? '#BB65AA' : '#65AABB'}
-                stroke="#0d161a"
+                fill={isLSelected ? '#FACC15' : '#EAB308'}
+                stroke="#080C14"
                 strokeWidth="2"
+                style={{
+                  filter: isLSelected ? 'drop-shadow(0 0 8px #FACC15)' : 'none',
+                }}
               />
               {/* Minimum 44x44px touch hit target */}
               <circle
@@ -269,9 +291,12 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
                 cx={rCoord.x}
                 cy={rCoord.y}
                 r="6"
-                fill={isRSelected ? '#BB65AA' : '#94a3b8'}
-                stroke="#0d161a"
+                fill={isRSelected ? '#FACC15' : '#64748b'}
+                stroke="#080C14"
                 strokeWidth="2"
+                style={{
+                  filter: isRSelected ? 'drop-shadow(0 0 8px #FACC15)' : 'none',
+                }}
               />
               <circle
                 cx={rCoord.x}
@@ -297,10 +322,10 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
                 y1={p1.y}
                 x2={p2.x}
                 y2={p2.y}
-                stroke="#65AABB"
+                stroke="#FACC15"
                 strokeWidth="2"
                 strokeDasharray="4 4"
-                strokeOpacity="0.4"
+                strokeOpacity="0.35"
               />
             );
           })}
@@ -327,10 +352,13 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
               <text
                 x={centerX}
                 y={centerY - 18}
-                fill={conducts ? '#BB65AA' : '#94a3b8'}
+                fill={conducts ? '#FEF08A' : '#94a3b8'}
                 fontSize="11"
                 fontWeight="800"
                 textAnchor="middle"
+                style={{
+                  filter: conducts ? 'drop-shadow(0 0 4px rgba(250, 204, 21, 0.6))' : 'none',
+                }}
               >
                 {part.tag}
               </text>
@@ -345,7 +373,7 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
                     y1={centerY}
                     x2={centerX - 8}
                     y2={centerY}
-                    stroke={poweredTerminals.has(inTerm) ? '#AABB65' : '#64748b'}
+                    stroke={poweredTerminals.has(inTerm) ? '#FACC15' : '#64748b'}
                     strokeWidth="2.5"
                   />
                   <line
@@ -353,30 +381,36 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
                     y1={centerY}
                     x2={pOut.x}
                     y2={centerY}
-                    stroke={poweredTerminals.has(inTerm) ? '#AABB65' : '#64748b'}
+                    stroke={poweredTerminals.has(inTerm) ? '#FACC15' : '#64748b'}
                     strokeWidth="2.5"
                   />
                   {/* Left parenthesis arc */}
                   <path
                     d={`M ${centerX - 5} ${centerY - 13} A 14 14 0 0 0 ${centerX - 5} ${centerY + 13}`}
                     fill="none"
-                    stroke={poweredTerminals.has(inTerm) ? '#AABB65' : '#64748b'}
+                    stroke={poweredTerminals.has(inTerm) ? '#FACC15' : '#64748b'}
                     strokeWidth="3.5"
                     strokeLinecap="round"
+                    style={{
+                      filter: poweredTerminals.has(inTerm) ? 'drop-shadow(0 0 6px #FACC15)' : 'none',
+                    }}
                   />
                   {/* Right parenthesis arc */}
                   <path
                     d={`M ${centerX + 5} ${centerY - 13} A 14 14 0 0 1 ${centerX + 5} ${centerY + 13}`}
                     fill="none"
-                    stroke={poweredTerminals.has(inTerm) ? '#AABB65' : '#64748b'}
+                    stroke={poweredTerminals.has(inTerm) ? '#FACC15' : '#64748b'}
                     strokeWidth="3.5"
                     strokeLinecap="round"
+                    style={{
+                      filter: poweredTerminals.has(inTerm) ? 'drop-shadow(0 0 6px #FACC15)' : 'none',
+                    }}
                   />
                   {/* Inner IEC modifier (e.g. S for Set/Latch, R for Reset/Unlatch, M for Motor) */}
                   <text
                     x={centerX}
                     y={centerY + 3.5}
-                    fill={poweredTerminals.has(inTerm) ? '#AABB65' : '#94a3b8'}
+                    fill={poweredTerminals.has(inTerm) ? '#FEF08A' : '#94a3b8'}
                     fontSize="9.5"
                     fontWeight="900"
                     fontFamily="monospace"
@@ -395,15 +429,35 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
                 // Contact Symbol: | | (XIC) or |/| (XIO)
                 <g>
                   {/* Left lead */}
-                  <line x1={pIn.x} y1={centerY} x2={centerX - 8} y2={centerY} stroke={conducts ? '#BB65AA' : '#64748b'} strokeWidth="2.5" />
+                  <line x1={pIn.x} y1={centerY} x2={centerX - 8} y2={centerY} stroke={conducts ? '#FACC15' : '#64748b'} strokeWidth="2.5" />
                   {/* Right lead */}
-                  <line x1={centerX + 8} y1={centerY} x2={pOut.x} y2={centerY} stroke={conducts ? '#BB65AA' : '#64748b'} strokeWidth="2.5" />
+                  <line x1={centerX + 8} y1={centerY} x2={pOut.x} y2={centerY} stroke={conducts ? '#FACC15' : '#64748b'} strokeWidth="2.5" />
                   {/* Contact plates */}
-                  <line x1={centerX - 8} y1={centerY - 12} x2={centerX - 8} y2={centerY + 12} stroke={conducts ? '#BB65AA' : '#94a3b8'} strokeWidth="3" />
-                  <line x1={centerX + 8} y1={centerY - 12} x2={centerX + 8} y2={centerY + 12} stroke={conducts ? '#BB65AA' : '#94a3b8'} strokeWidth="3" />
+                  <line
+                    x1={centerX - 8}
+                    y1={centerY - 12}
+                    x2={centerX - 8}
+                    y2={centerY + 12}
+                    stroke={conducts ? '#FACC15' : '#94a3b8'}
+                    strokeWidth="3"
+                    style={{
+                      filter: conducts ? 'drop-shadow(0 0 4px rgba(250, 204, 21, 0.7))' : 'none',
+                    }}
+                  />
+                  <line
+                    x1={centerX + 8}
+                    y1={centerY - 12}
+                    x2={centerX + 8}
+                    y2={centerY + 12}
+                    stroke={conducts ? '#FACC15' : '#94a3b8'}
+                    strokeWidth="3"
+                    style={{
+                      filter: conducts ? 'drop-shadow(0 0 4px rgba(250, 204, 21, 0.7))' : 'none',
+                    }}
+                  />
                   {/* Diagonal slash for XIO */}
                   {part.type === 'XIO' && (
-                    <line x1={centerX - 10} y1={centerY + 14} x2={centerX + 10} y2={centerY - 14} stroke={conducts ? '#BB65AA' : '#ef4444'} strokeWidth="2.5" />
+                    <line x1={centerX - 10} y1={centerY + 14} x2={centerX + 10} y2={centerY - 14} stroke={conducts ? '#FACC15' : '#ef4444'} strokeWidth="2.5" />
                   )}
                 </g>
               )}
@@ -427,7 +481,7 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
                         cy={coord.y}
                         r="6"
                         fill="none"
-                        stroke="#BB65AA"
+                        stroke="#FACC15"
                         strokeWidth="2"
                         style={{
                           animation: 'pulseTerminal 1.4s ease-in-out infinite',
@@ -442,15 +496,18 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
                       r={isSelected ? '6.5' : '4.5'}
                       fill={
                         isSelected
-                          ? '#BB65AA'
+                          ? '#FACC15'
                           : isPowered
-                          ? '#BB65AA'
+                          ? '#FACC15'
                           : isUnconnected
                           ? '#ef4444'
-                          : '#65AABB'
+                          : '#38BDF8'
                       }
-                      stroke="#0d161a"
+                      stroke="#080C14"
                       strokeWidth="2"
+                      style={{
+                        filter: isSelected || isPowered ? 'drop-shadow(0 0 6px #FACC15)' : 'none',
+                      }}
                     />
 
                     {/* Touch Target (Minimum 44x44px) */}
@@ -492,12 +549,12 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
               <path
                 d={pathD}
                 fill="none"
-                stroke={isPowered ? '#BB65AA' : '#64748b'}
+                stroke={isPowered ? '#FACC15' : '#64748b'}
                 strokeWidth={isPowered ? '3.5' : '2.5'}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 style={{
-                  filter: isPowered ? 'drop-shadow(0 0 6px #BB65AA)' : 'none',
+                  filter: isPowered ? 'drop-shadow(0 0 8px rgba(250, 204, 21, 0.85))' : 'none',
                   transition: 'stroke 0.15s ease',
                 }}
               />
@@ -509,7 +566,7 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
                 stroke="transparent"
                 strokeWidth="44"
                 style={{ cursor: 'pointer' }}
-                onClick={() => onRemoveWire(wire.id)}
+                onClick={() => handleWireClick(wire.id)}
               />
             </g>
           );
@@ -526,9 +583,12 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
                 cx={coord.x}
                 cy={coord.y}
                 r="5"
-                fill={isPowered ? '#BB65AA' : '#65AABB'}
-                stroke="#0d161a"
+                fill={isPowered ? '#FACC15' : '#38BDF8'}
+                stroke="#080C14"
                 strokeWidth="1.5"
+                style={{
+                  filter: isPowered ? 'drop-shadow(0 0 6px #FACC15)' : 'none',
+                }}
               />
             );
           }

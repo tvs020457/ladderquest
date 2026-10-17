@@ -12,6 +12,11 @@ html, body {
   height: 100%;
   overflow-x: hidden;
   background-color: var(--color-bg-primary);
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(250, 204, 21, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 10% 30%, rgba(56, 189, 248, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 90% 70%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
+  background-attachment: fixed;
   color: var(--color-text-primary);
   font-family: var(--font-family);
   font-size: 16px;
@@ -35,70 +40,127 @@ button, a, input, select, [role="button"] {
   touch-action: manipulation;
 }
 
-/* 3D Pressable Button Styles */
+/* ==========================================================================
+   GLASSMORPHISM UTILITIES
+   ========================================================================== */
+
+.glass-card {
+  background: var(--glass-bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 20px;
+  transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-yellow {
+  background: rgba(22, 28, 44, 0.75);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border-yellow);
+  box-shadow: var(--glass-shadow-glow);
+  border-radius: 20px;
+}
+
+.glass-panel {
+  background: var(--glass-bg-primary);
+  backdrop-filter: var(--glass-blur-heavy);
+  -webkit-backdrop-filter: var(--glass-blur-heavy);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 24px;
+}
+
+/* ==========================================================================
+   BUTTERY SMOOTH 3D PRESSABLE BUTTONS
+   ========================================================================== */
+
 .pressable-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 20px;
+  padding: 12px 22px;
   border-radius: var(--btn-border-radius);
   font-weight: 800;
   border: none;
   cursor: pointer;
   position: relative;
-  transition: transform 0.08s ease, filter 0.08s ease;
+  transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              box-shadow 0.12s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              filter 0.12s ease;
   user-select: none;
+  letter-spacing: 0.02em;
+}
+
+.pressable-btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
 }
 
 .pressable-btn:active {
-  transform: translateY(3px);
+  transform: translateY(3px) scale(0.985);
 }
 
+/* Primary Electric Yellow Button */
 .pressable-btn-primary {
-  background-color: var(--color-1);
-  color: #0d161a;
-  box-shadow: 0 4px 0 var(--color-1-dark);
+  background: linear-gradient(180deg, #FDE047 0%, #EAB308 100%);
+  color: #0F172A;
+  box-shadow: 0 4px 0 var(--color-1-dark), 0 8px 24px rgba(234, 179, 8, 0.35);
+  font-weight: 900;
 }
 .pressable-btn-primary:active {
-  box-shadow: 0 1px 0 var(--color-1-dark);
+  box-shadow: 0 1px 0 var(--color-1-dark), 0 2px 8px rgba(234, 179, 8, 0.2);
 }
 
+/* Success Emerald Button */
 .pressable-btn-success {
-  background-color: var(--color-3);
-  color: #0d161a;
-  box-shadow: 0 4px 0 var(--color-3-dark);
+  background: linear-gradient(180deg, #34D399 0%, #059669 100%);
+  color: #022C22;
+  box-shadow: 0 4px 0 var(--color-3-dark), 0 8px 20px rgba(16, 185, 129, 0.3);
+  font-weight: 900;
 }
 .pressable-btn-success:active {
   box-shadow: 0 1px 0 var(--color-3-dark);
 }
 
+/* Danger Button */
 .pressable-btn-danger {
-  background-color: var(--color-error);
-  color: #ffffff;
-  box-shadow: 0 4px 0 var(--color-error-dark);
+  background: linear-gradient(180deg, #F87171 0%, #DC2626 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 0 var(--color-error-dark), 0 8px 20px rgba(239, 68, 68, 0.3);
 }
 .pressable-btn-danger:active {
   box-shadow: 0 1px 0 var(--color-error-dark);
 }
 
+/* Secondary Glassmorphic Button */
 .pressable-btn-secondary {
-  background-color: var(--color-bg-secondary);
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   color: var(--color-text-primary);
-  box-shadow: 0 4px 0 #091013;
-  border: 1.5px solid var(--color-1);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border-light);
+}
+.pressable-btn-secondary:hover {
+  border-color: var(--glass-border-yellow);
 }
 .pressable-btn-secondary:active {
-  box-shadow: 0 1px 0 #091013;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
 }
 
-/* Animations for Wiring Canvas & Machines */
+/* ==========================================================================
+   ANIMATIONS & NEON WIRE GLOWS
+   ========================================================================== */
+
 @keyframes pulseTerminal {
   0% {
     r: 6;
     stroke-opacity: 0.9;
   }
   50% {
-    r: 10;
+    r: 9;
     stroke-opacity: 0.3;
   }
   100% {
@@ -107,20 +169,42 @@ button, a, input, select, [role="button"] {
   }
 }
 
-@keyframes spinMotor {
-  from {
-    transform: rotate(0deg);
+@keyframes neonWirePulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.9)) drop-shadow(0 0 16px rgba(245, 158, 11, 0.5));
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    filter: drop-shadow(0 0 10px rgba(250, 204, 21, 1)) drop-shadow(0 0 24px rgba(245, 158, 11, 0.75));
   }
 }
 
-@keyframes slideUp {
+@keyframes modalAppear {
   from {
-    transform: translateY(100%);
+    opacity: 0;
+    transform: scale(0.94) translateY(12px);
   }
   to {
-    transform: translateY(0);
+    opacity: 1;
+    transform: scale(1) translateY(0);
   }
+}
+
+.modal-enter {
+  animation: modalAppear 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.4);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(250, 204, 21, 0.3);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(250, 204, 21, 0.6);
 }
