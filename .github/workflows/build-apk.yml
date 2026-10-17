@@ -30,9 +30,6 @@ jobs:
 
       - name: Build Web Assets
         run: npm run build
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL || 'https://nmuiebboriqkxkicpfuv.supabase.co' }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY || 'sb_dummy_key_for_ci' }}
 
       - name: Initialize & Sync Capacitor Android
         run: |

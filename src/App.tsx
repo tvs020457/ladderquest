@@ -14,9 +14,6 @@ import {
 import { recordActivity, getTodayString } from './engine/progress/streak';
 import { updateQuestsOnActivity } from './engine/progress/quests';
 import { generateDailyChallenge } from './engine/progress/dailyChallenge';
-import { CloudSyncModal } from './components/profile/CloudSyncModal';
-import { getCurrentSession, subscribeToAuthChanges, AuthUserSummary } from './engine/supabase/auth';
-import { fetchRemoteProgress, uploadRemoteProgress, mergeProgress } from './engine/supabase/progressSync';
 import { sound } from './utils/sound';
 import { haptics } from './utils/haptics';
 import { FrostedIcon, FrostedIconName } from './components/common/FrostedIcon';
@@ -25,66 +22,17 @@ export default function App() {
   const allLevels = useMemo(() => getAllLoadedLevels(), []);
   const today = useMemo(() => getTodayString(), []);
 
-  // Persistent user progress state
+  // Persistent user progress state (100% local storage)
   const [progress, setProgress] = useState<UserProgressV1>(() => loadUserProgress(today));
-
-  // Cloud sync & auth state
-  const [showCloudModal, setShowCloudModal] = useState(false);
-  const [cloudUser, setCloudUser] = useState<AuthUserSummary | null>(null);
 
   // Top-level Navigation & Active Screen
   const [activeTab, setActiveTab] = useState<'path' | 'quests' | 'profile'>('path');
   const [activeLevel, setActiveLevel] = useState<LevelDefinition | null>(null);
 
-  // Sync to localStorage on progress updates & debounced cloud upload
+  // Sync to localStorage on progress updates
   useEffect(() => {
     saveUserProgress(progress);
-    if (cloudUser) {
-      const timer = setTimeout(() => {
-        uploadRemoteProgress(cloudUser.id, progress);
-      }, 1200);
-      return () => clearTimeout(timer);
-    }
-  }, [progress, cloudUser]);
-
-  // Initial session restoration and listener for auth events
-  useEffect(() => {
-    let mounted = true;
-    getCurrentSession().then(async ({ user }) => {
-      if (mounted && user) {
-        setCloudUser(user);
-        const remote = await fetchRemoteProgress(user.id);
-        if (mounted && remote) {
-          setProgress((local) => {
-            const merged = mergeProgress(local, remote);
-            uploadRemoteProgress(user.id, merged);
-            return merged;
-          });
-        }
-      }
-    });
-
-    const unsubscribe = subscribeToAuthChanges(async (user) => {
-      setCloudUser(user);
-      if (user) {
-        const remote = await fetchRemoteProgress(user.id);
-        if (remote) {
-          setProgress((local) => {
-            const merged = mergeProgress(local, remote);
-            uploadRemoteProgress(user.id, merged);
-            return merged;
-          });
-        } else {
-          uploadRemoteProgress(user.id, progress);
-        }
-      }
-    });
-
-    return () => {
-      mounted = false;
-      unsubscribe();
-    };
-  }, []);
+  }, [progress]);
 
   // Determine current unlocked level
   const unlockedLevel = useMemo(() => {
@@ -231,8 +179,6 @@ export default function App() {
             questsDoneCount={completedQuestsCount}
             totalQuests={progress.quests.items.length}
             onProfileClick={() => setActiveTab('profile')}
-            onCloudClick={() => setShowCloudModal(true)}
-            isCloudConnected={Boolean(cloudUser)}
           />
 
           <main style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -334,14 +280,6 @@ export default function App() {
               );
             })}
           </nav>
-
-          {/* Supabase Cloud Sync Modal */}
-          <CloudSyncModal
-            isOpen={showCloudModal}
-            onClose={() => setShowCloudModal(false)}
-            localProgress={progress}
-            onSyncComplete={handleImportProgress}
-          />
         </div>
       )}
     </div>

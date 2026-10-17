@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { UserProgressV1 } from '../../engine/progress/types';
 import { StreakCalendar } from './StreakCalendar';
 import { ExportImportModal } from './ExportImportModal';
-import { CloudSyncModal } from './CloudSyncModal';
 import { Mascot } from '../common/Mascot';
 import { Button } from '../common/Button';
 import { sound } from '../../utils/sound';
@@ -23,7 +22,6 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
   onImportProgress,
 }) => {
   const [showBackupModal, setShowBackupModal] = useState(false);
-  const [showCloudSyncModal, setShowCloudSyncModal] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(() => !sound.isMuted());
   const [hapticsEnabled, setHapticsEnabled] = useState(() => haptics.isEnabled());
   const streak = progress.streak;
@@ -315,23 +313,9 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
         </label>
       </div>
 
-      {/* Cloud Sync Button */}
+      {/* Backup & Transfer Button (100% Local JSON) */}
       <Button
         variant="primary"
-        size="md"
-        fullWidth
-        onClick={() => {
-          sound.playTap();
-          haptics.tap();
-          setShowCloudSyncModal(true);
-        }}
-      >
-        ☁️ Supabase Cloud Sync
-      </Button>
-
-      {/* Backup & Transfer Button */}
-      <Button
-        variant="secondary"
         size="md"
         fullWidth
         onClick={() => {
@@ -340,16 +324,8 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
           setShowBackupModal(true);
         }}
       >
-        💾 Backup & Transfer Progress
+        💾 Backup & Transfer Progress (Local JSON)
       </Button>
-
-      {/* Cloud Sync Modal */}
-      <CloudSyncModal
-        isOpen={showCloudSyncModal}
-        onClose={() => setShowCloudSyncModal(false)}
-        localProgress={progress}
-        onSyncComplete={onImportProgress}
-      />
 
       {/* Backup Modal */}
       <ExportImportModal

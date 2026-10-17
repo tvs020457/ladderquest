@@ -9,8 +9,6 @@ interface HeaderProps {
   questsDoneCount: number;
   totalQuests?: number;
   onProfileClick?: () => void;
-  onCloudClick?: () => void;
-  isCloudConnected?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -19,8 +17,6 @@ export const Header: React.FC<HeaderProps> = ({
   questsDoneCount,
   totalQuests = 3,
   onProfileClick,
-  onCloudClick,
-  isCloudConnected = false,
 }) => {
   const [muted, setMuted] = useState(() => sound.isMuted());
 
@@ -165,36 +161,6 @@ export const Header: React.FC<HeaderProps> = ({
             variant={muted ? 'neutral' : 'yellow'}
           />
         </button>
-
-        {/* Cloud Sync Button */}
-        {onCloudClick && (
-          <button
-            onClick={() => {
-              sound.playTap();
-              haptics.tap();
-              onCloudClick();
-            }}
-            title={isCloudConnected ? 'Supabase Cloud Connected' : 'Supabase Cloud Sync'}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: 0,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'transform 0.1s ease',
-            }}
-          >
-            <FrostedIcon
-              name="cloud"
-              size={32}
-              iconSize={17}
-              variant="cyan"
-              glow={isCloudConnected}
-            />
-          </button>
-        )}
       </div>
     </header>
   );
