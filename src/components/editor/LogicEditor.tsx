@@ -152,7 +152,7 @@ export const LogicEditor: React.FC<LogicEditorProps> = ({
               borderRight: '4px solid #64748B', // Right neutral rail R (0V)
               boxShadow: 'inset 4px 0 10px rgba(250, 204, 21, 0.25)',
               padding: '8px 12px',
-              background: 'rgba(15, 23, 42, 0.75)',
+              background: 'rgba(28, 28, 32, 0.78)',
               borderTop: '1px solid rgba(255, 255, 255, 0.06)',
               borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
               borderRadius: '12px',

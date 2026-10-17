@@ -178,7 +178,7 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
                   borderRadius: '16px',
                   background: isEquipped
                     ? 'linear-gradient(135deg, rgba(250, 204, 21, 0.22), rgba(245, 158, 11, 0.14))'
-                    : 'rgba(15, 23, 42, 0.6)',
+                    : 'rgba(28, 28, 32, 0.7)',
                   border: isEquipped ? '1.5px solid #FACC15' : '1px solid var(--glass-border)',
                   color: isEquipped ? '#FEF08A' : '#94a3b8',
                   display: 'flex',

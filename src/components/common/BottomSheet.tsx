@@ -32,8 +32,8 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
 
   const isPass = type === 'pass';
   const bg = isPass
-    ? 'rgba(15, 23, 42, 0.92)'
-    : 'rgba(30, 15, 20, 0.92)';
+    ? 'rgba(26, 26, 30, 0.94)'
+    : 'rgba(32, 20, 22, 0.94)';
   const borderColor = isPass ? 'rgba(250, 204, 21, 0.6)' : 'rgba(239, 68, 68, 0.6)';
   const glow = isPass
     ? '0 -16px 40px rgba(250, 204, 21, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2)'

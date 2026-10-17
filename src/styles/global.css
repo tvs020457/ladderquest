@@ -13,9 +13,9 @@ html, body {
   overflow-x: hidden;
   background-color: var(--color-bg-primary);
   background-image: 
-    radial-gradient(circle at 50% 0%, rgba(250, 204, 21, 0.08) 0%, transparent 60%),
-    radial-gradient(circle at 10% 30%, rgba(56, 189, 248, 0.04) 0%, transparent 50%),
-    radial-gradient(circle at 90% 70%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 50% 0%, rgba(250, 204, 21, 0.07) 0%, transparent 65%),
+    radial-gradient(circle at 15% 25%, rgba(255, 255, 255, 0.02) 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(245, 158, 11, 0.04) 0%, transparent 50%);
   background-attachment: fixed;
   color: var(--color-text-primary);
   font-family: var(--font-family);
@@ -55,7 +55,7 @@ button, a, input, select, [role="button"] {
 }
 
 .glass-card-yellow {
-  background: rgba(22, 28, 44, 0.75);
+  background: rgba(36, 36, 40, 0.78);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-border-yellow);
@@ -224,7 +224,7 @@ button, a, input, select, [role="button"] {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.4);
+  background: rgba(28, 28, 32, 0.5);
 }
 ::-webkit-scrollbar-thumb {
   background: rgba(250, 204, 21, 0.3);

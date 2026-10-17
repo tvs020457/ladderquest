@@ -18,29 +18,29 @@
   --color-3-light: #6EE7B7;
   --color-3-dark: #047857;
 
-  /* Glassmorphism Design Tokens */
-  --glass-bg-primary: rgba(15, 23, 42, 0.68);
-  --glass-bg-secondary: rgba(30, 41, 59, 0.62);
-  --glass-bg-card: rgba(18, 26, 43, 0.72);
-  --glass-bg-elevated: rgba(30, 41, 59, 0.85);
+  /* Glassmorphism Design Tokens - Luxury Dark Grey */
+  --glass-bg-primary: rgba(28, 28, 30, 0.72);
+  --glass-bg-secondary: rgba(38, 38, 42, 0.68);
+  --glass-bg-card: rgba(32, 32, 36, 0.75);
+  --glass-bg-elevated: rgba(44, 44, 48, 0.88);
   
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-border-light: rgba(255, 255, 255, 0.14);
-  --glass-border-yellow: rgba(250, 204, 21, 0.28);
-  --glass-border-glow: rgba(250, 204, 21, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --glass-border-light: rgba(255, 255, 255, 0.16);
+  --glass-border-yellow: rgba(250, 204, 21, 0.32);
+  --glass-border-glow: rgba(250, 204, 21, 0.55);
 
   --glass-blur: blur(20px) saturate(180%);
   --glass-blur-heavy: blur(28px) saturate(200%);
 
-  --glass-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.14);
-  --glass-shadow-glow: 0 16px 40px -4px rgba(250, 204, 21, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  --glass-shadow-sm: 0 8px 20px -2px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  --glass-shadow-glow: 0 16px 40px -4px rgba(250, 204, 21, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  --glass-shadow-sm: 0 8px 20px -2px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 
-  /* Deep Luxury Obsidian Surfaces */
-  --color-bg-primary: #080C14;     /* Infinite Deep Cosmic Navy-Black */
-  --color-bg-secondary: rgba(18, 26, 43, 0.72);
-  --color-bg-tertiary: rgba(30, 41, 59, 0.6);
-  --color-bg-canvas: #05080E;      /* Rich Obsidian for Schematics */
+  /* Deep Luxury Dark Grey Surfaces */
+  --color-bg-primary: #121214;     /* Refined Neutral Dark Grey */
+  --color-bg-secondary: rgba(32, 32, 36, 0.75);
+  --color-bg-tertiary: rgba(44, 44, 48, 0.65);
+  --color-bg-canvas: #18181B;      /* Precision Dark Zinc-Grey for Schematics */
 
   /* Luxury Typography */
   --color-text-primary: #F8FAFC;

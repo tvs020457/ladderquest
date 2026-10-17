@@ -270,7 +270,7 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
                 cy={lCoord.y}
                 r="6"
                 fill={isLSelected ? '#FACC15' : '#EAB308'}
-                stroke="#080C14"
+                stroke="#18181B"
                 strokeWidth="2"
                 style={{
                   filter: isLSelected ? 'drop-shadow(0 0 8px #FACC15)' : 'none',
@@ -292,7 +292,7 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
                 cy={rCoord.y}
                 r="6"
                 fill={isRSelected ? '#FACC15' : '#64748b'}
-                stroke="#080C14"
+                stroke="#18181B"
                 strokeWidth="2"
                 style={{
                   filter: isRSelected ? 'drop-shadow(0 0 8px #FACC15)' : 'none',
@@ -503,7 +503,7 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
                           ? '#ef4444'
                           : '#38BDF8'
                       }
-                      stroke="#080C14"
+                      stroke="#18181B"
                       strokeWidth="2"
                       style={{
                         filter: isSelected || isPowered ? 'drop-shadow(0 0 6px #FACC15)' : 'none',
@@ -584,7 +584,7 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
                 cy={coord.y}
                 r="5"
                 fill={isPowered ? '#FACC15' : '#38BDF8'}
-                stroke="#080C14"
+                stroke="#18181B"
                 strokeWidth="1.5"
                 style={{
                   filter: isPowered ? 'drop-shadow(0 0 6px #FACC15)' : 'none',

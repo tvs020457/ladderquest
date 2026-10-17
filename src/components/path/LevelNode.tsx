@@ -31,16 +31,16 @@ export const LevelNode: React.FC<LevelNodeProps> = ({
     onClick(id);
   };
 
-  let bg = 'rgba(15, 23, 42, 0.65)';
+  let bg = 'rgba(28, 28, 32, 0.7)';
   let border = '1px solid rgba(255, 255, 255, 0.08)';
-  let shadow = '0 6px 0 #05080E, 0 8px 16px rgba(0, 0, 0, 0.4)';
+  let shadow = '0 6px 0 #18181B, 0 8px 16px rgba(0, 0, 0, 0.45)';
   let textColor = '#64748B';
 
   if (isCurrent) {
     bg = 'linear-gradient(135deg, #FEF08A 0%, #FACC15 50%, #EAB308 100%)';
     border = '2.5px solid #FFFFFF';
     shadow = '0 6px 0 #A16207, 0 16px 32px rgba(250, 204, 21, 0.45)';
-    textColor = '#05080E';
+    textColor = '#18181B';
   } else if (isCompleted) {
     bg = 'linear-gradient(135deg, rgba(250, 204, 21, 0.18), rgba(245, 158, 11, 0.08))';
     border = '2px solid rgba(250, 204, 21, 0.75)';
@@ -80,7 +80,7 @@ export const LevelNode: React.FC<LevelNodeProps> = ({
         <div
           style={{
             background: 'linear-gradient(90deg, #F59E0B, #FACC15)',
-            color: '#05080E',
+            color: '#18181B',
             fontSize: '0.72rem',
             fontWeight: 900,
             padding: '3px 10px',

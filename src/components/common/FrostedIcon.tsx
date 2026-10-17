@@ -53,7 +53,7 @@ export const FrostedIcon: React.FC<FrostedIconProps> = ({
       border: active ? 'rgba(250, 204, 21, 0.7)' : 'rgba(250, 204, 21, 0.35)',
       bg: active
         ? 'linear-gradient(135deg, rgba(250, 204, 21, 0.28) 0%, rgba(245, 158, 11, 0.12) 100%)'
-        : 'linear-gradient(135deg, rgba(250, 204, 21, 0.15) 0%, rgba(15, 23, 42, 0.45) 100%)',
+        : 'linear-gradient(135deg, rgba(250, 204, 21, 0.15) 0%, rgba(28, 28, 32, 0.5) 100%)',
       glow: active
         ? '0 0 16px rgba(250, 204, 21, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.5)'
         : '0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.3)',
@@ -78,14 +78,14 @@ export const FrostedIcon: React.FC<FrostedIconProps> = ({
     },
     cyan: {
       border: 'rgba(56, 189, 248, 0.4)',
-      bg: 'linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(15, 23, 42, 0.4) 100%)',
+      bg: 'linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(28, 28, 32, 0.5) 100%)',
       glow: '0 0 12px rgba(56, 189, 248, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.35)',
       svgFill: '#BAE6FD',
       svgStroke: '#38BDF8',
     },
     neutral: {
       border: 'rgba(255, 255, 255, 0.14)',
-      bg: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(15, 23, 42, 0.4) 100%)',
+      bg: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(28, 28, 32, 0.5) 100%)',
       glow: '0 4px 10px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.2)',
       svgFill: '#F8FAFC',
       svgStroke: '#94A3B8',

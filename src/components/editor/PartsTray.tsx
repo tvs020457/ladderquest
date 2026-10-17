@@ -120,8 +120,8 @@ export const PartsTray: React.FC<PartsTrayProps> = ({
                 borderRadius: '14px',
                 background: isSelected
                   ? 'linear-gradient(135deg, #FEF08A, #FACC15, #EAB308)'
-                  : 'rgba(15, 23, 42, 0.75)',
-                color: isSelected ? '#05080E' : '#f8fafc',
+                  : 'rgba(28, 28, 32, 0.75)',
+                color: isSelected ? '#18181B' : '#f8fafc',
                 border: isSelected ? '2px solid #FFFFFF' : '1px solid var(--glass-border)',
                 display: 'flex',
                 flexDirection: 'column',
