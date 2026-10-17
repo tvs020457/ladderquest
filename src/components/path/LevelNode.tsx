@@ -1,6 +1,7 @@
 import React from 'react';
 import { sound } from '../../utils/sound';
 import { haptics } from '../../utils/haptics';
+import { FrostedIcon } from '../common/FrostedIcon';
 
 export type NodeStatus = 'locked' | 'current' | 'completed';
 
@@ -31,7 +32,7 @@ export const LevelNode: React.FC<LevelNodeProps> = ({
   };
 
   let bg = 'rgba(15, 23, 42, 0.65)';
-  let border = '1px solid rgba(255, 255, 255, 0.07)';
+  let border = '1px solid rgba(255, 255, 255, 0.08)';
   let shadow = '0 6px 0 #05080E, 0 8px 16px rgba(0, 0, 0, 0.4)';
   let textColor = '#64748B';
 
@@ -41,9 +42,9 @@ export const LevelNode: React.FC<LevelNodeProps> = ({
     shadow = '0 6px 0 #A16207, 0 16px 32px rgba(250, 204, 21, 0.45)';
     textColor = '#05080E';
   } else if (isCompleted) {
-    bg = 'linear-gradient(135deg, rgba(250, 204, 21, 0.16), rgba(245, 158, 11, 0.06))';
+    bg = 'linear-gradient(135deg, rgba(250, 204, 21, 0.18), rgba(245, 158, 11, 0.08))';
     border = '2px solid rgba(250, 204, 21, 0.75)';
-    shadow = '0 6px 0 rgba(161, 98, 7, 0.5), 0 8px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15)';
+    shadow = '0 6px 0 rgba(161, 98, 7, 0.5), 0 8px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
     textColor = '#FEF08A';
   }
 
@@ -62,13 +63,15 @@ export const LevelNode: React.FC<LevelNodeProps> = ({
       {isCompleted && (
         <div
           style={{
-            fontSize: '0.88rem',
+            display: 'flex',
+            gap: '2px',
             marginBottom: '4px',
-            letterSpacing: '2px',
             filter: 'drop-shadow(0 0 6px rgba(250, 204, 21, 0.6))',
           }}
         >
-          {'⭐'.repeat(Math.max(1, stars))}
+          {Array.from({ length: Math.max(1, stars) }).map((_, i) => (
+            <FrostedIcon key={i} name="star" size={20} iconSize={12} variant="yellow" glow />
+          ))}
         </div>
       )}
 
@@ -91,17 +94,17 @@ export const LevelNode: React.FC<LevelNodeProps> = ({
         </div>
       )}
 
-      {/* Circular Node Button */}
+      {/* Circular Node Button with Frosted Glass Core */}
       <button
         disabled={isLocked}
         onClick={handleClick}
         style={{
-          width: '70px',
-          height: '70px',
+          width: '72px',
+          height: '72px',
           borderRadius: '50%',
           background: bg,
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
           boxShadow: shadow,
           border: border,
           display: 'flex',
@@ -113,15 +116,31 @@ export const LevelNode: React.FC<LevelNodeProps> = ({
           cursor: isLocked ? 'not-allowed' : 'pointer',
           userSelect: 'none',
           position: 'relative',
+          overflow: 'hidden',
           transition: 'transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.15s ease',
           outline: 'none',
         }}
         aria-label={`Level ${id} (${status})`}
       >
+        {/* Specular curved gloss reflection */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '48%',
+            background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%)',
+            borderTopLeftRadius: '50%',
+            borderTopRightRadius: '50%',
+            pointerEvents: 'none',
+          }}
+        />
+
         {isLocked ? (
-          <span style={{ fontSize: '1.2rem', opacity: 0.5 }}>🔒</span>
+          <FrostedIcon name="lock" size={36} iconSize={18} variant="neutral" />
         ) : (
-          <span>{id}</span>
+          <span style={{ position: 'relative', zIndex: 1 }}>{id}</span>
         )}
       </button>
     </div>

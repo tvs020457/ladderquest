@@ -3,6 +3,7 @@ import { DailyQuestsState, WeeklyQuestState, DailyChallengeState } from '../../e
 import { Button } from '../common/Button';
 import { sound } from '../../utils/sound';
 import { haptics } from '../../utils/haptics';
+import { FrostedIcon } from '../common/FrostedIcon';
 
 interface QuestsTabProps {
   quests: DailyQuestsState;
@@ -126,9 +127,13 @@ export const QuestsTab: React.FC<QuestsTabProps> = ({
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          <span style={{ fontSize: '2.2rem', filter: allDailyDone ? 'drop-shadow(0 0 10px #FACC15)' : 'none' }}>
-            🎁
-          </span>
+          <FrostedIcon
+            name="gift"
+            size={46}
+            iconSize={26}
+            variant="yellow"
+            glow={allDailyDone}
+          />
           <div>
             <h4 style={{ fontSize: '1.05rem', fontWeight: 900, color: '#ffffff' }}>Daily Bonus Chest</h4>
             <span style={{ fontSize: '0.82rem', color: '#FEF08A' }}>+50 XP & Streak Freeze</span>

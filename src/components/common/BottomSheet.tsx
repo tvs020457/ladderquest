@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from './Button';
 import { Mascot } from './Mascot';
+import { FrostedIcon } from './FrostedIcon';
 import { sound } from '../../utils/sound';
 import { haptics } from '../../utils/haptics';
 
@@ -72,17 +73,20 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
               {title}
             </h3>
             {isPass && stars > 0 && (
-              <span style={{ fontSize: '1.2rem', filter: 'drop-shadow(0 0 8px rgba(250, 204, 21, 0.8))' }}>
-                {'⭐'.repeat(stars)}
-              </span>
+              <div style={{ display: 'flex', gap: '3px', filter: 'drop-shadow(0 0 10px rgba(250, 204, 21, 0.8))' }}>
+                {Array.from({ length: stars }).map((_, i) => (
+                  <FrostedIcon key={i} name="star" size={20} yellow />
+                ))}
+              </div>
             )}
           </div>
           <p style={{ color: '#e2e8f0', fontSize: '0.95rem', marginTop: '4px', lineHeight: 1.45 }}>
             {message}
           </p>
           {isPass && xpEarned > 0 && (
-            <div style={{ marginTop: '6px', fontSize: '0.95rem', color: '#FEF08A', fontWeight: 900 }}>
-              ⚡ +{xpEarned} XP Earned!
+            <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.95rem', color: '#FEF08A', fontWeight: 900 }}>
+              <FrostedIcon name="bolt" size={18} yellow />
+              <span>+{xpEarned} XP Earned!</span>
             </div>
           )}
         </div>

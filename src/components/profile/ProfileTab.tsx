@@ -7,6 +7,7 @@ import { Mascot } from '../common/Mascot';
 import { Button } from '../common/Button';
 import { sound } from '../../utils/sound';
 import { haptics } from '../../utils/haptics';
+import { FrostedIcon, FrostedIconName } from '../common/FrostedIcon';
 
 interface ProfileTabProps {
   progress: UserProgressV1;
@@ -27,11 +28,11 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
   const [hapticsEnabled, setHapticsEnabled] = useState(() => haptics.isEnabled());
   const streak = progress.streak;
 
-  const BADGES = [
-    { id: 'streak_3', title: 'Spark Starter', desc: '3-Day Streak', icon: '⚡' },
-    { id: 'streak_7', title: 'Circuit Apprentice', desc: '7-Day Streak', icon: '🔥' },
-    { id: 'streak_14', title: 'Relay Runner', desc: '14-Day Streak', icon: '🏆' },
-    { id: 'streak_30', title: 'Logic Master', desc: '30-Day Streak', icon: '👑' },
+  const BADGES: { id: string; title: string; desc: string; iconName: FrostedIconName; variant: 'yellow' | 'amber' }[] = [
+    { id: 'streak_3', title: 'Spark Starter', desc: '3-Day Streak', iconName: 'bolt', variant: 'yellow' },
+    { id: 'streak_7', title: 'Circuit Apprentice', desc: '7-Day Streak', iconName: 'flame', variant: 'amber' },
+    { id: 'streak_14', title: 'Relay Runner', desc: '14-Day Streak', iconName: 'trophy', variant: 'yellow' },
+    { id: 'streak_30', title: 'Logic Master', desc: '30-Day Streak', iconName: 'crown', variant: 'yellow' },
   ];
 
   const handleToggleSound = (enabled: boolean) => {
@@ -97,36 +98,44 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
-            gap: '10px',
+            gap: '12px',
           }}
         >
           <div
+            className="glass-card"
             style={{
-              backgroundColor: 'var(--color-bg-secondary)',
-              borderRadius: '16px',
-              padding: '14px',
-              border: '1px solid var(--color-bg-tertiary)',
-              textAlign: 'center',
+              padding: '16px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '6px',
             }}
           >
-            <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#94a3b8' }}>BEST STREAK</span>
-            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: 'var(--color-2)', marginTop: '2px' }}>
-              🔥 {streak.best} Days
+            <FrostedIcon name="flame" size={36} iconSize={20} variant="amber" />
+            <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#94a3b8', letterSpacing: '0.04em' }}>
+              BEST STREAK
+            </span>
+            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#F59E0B' }}>
+              {streak.best} Days
             </div>
           </div>
 
           <div
+            className="glass-card"
             style={{
-              backgroundColor: 'var(--color-bg-secondary)',
-              borderRadius: '16px',
-              padding: '14px',
-              border: '1px solid var(--color-bg-tertiary)',
-              textAlign: 'center',
+              padding: '16px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '6px',
             }}
           >
-            <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#94a3b8' }}>STREAK FREEZES</span>
-            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: 'var(--color-1)', marginTop: '2px' }}>
-              ❄️ {streak.freezes}/2
+            <FrostedIcon name="snowflake" size={36} iconSize={20} variant="cyan" />
+            <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#94a3b8', letterSpacing: '0.04em' }}>
+              STREAK FREEZES
+            </span>
+            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#38BDF8' }}>
+              {streak.freezes}/2
             </div>
           </div>
         </div>
@@ -139,44 +148,58 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
 
       {/* Mascot Cosmetics */}
       <div
+        className="glass-card"
         style={{
-          backgroundColor: 'var(--color-bg-secondary)',
-          borderRadius: '16px',
-          padding: '16px',
-          border: '1px solid var(--color-bg-tertiary)',
+          padding: '18px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '10px',
+          gap: '12px',
         }}
       >
         <h4 style={{ fontSize: '1rem', fontWeight: 900, color: '#ffffff' }}>
           Volt&apos;s Gear
         </h4>
-        <div style={{ display: 'flex', gap: '8px' }}>
+        <div style={{ display: 'flex', gap: '10px' }}>
           {[
-            { id: 'none', label: 'Classic' },
-            { id: 'hard_hat', label: '👷 Hard Hat' },
-            { id: 'safety_glasses', label: '👓 Glasses' },
+            { id: 'none', label: 'Classic', iconName: 'user' as FrostedIconName, variant: 'neutral' as const },
+            { id: 'hard_hat', label: 'Hard Hat', iconName: 'hat' as FrostedIconName, variant: 'yellow' as const },
+            { id: 'safety_glasses', label: 'Glasses', iconName: 'glasses' as FrostedIconName, variant: 'cyan' as const },
           ].map((item) => {
             const isEquipped = (progress.cosmetics.equipped || 'none') === item.id;
             return (
               <button
                 key={item.id}
-                onClick={() => onEquipCosmetic(item.id as any)}
+                onClick={() => {
+                  sound.playTap();
+                  haptics.tap();
+                  onEquipCosmetic(item.id as any);
+                }}
                 style={{
                   flex: 1,
                   padding: '10px 6px',
-                  borderRadius: '12px',
-                  backgroundColor: isEquipped ? 'var(--color-2)' : '#0d161a',
-                  color: isEquipped ? '#ffffff' : '#94a3b8',
-                  border: isEquipped ? '2px solid var(--color-2-light)' : '1px solid #23353e',
-                  fontWeight: 800,
-                  fontSize: '0.82rem',
+                  borderRadius: '16px',
+                  background: isEquipped
+                    ? 'linear-gradient(135deg, rgba(250, 204, 21, 0.22), rgba(245, 158, 11, 0.14))'
+                    : 'rgba(15, 23, 42, 0.6)',
+                  border: isEquipped ? '1.5px solid #FACC15' : '1px solid var(--glass-border)',
+                  color: isEquipped ? '#FEF08A' : '#94a3b8',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '6px',
                   cursor: 'pointer',
-                  minHeight: '44px',
+                  boxShadow: isEquipped ? '0 0 16px rgba(250, 204, 21, 0.3)' : 'none',
+                  transition: 'all 0.15s ease',
                 }}
               >
-                {item.label}
+                <FrostedIcon
+                  name={item.iconName}
+                  size={34}
+                  iconSize={18}
+                  variant={isEquipped ? 'yellow' : item.variant}
+                  active={isEquipped}
+                />
+                <span style={{ fontSize: '0.78rem', fontWeight: 800 }}>{item.label}</span>
               </button>
             );
           })}
@@ -185,39 +208,43 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
 
       {/* Badges Showcase */}
       <div
+        className="glass-card"
         style={{
-          backgroundColor: 'var(--color-bg-secondary)',
-          borderRadius: '16px',
-          padding: '16px',
-          border: '1px solid var(--color-bg-tertiary)',
+          padding: '18px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '10px',
+          gap: '12px',
         }}
       >
         <h4 style={{ fontSize: '1rem', fontWeight: 900, color: '#ffffff' }}>
           Badges & Milestones
         </h4>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }}>
           {BADGES.map((b) => {
             const unlocked = streak.best >= parseInt(b.id.split('_')[1] || '0');
             return (
               <div
                 key={b.id}
                 style={{
-                  backgroundColor: 'var(--color-bg-canvas)',
-                  borderRadius: '12px',
-                  padding: '10px',
-                  border: unlocked ? '1.5px solid var(--color-2)' : '1px solid var(--color-bg-tertiary)',
+                  backgroundColor: unlocked ? 'rgba(250, 204, 21, 0.08)' : 'rgba(255, 255, 255, 0.02)',
+                  borderRadius: '16px',
+                  padding: '12px',
+                  border: unlocked ? '1.5px solid rgba(250, 204, 21, 0.4)' : '1px solid var(--glass-border)',
                   opacity: unlocked ? 1 : 0.5,
                   display: 'flex',
                   alignItems: 'center',
                   gap: '10px',
                 }}
               >
-                <span style={{ fontSize: '1.4rem' }}>{b.icon}</span>
+                <FrostedIcon
+                  name={b.iconName}
+                  size={38}
+                  iconSize={20}
+                  variant={b.variant}
+                  glow={unlocked}
+                />
                 <div>
-                  <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#f8fafc' }}>{b.title}</div>
+                  <div style={{ fontSize: '0.84rem', fontWeight: 900, color: '#f8fafc' }}>{b.title}</div>
                   <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>{b.desc}</div>
                 </div>
               </div>

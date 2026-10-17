@@ -19,6 +19,7 @@ import { getCurrentSession, subscribeToAuthChanges, AuthUserSummary } from './en
 import { fetchRemoteProgress, uploadRemoteProgress, mergeProgress } from './engine/supabase/progressSync';
 import { sound } from './utils/sound';
 import { haptics } from './utils/haptics';
+import { FrostedIcon, FrostedIconName } from './components/common/FrostedIcon';
 
 export default function App() {
   const allLevels = useMemo(() => getAllLoadedLevels(), []);
@@ -287,9 +288,9 @@ export default function App() {
             }}
           >
             {[
-              { id: 'path', label: 'Path', icon: '🗺️' },
-              { id: 'quests', label: 'Quests', icon: '🎯' },
-              { id: 'profile', label: 'Profile', icon: '👤' },
+              { id: 'path', label: 'Path', iconName: 'path' as FrostedIconName },
+              { id: 'quests', label: 'Quests', iconName: 'quests' as FrostedIconName },
+              { id: 'profile', label: 'Profile', iconName: 'profile' as FrostedIconName },
             ].map((tab) => {
               const isActive = activeTab === tab.id;
               return (
@@ -301,8 +302,8 @@ export default function App() {
                     setActiveTab(tab.id as any);
                   }}
                   style={{
-                    background: isActive ? 'rgba(250, 204, 21, 0.14)' : 'transparent',
-                    border: isActive ? '1px solid rgba(250, 204, 21, 0.4)' : '1px solid transparent',
+                    background: isActive ? 'rgba(250, 204, 21, 0.12)' : 'transparent',
+                    border: isActive ? '1px solid rgba(250, 204, 21, 0.35)' : '1px solid transparent',
                     borderRadius: '20px',
                     color: isActive ? '#FEF08A' : '#94A3B8',
                     fontWeight: 900,
@@ -312,14 +313,23 @@ export default function App() {
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    padding: '8px 24px',
-                    gap: '2px',
+                    padding: '6px 18px',
+                    gap: '4px',
                     boxShadow: isActive ? '0 0 16px rgba(250, 204, 21, 0.25)' : 'none',
                     transition: 'all 0.15s cubic-bezier(0.16, 1, 0.3, 1)',
                   }}
                 >
-                  <span style={{ fontSize: '1.25rem' }}>{tab.icon}</span>
-                  <span style={{ fontSize: '0.78rem', letterSpacing: '0.02em' }}>{tab.label}</span>
+                  <FrostedIcon
+                    name={tab.iconName}
+                    size={34}
+                    iconSize={18}
+                    active={isActive}
+                    variant={isActive ? 'yellow' : 'neutral'}
+                    glow={isActive}
+                  />
+                  <span style={{ fontSize: '0.78rem', letterSpacing: '0.02em', marginTop: '1px' }}>
+                    {tab.label}
+                  </span>
                 </button>
               );
             })}

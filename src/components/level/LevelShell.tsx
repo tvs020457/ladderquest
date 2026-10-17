@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { LevelDefinition, WireDef } from '../../levels/types';
+import { FrostedIcon } from '../common/FrostedIcon';
 import { LearnStep } from './LearnStep';
 import { GuidedTryStep } from './GuidedTryStep';
 import { WiringCanvas } from '../editor/WiringCanvas';
@@ -221,22 +222,19 @@ export const LevelShell: React.FC<LevelShellProps> = ({
             style={{
               background: 'rgba(255, 255, 255, 0.06)',
               border: '1px solid var(--glass-border)',
-              borderRadius: '10px',
-              color: '#FEF08A',
-              fontSize: '1.1rem',
-              fontWeight: 900,
+              borderRadius: '12px',
               cursor: 'pointer',
-              padding: '4px 10px',
-              minHeight: '36px',
-              minWidth: '36px',
+              padding: '6px',
+              minHeight: '38px',
+              minWidth: '38px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              transition: 'transform 0.1s ease',
+              transition: 'transform 0.15s cubic-bezier(0.16, 1, 0.3, 1)',
             }}
             aria-label="Back to path"
           >
-            ←
+            <FrostedIcon name="back" size={18} yellow />
           </button>
 
           <span style={{ fontSize: '0.9rem', fontWeight: 900, color: '#F8FAFC', letterSpacing: '0.01em' }}>
@@ -255,12 +253,16 @@ export const LevelShell: React.FC<LevelShellProps> = ({
               cursor: 'pointer',
               padding: '6px 12px',
               borderRadius: '12px',
-              minHeight: '36px',
+              minHeight: '38px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
               boxShadow: hintsRevealed > 0 ? '0 0 10px rgba(245, 158, 11, 0.3)' : 'none',
-              transition: 'transform 0.1s ease',
+              transition: 'transform 0.15s cubic-bezier(0.16, 1, 0.3, 1)',
             }}
           >
-            💡 Hint ({hintsRevealed}/3)
+            <FrostedIcon name="hint" size={18} yellow={hintsRevealed > 0} />
+            <span>Hint ({hintsRevealed}/3)</span>
           </button>
         </div>
 
@@ -342,18 +344,22 @@ export const LevelShell: React.FC<LevelShellProps> = ({
                 <button
                   onClick={handleReset}
                   style={{
-                    background: 'none',
-                    border: 'none',
+                    background: 'rgba(255, 255, 255, 0.06)',
+                    border: '1px solid var(--glass-border)',
+                    borderRadius: '8px',
                     color: '#94a3b8',
                     fontSize: '0.8rem',
                     fontWeight: 700,
                     cursor: 'pointer',
-                    padding: '4px',
-                    minHeight: 'auto',
-                    minWidth: 'auto',
+                    padding: '4px 8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    transition: 'all 0.15s ease',
                   }}
                 >
-                  ↺ Reset
+                  <FrostedIcon name="reset" size={14} />
+                  <span>Reset</span>
                 </button>
               </div>
               <p style={{ color: '#cbd5e1', fontSize: '0.88rem', marginTop: '4px' }}>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { sound } from '../../utils/sound';
 import { haptics } from '../../utils/haptics';
+import { FrostedIcon } from './FrostedIcon';
 
 interface HeaderProps {
   streak: number;
@@ -38,7 +39,7 @@ export const Header: React.FC<HeaderProps> = ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '12px 18px',
+        padding: '10px 16px',
         background: 'var(--glass-bg-primary)',
         backdropFilter: 'var(--glass-blur)',
         WebkitBackdropFilter: 'var(--glass-blur)',
@@ -64,9 +65,10 @@ export const Header: React.FC<HeaderProps> = ({
           cursor: onProfileClick ? 'pointer' : 'default',
         }}
       >
+        <FrostedIcon name="bolt" size={30} iconSize={16} variant="yellow" glow />
         <span
           style={{
-            fontSize: '1.25rem',
+            fontSize: '1.2rem',
             fontWeight: 900,
             background: 'linear-gradient(135deg, #FEF08A, #FACC15, #F59E0B)',
             WebkitBackgroundClip: 'text',
@@ -75,28 +77,28 @@ export const Header: React.FC<HeaderProps> = ({
             letterSpacing: '0.01em',
           }}
         >
-          ⚡ LadderQuest
+          LadderQuest
         </span>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
         {/* Streak Pill */}
         <div
           title="Daily Streak"
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '4px',
+            gap: '6px',
             fontSize: '0.88rem',
             fontWeight: 900,
             color: streak > 0 ? '#F59E0B' : '#64748B',
             background: streak > 0 ? 'rgba(245, 158, 11, 0.12)' : 'rgba(255, 255, 255, 0.04)',
-            padding: '4px 8px',
-            borderRadius: '12px',
-            border: streak > 0 ? '1px solid rgba(245, 158, 11, 0.3)' : '1px solid transparent',
+            padding: '3px 8px 3px 4px',
+            borderRadius: '16px',
+            border: streak > 0 ? '1px solid rgba(245, 158, 11, 0.35)' : '1px solid var(--glass-border)',
           }}
         >
-          <span>🔥</span>
+          <FrostedIcon name="flame" size={24} iconSize={14} variant="amber" />
           <span>{streak}</span>
         </div>
 
@@ -106,18 +108,18 @@ export const Header: React.FC<HeaderProps> = ({
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '4px',
+            gap: '6px',
             fontSize: '0.88rem',
             fontWeight: 900,
             color: '#FEF08A',
             background: 'rgba(250, 204, 21, 0.12)',
-            padding: '4px 8px',
-            borderRadius: '12px',
-            border: '1px solid rgba(250, 204, 21, 0.35)',
-            boxShadow: '0 0 8px rgba(250, 204, 21, 0.15)',
+            padding: '3px 8px 3px 4px',
+            borderRadius: '16px',
+            border: '1px solid rgba(250, 204, 21, 0.4)',
+            boxShadow: '0 0 10px rgba(250, 204, 21, 0.18)',
           }}
         >
-          <span>⚡</span>
+          <FrostedIcon name="bolt" size={24} iconSize={14} variant="yellow" glow />
           <span>{xp}</span>
         </div>
 
@@ -127,17 +129,17 @@ export const Header: React.FC<HeaderProps> = ({
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '4px',
+            gap: '6px',
             fontSize: '0.82rem',
             fontWeight: 800,
             backgroundColor: 'rgba(16, 185, 129, 0.12)',
-            padding: '4px 8px',
-            borderRadius: '12px',
+            padding: '3px 8px 3px 4px',
+            borderRadius: '16px',
             color: '#10B981',
-            border: '1px solid rgba(16, 185, 129, 0.3)',
+            border: '1px solid rgba(16, 185, 129, 0.35)',
           }}
         >
-          <span>🎯</span>
+          <FrostedIcon name="target" size={24} iconSize={14} variant="emerald" />
           <span>{questsDoneCount}/{totalQuests}</span>
         </div>
 
@@ -146,22 +148,22 @@ export const Header: React.FC<HeaderProps> = ({
           onClick={handleToggleSound}
           title={muted ? 'Unmute Sound Effects' : 'Mute Sound Effects'}
           style={{
-            background: 'rgba(255, 255, 255, 0.05)',
-            border: '1px solid var(--glass-border)',
-            borderRadius: '10px',
+            background: 'none',
+            border: 'none',
             cursor: 'pointer',
-            fontSize: '0.95rem',
-            padding: '4px 8px',
+            padding: 0,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            minHeight: '32px',
-            minWidth: '32px',
-            opacity: muted ? 0.6 : 1,
             transition: 'transform 0.1s ease',
           }}
         >
-          {muted ? '🔇' : '🔊'}
+          <FrostedIcon
+            name={muted ? 'sound-off' : 'sound-on'}
+            size={32}
+            iconSize={16}
+            variant={muted ? 'neutral' : 'yellow'}
+          />
         </button>
 
         {/* Cloud Sync Button */}
@@ -177,17 +179,20 @@ export const Header: React.FC<HeaderProps> = ({
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              fontSize: '1.05rem',
-              padding: '2px 4px',
-              opacity: isCloudConnected ? 1 : 0.65,
+              padding: 0,
               display: 'flex',
               alignItems: 'center',
-              minHeight: '32px',
-              minWidth: '32px',
               justifyContent: 'center',
+              transition: 'transform 0.1s ease',
             }}
           >
-            {isCloudConnected ? '☁️' : '🌥️'}
+            <FrostedIcon
+              name="cloud"
+              size={32}
+              iconSize={17}
+              variant="cyan"
+              glow={isCloudConnected}
+            />
           </button>
         )}
       </div>
