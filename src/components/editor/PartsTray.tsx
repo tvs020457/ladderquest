@@ -16,16 +16,16 @@ export const PartsTray: React.FC<PartsTrayProps> = ({
   onAddRung,
   onAddBranch,
 }) => {
-  const ELEMENT_LABELS: Record<InstructionType, { symbol: string; name: string }> = {
-    XIC: { symbol: '—[ ]—', name: 'NO Contact' },
-    XIO: { symbol: '—[/]—', name: 'NC Contact' },
-    OTE: { symbol: '—( )—', name: 'Output Coil' },
-    OTL: { symbol: '—(L)—', name: 'Latch' },
-    OTU: { symbol: '—(U)—', name: 'Unlatch' },
-    TON: { symbol: '[TON]', name: 'On Timer' },
-    TOF: { symbol: '[TOF]', name: 'Off Timer' },
-    CTU: { symbol: '[CTU]', name: 'Counter' },
-    RES: { symbol: '—(R)—', name: 'Reset' },
+  const ELEMENT_LABELS: Record<InstructionType, { symbol: string; name: string; standard: string }> = {
+    XIC: { symbol: '—| |—', name: 'Normally Open', standard: 'IEC 61131-3' },
+    XIO: { symbol: '—|/|—', name: 'Normally Closed', standard: 'IEC 61131-3' },
+    OTE: { symbol: '—( )—', name: 'Normal Coil', standard: 'IEC 61131-3' },
+    OTL: { symbol: '—(S)—', name: 'Set (Latch)', standard: 'IEC 61131-3' },
+    OTU: { symbol: '—(R)—', name: 'Reset (Unlatch)', standard: 'IEC 61131-3' },
+    TON: { symbol: '┌─TON─┐', name: 'On-Delay Timer', standard: 'IEC 61131-3' },
+    TOF: { symbol: '┌─TOF─┐', name: 'Off-Delay Timer', standard: 'IEC 61131-3' },
+    CTU: { symbol: '┌─CTU─┐', name: 'Up Counter', standard: 'IEC 61131-3' },
+    RES: { symbol: '—(R)—', name: 'Reset Block', standard: 'IEC 61131-3' },
   };
 
   return (
@@ -44,9 +44,24 @@ export const PartsTray: React.FC<PartsTrayProps> = ({
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>
-          Parts Tray (Tap part, then tap rung slot)
-        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>
+            Parts Tray
+          </span>
+          <span
+            style={{
+              fontSize: '0.62rem',
+              fontWeight: 800,
+              backgroundColor: 'rgba(101, 170, 187, 0.15)',
+              color: 'var(--color-1)',
+              border: '1px solid var(--color-1)',
+              padding: '1px 6px',
+              borderRadius: '6px',
+            }}
+          >
+            IEC 61131-3:2025
+          </span>
+        </div>
         {selectedElement && (
           <button
             onClick={() => onSelectElement(null)}

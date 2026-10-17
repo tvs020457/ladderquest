@@ -186,7 +186,7 @@ export const LogicEditor: React.FC<LogicEditorProps> = ({
                           }}
                         >
                           <span style={{ fontSize: '0.9rem', fontWeight: 900, fontFamily: 'monospace' }}>
-                            {isNC ? '—[/]—' : '—[ ]—'}
+                            {isNC ? '—|/|—' : '—| |—'}
                           </span>
                           <span style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--color-2)' }}>
                             {inst.tag}
@@ -227,6 +227,7 @@ export const LogicEditor: React.FC<LogicEditorProps> = ({
             {/* Outputs Area (Right side) */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               {rung.outputs.map((out, oIdx) => {
+                const isFunctionBlock = ['TON', 'TOF', 'CTU'].includes(out.type);
                 return (
                   <button
                     key={out.id || oIdx}
@@ -239,8 +240,8 @@ export const LogicEditor: React.FC<LogicEditorProps> = ({
                       })
                     }
                     style={{
-                      minWidth: '64px',
-                      minHeight: '44px',
+                      minWidth: isFunctionBlock ? '72px' : '60px',
+                      minHeight: '46px',
                       borderRadius: '8px',
                       backgroundColor: 'var(--color-bg-canvas)',
                       border: '1.5px solid var(--color-3)',
@@ -253,18 +254,56 @@ export const LogicEditor: React.FC<LogicEditorProps> = ({
                       cursor: 'pointer',
                     }}
                   >
-                    <span style={{ fontSize: '0.85rem', fontWeight: 900, color: 'var(--color-3)' }}>
-                      {out.type === 'OTE'
-                        ? '—( )—'
-                        : out.type === 'OTL'
-                        ? '—(L)—'
-                        : out.type === 'OTU'
-                        ? '—(U)—'
-                        : `[${out.type}]`}
-                    </span>
-                    <span style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--color-2)' }}>
-                      {out.tag}
-                    </span>
+                    {isFunctionBlock ? (
+                      /* IEC 61131-3 Standard Function Block Box */
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <div
+                          style={{
+                            fontSize: '0.68rem',
+                            fontWeight: 900,
+                            fontFamily: 'monospace',
+                            color: 'var(--color-3)',
+                            borderBottom: '1px solid #334155',
+                            paddingBottom: '1px',
+                            width: '100%',
+                            textAlign: 'center',
+                          }}
+                        >
+                          {out.type}
+                        </div>
+                        <div style={{ fontSize: '0.58rem', color: '#94a3b8', marginTop: '1px' }}>
+                          {out.type === 'CTU'
+                            ? `PV:${'preset' in out ? out.preset : 5}`
+                            : `PT:${('preset' in out ? out.preset : 3000) / 1000}s`}
+                        </div>
+                        <span style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--color-2)' }}>
+                          {out.tag}
+                        </span>
+                      </div>
+                    ) : (
+                      /* IEC 61131-3 Coil Symbol */
+                      <>
+                        <span
+                          style={{
+                            fontSize: '0.9rem',
+                            fontWeight: 900,
+                            color: 'var(--color-3)',
+                            fontFamily: 'monospace',
+                          }}
+                        >
+                          {out.type === 'OTE'
+                            ? '—( )—'
+                            : out.type === 'OTL'
+                            ? '—(S)—'
+                            : out.type === 'OTU'
+                            ? '—(R)—'
+                            : '—(R)—'}
+                        </span>
+                        <span style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--color-2)' }}>
+                          {out.tag}
+                        </span>
+                      </>
+                    )}
                   </button>
                 );
               })}

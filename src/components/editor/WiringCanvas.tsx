@@ -337,35 +337,59 @@ export const WiringCanvas: React.FC<WiringCanvasProps> = ({
 
               {/* Contact / Load Symbol */}
               {isLoad ? (
-                // Coil / Lamp / Motor Symbol: ( )
+                // IEC 61131-3 Standard Coil Symbol: —( )—
                 <g>
-                  <circle
-                    cx={centerX}
-                    cy={centerY}
-                    r="14"
-                    fill="#17242a"
+                  {/* Lead stubs */}
+                  <line
+                    x1={pIn.x}
+                    y1={centerY}
+                    x2={centerX - 8}
+                    y2={centerY}
                     stroke={poweredTerminals.has(inTerm) ? '#AABB65' : '#64748b'}
-                    strokeWidth="3"
+                    strokeWidth="2.5"
                   />
+                  <line
+                    x1={centerX + 8}
+                    y1={centerY}
+                    x2={pOut.x}
+                    y2={centerY}
+                    stroke={poweredTerminals.has(inTerm) ? '#AABB65' : '#64748b'}
+                    strokeWidth="2.5"
+                  />
+                  {/* Left parenthesis arc */}
+                  <path
+                    d={`M ${centerX - 5} ${centerY - 13} A 14 14 0 0 0 ${centerX - 5} ${centerY + 13}`}
+                    fill="none"
+                    stroke={poweredTerminals.has(inTerm) ? '#AABB65' : '#64748b'}
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                  />
+                  {/* Right parenthesis arc */}
+                  <path
+                    d={`M ${centerX + 5} ${centerY - 13} A 14 14 0 0 1 ${centerX + 5} ${centerY + 13}`}
+                    fill="none"
+                    stroke={poweredTerminals.has(inTerm) ? '#AABB65' : '#64748b'}
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                  />
+                  {/* Inner IEC modifier (e.g. S for Set/Latch, R for Reset/Unlatch, M for Motor) */}
                   <text
                     x={centerX}
-                    y={centerY + 4}
-                    fill={poweredTerminals.has(inTerm) ? '#AABB65' : '#e2e8f0'}
-                    fontSize="10"
+                    y={centerY + 3.5}
+                    fill={poweredTerminals.has(inTerm) ? '#AABB65' : '#94a3b8'}
+                    fontSize="9.5"
                     fontWeight="900"
+                    fontFamily="monospace"
                     textAnchor="middle"
                   >
-                    {part.type === 'LAMP'
-                      ? '💡'
-                      : part.type === 'MOTOR'
+                    {part.type === 'MOTOR'
                       ? 'M'
+                      : part.type === 'LAMP'
+                      ? 'L'
                       : part.type === 'HORN' || part.type === 'BUZZER'
-                      ? '🔊'
-                      : 'OUT'}
+                      ? 'H'
+                      : ''}
                   </text>
-                  {/* Lead stubs */}
-                  <line x1={pIn.x} y1={centerY} x2={centerX - 14} y2={centerY} stroke="#64748b" strokeWidth="2.5" />
-                  <line x1={centerX + 14} y1={centerY} x2={pOut.x} y2={centerY} stroke="#64748b" strokeWidth="2.5" />
                 </g>
               ) : (
                 // Contact Symbol: | | (XIC) or |/| (XIO)
