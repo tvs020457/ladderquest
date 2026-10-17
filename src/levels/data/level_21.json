@@ -1,0 +1,76 @@
+{
+  "id": 21,
+  "mode": "write",
+  "unit": 5,
+  "unitTitle": "Memory & Logic",
+  "title": "Write: Direct Contact and Coil",
+  "story": "Welcome to logic programming! Place an XIC contact and an OTE coil onto the ladder rung so pressing START turns on the LAMP.",
+  "concept": "Direct control: An XIC contact in series with an OTE coil replicates a simple switch-lamp circuit in software.",
+  "inputs": [
+    {
+      "tag": "START",
+      "type": "pushbutton NO",
+      "description": "Start button"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "LAMP",
+      "type": "lamp",
+      "description": "Indicator lamp"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "OTE"
+  ],
+  "scanMs": 10,
+  "parElements": 2,
+  "learn": [
+    {
+      "title": "Software Ladder Logic",
+      "text": "Instead of physical wires, place XIC and OTE instructions on the rung."
+    }
+  ],
+  "initialParts": [],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "START controls LAMP",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "START": 0
+          },
+          "expect": {
+            "LAMP": 0
+          }
+        },
+        {
+          "t": 50,
+          "set": {
+            "START": 1
+          },
+          "expect": {
+            "LAMP": 1
+          }
+        },
+        {
+          "t": 100,
+          "set": {
+            "START": 0
+          },
+          "expect": {
+            "LAMP": 0
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Select XIC from the tray and place it in the rung condition slot.",
+    "Assign the START tag to the XIC contact.",
+    "Select OTE from the tray, place it in the output slot, and assign LAMP."
+  ]
+}

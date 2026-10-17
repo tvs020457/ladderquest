@@ -1,0 +1,56 @@
+:root {
+  /* User-Specified Triadic Palette */
+  --color-1: #65AABB;       /* Soft Cyan-Teal */
+  --color-2: #BB65AA;       /* Vivid Orchid-Magenta */
+  --color-3: #AABB65;       /* Fresh Olive-Lime */
+
+  /* Button 3D Shadow and Highlight Shades */
+  --color-1-dark: #3a7584;
+  --color-1-light: #8ec3cf;
+  --color-2-dark: #833974;
+  --color-2-light: #cf84c0;
+  --color-3-dark: #6e7c35;
+  --color-3-light: #c5d38c;
+
+  /* UI Surfaces (Harmonized with palette: deep midnight teal-slate) */
+  --color-bg-primary: #0d161a;
+  --color-bg-secondary: #17242a;
+  --color-bg-tertiary: #23353e;
+  --color-bg-canvas: #091013;
+
+  /* Typography */
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #9db5be;
+  --color-text-muted: #67848f;
+
+  /* Primary Brand Roles mapped to the 3 colors */
+  --color-accent-amber: var(--color-2);        /* Glowing powered wires, active tags */
+  --color-accent-amber-glow: var(--color-2-light);
+  --color-accent-blue: var(--color-1);         /* Power rails, primary buttons, badges */
+  --color-accent-indigo: var(--color-2);
+
+  /* Feedback Colors */
+  --color-success: var(--color-3);             /* #AABB65 for pass, completed stars, checkmarks */
+  --color-success-dark: var(--color-3-dark);
+  --color-success-light: #f0f5dc;
+  --color-error: #ef4444;                      /* Diagnostic red for failures */
+  --color-error-dark: #dc2626;
+  --color-error-light: #fee2e2;
+  --color-warning: var(--color-2);
+
+  /* Duolingo-style 3D Pressable Button Tokens */
+  --btn-border-bottom-width: 4px;
+  --btn-border-radius: 14px;
+  --touch-target-min: 44px;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* Typography */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --font-mono: 'SF Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+}

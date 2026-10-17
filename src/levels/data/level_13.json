@@ -1,0 +1,143 @@
+{
+  "id": 13,
+  "mode": "build",
+  "unit": 3,
+  "unitTitle": "Find the Fault",
+  "title": "Two Independent Rungs",
+  "story": "Wire two completely separate rungs: Button 1 controls Lamp 1, and Button 2 controls Lamp 2. They must operate independently without crosstalk.",
+  "concept": "Independent rungs: In ladder logic, separate horizontal rungs execute in isolation unless linked by shared memory bits.",
+  "inputs": [
+    {
+      "tag": "PB1",
+      "type": "pushbutton NO",
+      "description": "Button 1"
+    },
+    {
+      "tag": "PB2",
+      "type": "pushbutton NO",
+      "description": "Button 2"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "LAMP1",
+      "type": "lamp",
+      "description": "Lamp 1"
+    },
+    {
+      "tag": "LAMP2",
+      "type": "lamp",
+      "description": "Lamp 2"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "OTE"
+  ],
+  "scanMs": 10,
+  "parElements": 6,
+  "learn": [
+    {
+      "title": "Multiple Rungs",
+      "text": "Each rung spans between Rail L and Rail R independently."
+    }
+  ],
+  "initialParts": [
+    {
+      "id": "pb1",
+      "type": "XIC",
+      "tag": "PB1",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "id": "lamp1",
+      "type": "LAMP",
+      "tag": "LAMP1",
+      "x": 3,
+      "y": 0
+    },
+    {
+      "id": "pb2",
+      "type": "XIC",
+      "tag": "PB2",
+      "x": 1,
+      "y": 1
+    },
+    {
+      "id": "lamp2",
+      "type": "LAMP",
+      "tag": "LAMP2",
+      "x": 3,
+      "y": 1
+    }
+  ],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "Independent operation without crosstalk",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "PB1": 0,
+            "PB2": 0
+          },
+          "expect": {
+            "LAMP1": 0,
+            "LAMP2": 0
+          }
+        },
+        {
+          "t": 30,
+          "set": {
+            "PB1": 1,
+            "PB2": 0
+          },
+          "expect": {
+            "LAMP1": 1,
+            "LAMP2": 0
+          }
+        },
+        {
+          "t": 60,
+          "set": {
+            "PB1": 0,
+            "PB2": 1
+          },
+          "expect": {
+            "LAMP1": 0,
+            "LAMP2": 1
+          }
+        },
+        {
+          "t": 90,
+          "set": {
+            "PB1": 1,
+            "PB2": 1
+          },
+          "expect": {
+            "LAMP1": 1,
+            "LAMP2": 1
+          }
+        },
+        {
+          "t": 120,
+          "set": {
+            "PB1": 0,
+            "PB2": 0
+          },
+          "expect": {
+            "LAMP1": 0,
+            "LAMP2": 0
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Wire Rung 0: L -> PB1 -> LAMP1 -> R.",
+    "Wire Rung 1: L -> PB2 -> LAMP2 -> R.",
+    "Do not connect wires between the two rungs."
+  ]
+}

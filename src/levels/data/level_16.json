@@ -1,0 +1,148 @@
+{
+  "id": 16,
+  "mode": "build",
+  "unit": 4,
+  "unitTitle": "Building Blocks",
+  "title": "Forward / Reverse Electrical Interlock",
+  "story": "Dual direction motor control: Pressing FWD runs the motor forward, and REV runs it in reverse. If both buttons are pressed at once, neither should run to prevent a short circuit. Use each other's normally closed contact as an interlock.",
+  "concept": "Electrical interlocking: Placing a Normally Closed contact of Coil A in series with Coil B ensures both outputs can never be active simultaneously.",
+  "inputs": [
+    {
+      "tag": "FWD_PB",
+      "type": "pushbutton NO",
+      "description": "Forward button"
+    },
+    {
+      "tag": "REV_PB",
+      "type": "pushbutton NO",
+      "description": "Reverse button"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "FWD_COIL",
+      "type": "motor",
+      "description": "Forward contactor"
+    },
+    {
+      "tag": "REV_COIL",
+      "type": "motor",
+      "description": "Reverse contactor"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "XIO",
+    "OTE"
+  ],
+  "scanMs": 10,
+  "parElements": 8,
+  "learn": [
+    {
+      "title": "Interlocking",
+      "text": "XIO of the opposite coil acts as an electrical lock."
+    }
+  ],
+  "initialParts": [
+    {
+      "id": "pbFwd",
+      "type": "XIC",
+      "tag": "FWD_PB",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "id": "lockRev",
+      "type": "XIO",
+      "tag": "REV_COIL",
+      "x": 2,
+      "y": 0
+    },
+    {
+      "id": "coilFwd",
+      "type": "MOTOR",
+      "tag": "FWD_COIL",
+      "x": 4,
+      "y": 0
+    },
+    {
+      "id": "pbRev",
+      "type": "XIC",
+      "tag": "REV_PB",
+      "x": 1,
+      "y": 1
+    },
+    {
+      "id": "lockFwd",
+      "type": "XIO",
+      "tag": "FWD_COIL",
+      "x": 2,
+      "y": 1
+    },
+    {
+      "id": "coilRev",
+      "type": "MOTOR",
+      "tag": "REV_COIL",
+      "x": 4,
+      "y": 1
+    }
+  ],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "Interlock prevents dual direction activation",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "FWD_PB": 0,
+            "REV_PB": 0
+          },
+          "expect": {
+            "FWD_COIL": 0,
+            "REV_COIL": 0
+          }
+        },
+        {
+          "t": 30,
+          "set": {
+            "FWD_PB": 1,
+            "REV_PB": 0
+          },
+          "expect": {
+            "FWD_COIL": 1,
+            "REV_COIL": 0
+          }
+        },
+        {
+          "t": 60,
+          "set": {
+            "FWD_PB": 0,
+            "REV_PB": 1
+          },
+          "expect": {
+            "FWD_COIL": 0,
+            "REV_COIL": 1
+          }
+        },
+        {
+          "t": 90,
+          "set": {
+            "FWD_PB": 1,
+            "REV_PB": 1
+          },
+          "expect": {
+            "FWD_COIL": 0,
+            "REV_COIL": 1
+          },
+          "explanation": "Interlock prevents FWD from turning on while REV is running!"
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Rung 0: L -> FWD_PB -> REV_COIL (XIO) -> FWD_COIL -> R.",
+    "Rung 1: L -> REV_PB -> FWD_COIL (XIO) -> REV_COIL -> R.",
+    "Each rung contains the opposite coil's XIO contact."
+  ]
+}

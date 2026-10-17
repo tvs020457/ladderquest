@@ -1,0 +1,114 @@
+{
+  "id": 10,
+  "mode": "fix",
+  "unit": 3,
+  "unitTitle": "Find the Fault",
+  "title": "The Sneak Bypass",
+  "story": "The conveyor lamp stays on constantly even when the start switch is released! A faulty jumper wire is bypassing the switch. Find and delete the bypass wire.",
+  "concept": "Sneak circuits: A parallel wire that circumvents a control contact will keep the load energized regardless of switch position. Tap a wire to delete it.",
+  "inputs": [
+    {
+      "tag": "START",
+      "type": "pushbutton NO",
+      "description": "Start button"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "LAMP",
+      "type": "lamp",
+      "description": "Conveyor lamp"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "OTE"
+  ],
+  "scanMs": 10,
+  "parElements": 3,
+  "learn": [
+    {
+      "title": "Bypass Shorts",
+      "text": "If a wire jumpers directly from the feed rail around the switch, the switch loses control."
+    }
+  ],
+  "initialParts": [
+    {
+      "id": "btn1",
+      "type": "SWITCH",
+      "tag": "START",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "id": "lamp1",
+      "type": "LAMP",
+      "tag": "LAMP",
+      "x": 3,
+      "y": 0
+    }
+  ],
+  "initialWires": [
+    {
+      "id": "w1",
+      "from": "L",
+      "to": "btn1:in"
+    },
+    {
+      "id": "w2",
+      "from": "btn1:out",
+      "to": "lamp1:in"
+    },
+    {
+      "id": "w_bypass",
+      "from": "L",
+      "to": "lamp1:in"
+    },
+    {
+      "id": "w3",
+      "from": "lamp1:out",
+      "to": "R"
+    }
+  ],
+  "tests": [
+    {
+      "name": "Lamp must turn OFF when START is 0",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "START": 0
+          },
+          "expect": {
+            "LAMP": 0
+          },
+          "explanation": "Lamp must be OFF when switch is released."
+        },
+        {
+          "t": 50,
+          "set": {
+            "START": 1
+          },
+          "expect": {
+            "LAMP": 1
+          },
+          "explanation": "Lamp must be ON when switch is pressed."
+        },
+        {
+          "t": 100,
+          "set": {
+            "START": 0
+          },
+          "expect": {
+            "LAMP": 0
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Notice that Rail L connects to both START and directly to the LAMP.",
+    "Tap the bypass wire connecting Rail L straight to the LAMP to delete it.",
+    "The only path from L to LAMP should pass through START."
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "id": 19,
+  "mode": "complete",
+  "unit": 4,
+  "unitTitle": "Building Blocks",
+  "title": "Counter Block (CTU) Connection",
+  "story": "Part counting: Wire a CTU counter block. When BOX pulses arrive, the counter counts up. At 3 boxes, the counter Done contact opens the SORT GATE.",
+  "concept": "CTU Counter: Increments on false-to-true edges. Its .DN contact closes when ACC reaches PRE.",
+  "inputs": [
+    {
+      "tag": "BOX_SENSOR",
+      "type": "sensor",
+      "description": "Proximity sensor"
+    },
+    {
+      "tag": "RESET",
+      "type": "pushbutton NO",
+      "description": "Manual reset"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "GATE",
+      "type": "valve",
+      "description": "Diverter gate"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "OTE",
+    "CTU",
+    "RES"
+  ],
+  "scanMs": 10,
+  "parElements": 6,
+  "learn": [
+    {
+      "title": "Counters",
+      "text": "Counters accumulate pulses and trigger upon reaching preset values."
+    }
+  ],
+  "initialParts": [
+    {
+      "id": "sens",
+      "type": "XIC",
+      "tag": "BOX_SENSOR",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "type": "CTU",
+      "tag": "C1",
+      "preset": 3,
+      "x": 3,
+      "y": 0
+    },
+    {
+      "id": "c1Dn",
+      "type": "XIC",
+      "tag": "C1.DN",
+      "x": 1,
+      "y": 1
+    },
+    {
+      "id": "gate",
+      "type": "MOTOR",
+      "tag": "GATE",
+      "x": 3,
+      "y": 1
+    }
+  ],
+  "initialWires": [
+    {
+      "id": "w1",
+      "from": "L",
+      "to": "sens:in"
+    },
+    {
+      "id": "w2",
+      "from": "sens:out",
+      "to": "c1:in"
+    },
+    {
+      "id": "w3",
+      "from": "c1:out",
+      "to": "R"
+    },
+    {
+      "id": "w4",
+      "from": "L",
+      "to": "c1Dn:in"
+    }
+  ],
+  "tests": [
+    {
+      "name": "Gate opens after 3 box pulses",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "BOX_SENSOR": 0
+          },
+          "expect": {
+            "GATE": 0
+          }
+        },
+        {
+          "t": 30,
+          "set": {
+            "BOX_SENSOR": 1
+          },
+          "expect": {
+            "GATE": 0
+          }
+        },
+        {
+          "t": 60,
+          "set": {
+            "BOX_SENSOR": 0
+          },
+          "expect": {
+            "GATE": 0
+          }
+        },
+        {
+          "t": 90,
+          "set": {
+            "BOX_SENSOR": 1
+          },
+          "expect": {
+            "GATE": 0
+          }
+        },
+        {
+          "t": 120,
+          "set": {
+            "BOX_SENSOR": 0
+          },
+          "expect": {
+            "GATE": 0
+          }
+        },
+        {
+          "t": 150,
+          "set": {
+            "BOX_SENSOR": 1
+          },
+          "expect": {
+            "GATE": 1
+          },
+          "explanation": "Gate opens upon 3rd pulse!"
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Connect c1Dn:out to gate:in.",
+    "Connect gate:out to Rail R.",
+    "When C1 reaches 3 pulses, C1.DN activates GATE."
+  ]
+}

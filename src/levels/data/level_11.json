@@ -1,0 +1,144 @@
+{
+  "id": 11,
+  "mode": "fix",
+  "unit": 3,
+  "unitTitle": "Find the Fault",
+  "title": "Contact in Wrong Position",
+  "story": "A technician accidentally wired the emergency STOP contact in parallel with the START button instead of in series. When STOP is pressed, it turns the machine ON instead of OFF! Fix the wiring so STOP cuts power.",
+  "concept": "Safety interlocks: Stop pushbuttons must be in series with the load to guarantee power interruption.",
+  "inputs": [
+    {
+      "tag": "START",
+      "type": "pushbutton NO",
+      "description": "Start button"
+    },
+    {
+      "tag": "STOP",
+      "type": "pushbutton NC-wired",
+      "initialValue": 1,
+      "description": "Stop button (1=Safe, 0=Pressed)"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "MOTOR",
+      "type": "motor",
+      "description": "Industrial mixer"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "OTE"
+  ],
+  "scanMs": 10,
+  "parElements": 4,
+  "learn": [
+    {
+      "title": "Series Stop Placement",
+      "text": "STOP must be in series so opening it breaks continuity regardless of START."
+    }
+  ],
+  "initialParts": [
+    {
+      "id": "btnStart",
+      "type": "XIC",
+      "tag": "START",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "id": "btnStop",
+      "type": "XIC",
+      "tag": "STOP",
+      "x": 2,
+      "y": 0
+    },
+    {
+      "id": "mot1",
+      "type": "MOTOR",
+      "tag": "MOTOR",
+      "x": 4,
+      "y": 0
+    }
+  ],
+  "initialWires": [
+    {
+      "id": "w1",
+      "from": "L",
+      "to": "btnStart:in"
+    },
+    {
+      "id": "w2",
+      "from": "L",
+      "to": "btnStop:in"
+    },
+    {
+      "id": "w3",
+      "from": "btnStart:out",
+      "to": "mot1:in"
+    },
+    {
+      "id": "w4",
+      "from": "btnStop:out",
+      "to": "mot1:in"
+    },
+    {
+      "id": "w5",
+      "from": "mot1:out",
+      "to": "R"
+    }
+  ],
+  "tests": [
+    {
+      "name": "STOP cuts power even if START is held",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "START": 0,
+            "STOP": 1
+          },
+          "expect": {
+            "MOTOR": 0
+          }
+        },
+        {
+          "t": 30,
+          "set": {
+            "START": 1,
+            "STOP": 1
+          },
+          "expect": {
+            "MOTOR": 1
+          }
+        },
+        {
+          "t": 60,
+          "set": {
+            "START": 1,
+            "STOP": 0
+          },
+          "expect": {
+            "MOTOR": 0
+          },
+          "explanation": "Pressing STOP (0) must stop MOTOR immediately!"
+        },
+        {
+          "t": 90,
+          "set": {
+            "START": 0,
+            "STOP": 1
+          },
+          "expect": {
+            "MOTOR": 0
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Delete the wires putting STOP in parallel with START.",
+    "Connect START in series with STOP: L -> START -> STOP -> MOTOR -> R.",
+    "Both contacts must be in series so opening STOP kills power."
+  ]
+}

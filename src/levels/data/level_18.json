@@ -1,0 +1,106 @@
+{
+  "id": 18,
+  "mode": "build",
+  "unit": 4,
+  "unitTitle": "Building Blocks",
+  "title": "Pre-Start Warning Horn Sequence",
+  "story": "Industrial safety sequence: On START, immediately sound the WARNING HORN, then start the CONVEYOR after a delay.",
+  "concept": "Sequential automation: Trigger immediate safety warning devices while simultaneously starting timing for main drive actuators.",
+  "inputs": [
+    {
+      "tag": "START",
+      "type": "pushbutton NO",
+      "description": "Start"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "HORN",
+      "type": "horn",
+      "description": "Warning horn"
+    },
+    {
+      "tag": "CONVEYOR",
+      "type": "conveyor",
+      "description": "Conveyor"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "OTE"
+  ],
+  "scanMs": 10,
+  "parElements": 6,
+  "learn": [
+    {
+      "title": "Pre-Start Warnings",
+      "text": "Audible horns sound before mechanical motion begins."
+    }
+  ],
+  "initialParts": [
+    {
+      "id": "btnStart",
+      "type": "XIC",
+      "tag": "START",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "id": "horn",
+      "type": "HORN",
+      "tag": "HORN",
+      "x": 3,
+      "y": 0
+    },
+    {
+      "id": "conv",
+      "type": "MOTOR",
+      "tag": "CONVEYOR",
+      "x": 3,
+      "y": 1
+    }
+  ],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "Warning horn triggers with start",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "START": 0
+          },
+          "expect": {
+            "HORN": 0,
+            "CONVEYOR": 0
+          }
+        },
+        {
+          "t": 50,
+          "set": {
+            "START": 1
+          },
+          "expect": {
+            "HORN": 1,
+            "CONVEYOR": 1
+          }
+        },
+        {
+          "t": 100,
+          "set": {
+            "START": 0
+          },
+          "expect": {
+            "HORN": 0,
+            "CONVEYOR": 0
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Connect Rail L to START.",
+    "Connect START to both HORN and CONVEYOR in parallel.",
+    "Connect HORN and CONVEYOR outputs to Rail R."
+  ]
+}

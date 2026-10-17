@@ -1,0 +1,66 @@
+{
+  "id": 1,
+  "mode": "complete",
+  "unit": 1,
+  "unitTitle": "First Connections",
+  "title": "The First Wire",
+  "story": "Complete the circuit so pressing the pushbutton turns on the indicator lamp.",
+  "concept": "Power flows from the left rail (L) through closed contacts to the load, then returns to the right rail (R).",
+  "inputs": [
+    { "tag": "START", "type": "pushbutton NO", "description": "Normally open start pushbutton" }
+  ],
+  "outputs": [
+    { "tag": "LAMP", "type": "lamp", "description": "Run indicator lamp" }
+  ],
+  "allowedElements": ["XIC", "OTE"],
+  "scanMs": 10,
+  "parElements": 3,
+  "learn": [
+    {
+      "title": "Power Rails & Continuity",
+      "text": "In a ladder diagram, the left rail (L) provides power and the right rail (R) completes the circuit. Electricity must flow all the way through a load to turn it on."
+    }
+  ],
+  "guidedTry": {
+    "prompt": "Tap the START button's right terminal, then tap the LAMP's left terminal to connect them.",
+    "hint": "Connect btn1:out to lamp1:in."
+  },
+  "initialParts": [
+    { "id": "btn1", "type": "SWITCH", "tag": "START", "x": 1, "y": 0 },
+    { "id": "lamp1", "type": "LAMP", "tag": "LAMP", "x": 3, "y": 0 }
+  ],
+  "initialWires": [
+    { "id": "w1", "from": "L", "to": "btn1:in" },
+    { "id": "w2", "from": "lamp1:out", "to": "R" }
+  ],
+  "expectedExactWires": [
+    { "id": "w1", "from": "L", "to": "btn1:in" },
+    { "id": "w_missing", "from": "btn1:out", "to": "lamp1:in" },
+    { "id": "w2", "from": "lamp1:out", "to": "R" }
+  ],
+  "tests": [
+    {
+      "name": "Lamp lights up when START is pressed",
+      "steps": [
+        { "t": 0, "set": { "START": 0 }, "expect": { "LAMP": 0 }, "explanation": "Lamp must be OFF when button is released." },
+        { "t": 50, "set": { "START": 1 }, "expect": { "LAMP": 1 }, "explanation": "Lamp must turn ON when button is pressed." },
+        { "t": 100, "set": { "START": 0 }, "expect": { "LAMP": 0 }, "explanation": "Lamp must turn OFF when button is released." }
+      ]
+    }
+  ],
+  "hiddenTests": [
+    {
+      "name": "Rapid button presses",
+      "steps": [
+        { "t": 0, "set": { "START": 1 }, "expect": { "LAMP": 1 } },
+        { "t": 20, "set": { "START": 0 }, "expect": { "LAMP": 0 } },
+        { "t": 40, "set": { "START": 1 }, "expect": { "LAMP": 1 } }
+      ]
+    }
+  ],
+  "hints": [
+    "Look at the pulsing terminal on the START button.",
+    "Tap the START button's right terminal, then tap the LAMP's left terminal.",
+    "Draw a wire between btn1:out and lamp1:in to complete the path."
+  ]
+}

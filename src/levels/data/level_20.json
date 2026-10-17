@@ -1,0 +1,145 @@
+{
+  "id": 20,
+  "mode": "fix",
+  "unit": 4,
+  "unitTitle": "Building Blocks",
+  "title": "Capstone: Tank Pump 3-Fault Troubleshooting",
+  "story": "Factory Emergency: The tank filling system has THREE wiring faults injected into it: a broken wire, an illegal bypass, and a floating neutral. Find all three faults and restore operation!",
+  "concept": "Capstone Troubleshooting: Systematic fault isolation combines checking for opens, sneak paths, and floating rails.",
+  "inputs": [
+    {
+      "tag": "RUN",
+      "type": "switch",
+      "description": "Run master switch"
+    },
+    {
+      "tag": "LOW",
+      "type": "sensor",
+      "initialValue": 0,
+      "description": "Tank low sensor"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "PUMP",
+      "type": "motor",
+      "description": "Refill pump"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "OTE"
+  ],
+  "scanMs": 10,
+  "parElements": 5,
+  "learn": [
+    {
+      "title": "Systematic Troubleshooting",
+      "text": "1. Check power feed. 2. Verify return rail. 3. Eliminate unauthorized jumpers."
+    }
+  ],
+  "initialParts": [
+    {
+      "id": "swRun",
+      "type": "XIC",
+      "tag": "RUN",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "id": "swLow",
+      "type": "XIC",
+      "tag": "LOW",
+      "x": 2,
+      "y": 0
+    },
+    {
+      "id": "pump",
+      "type": "MOTOR",
+      "tag": "PUMP",
+      "x": 4,
+      "y": 0
+    }
+  ],
+  "initialWires": [
+    {
+      "id": "w1",
+      "from": "L",
+      "to": "swRun:in"
+    },
+    {
+      "id": "w_bypass",
+      "from": "L",
+      "to": "swLow:in"
+    },
+    {
+      "id": "w2",
+      "from": "swRun:out",
+      "to": "swLow:in"
+    }
+  ],
+  "tests": [
+    {
+      "name": "Pump operates only when RUN and LOW are both 1",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "RUN": 0,
+            "LOW": 0
+          },
+          "expect": {
+            "PUMP": 0
+          }
+        },
+        {
+          "t": 30,
+          "set": {
+            "RUN": 1,
+            "LOW": 0
+          },
+          "expect": {
+            "PUMP": 0
+          }
+        },
+        {
+          "t": 60,
+          "set": {
+            "RUN": 0,
+            "LOW": 1
+          },
+          "expect": {
+            "PUMP": 0
+          },
+          "explanation": "RUN is 0: Pump must NOT run!"
+        },
+        {
+          "t": 90,
+          "set": {
+            "RUN": 1,
+            "LOW": 1
+          },
+          "expect": {
+            "PUMP": 1
+          },
+          "explanation": "RUN and LOW both on: PUMP runs!"
+        },
+        {
+          "t": 120,
+          "set": {
+            "RUN": 0,
+            "LOW": 1
+          },
+          "expect": {
+            "PUMP": 0
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Delete the bypass wire w_bypass between Rail L and swLow:in.",
+    "Connect swLow:out to pump:in.",
+    "Connect pump:out to Rail R."
+  ]
+}

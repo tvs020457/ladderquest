@@ -1,0 +1,145 @@
+{
+  "id": 15,
+  "mode": "build",
+  "unit": 4,
+  "unitTitle": "Building Blocks",
+  "title": "Seal-In with STOP Priority",
+  "story": "Build a complete start/stop station with seal-in from scratch. Safety priority rule: If an operator holds START and STOP at the same time, STOP must win and MOTOR must be 0.",
+  "concept": "Stop Priority: By placing STOP in series outside the parallel start branch, opening STOP halts all current flow regardless of START state.",
+  "inputs": [
+    {
+      "tag": "START",
+      "type": "pushbutton NO",
+      "description": "Start"
+    },
+    {
+      "tag": "STOP",
+      "type": "pushbutton NC-wired",
+      "initialValue": 1,
+      "description": "Stop (NC, 1=Safe)"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "MOTOR",
+      "type": "motor",
+      "description": "Drive motor"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "OTE"
+  ],
+  "scanMs": 10,
+  "parElements": 6,
+  "learn": [
+    {
+      "title": "STOP Priority",
+      "text": "Safety rule: Stop always overrides Start. Never put STOP inside the start branch."
+    }
+  ],
+  "initialParts": [
+    {
+      "id": "btnStart",
+      "type": "XIC",
+      "tag": "START",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "id": "auxMotor",
+      "type": "XIC",
+      "tag": "MOTOR",
+      "x": 1,
+      "y": 1
+    },
+    {
+      "id": "btnStop",
+      "type": "XIC",
+      "tag": "STOP",
+      "x": 2,
+      "y": 0
+    },
+    {
+      "id": "mot1",
+      "type": "MOTOR",
+      "tag": "MOTOR",
+      "x": 4,
+      "y": 0
+    }
+  ],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "Start/stop cycle and stop priority",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "START": 0,
+            "STOP": 1
+          },
+          "expect": {
+            "MOTOR": 0
+          }
+        },
+        {
+          "t": 30,
+          "set": {
+            "START": 1,
+            "STOP": 1
+          },
+          "expect": {
+            "MOTOR": 1
+          }
+        },
+        {
+          "t": 60,
+          "set": {
+            "START": 0,
+            "STOP": 1
+          },
+          "expect": {
+            "MOTOR": 1
+          }
+        },
+        {
+          "t": 90,
+          "set": {
+            "START": 0,
+            "STOP": 0
+          },
+          "expect": {
+            "MOTOR": 0
+          }
+        },
+        {
+          "t": 120,
+          "set": {
+            "START": 0,
+            "STOP": 1
+          },
+          "expect": {
+            "MOTOR": 0
+          }
+        },
+        {
+          "t": 150,
+          "set": {
+            "START": 1,
+            "STOP": 0
+          },
+          "expect": {
+            "MOTOR": 0
+          },
+          "explanation": "STOP priority: Both held -> MOTOR must stay 0!"
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Wire Rail L to both START and MOTOR auxiliary contact.",
+    "Join START and MOTOR outputs together and feed into STOP.",
+    "Connect STOP to the MOTOR coil, and MOTOR to Rail R."
+  ]
+}

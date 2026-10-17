@@ -1,0 +1,127 @@
+{
+  "id": 9,
+  "mode": "fix",
+  "unit": 3,
+  "unitTitle": "Find the Fault",
+  "title": "The Broken Wire",
+  "story": "The motor circuit was working yesterday, but now it fails to turn on. An open wire is preventing current from flowing. Inspect the wiring and repair the break.",
+  "concept": "Troubleshooting: An open circuit breaks electrical continuity. The connection checker identifies floating or broken ends immediately.",
+  "inputs": [
+    {
+      "tag": "START",
+      "type": "pushbutton NO",
+      "description": "Motor start button"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "MOTOR",
+      "type": "motor",
+      "description": "Main drive motor"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "OTE"
+  ],
+  "scanMs": 10,
+  "parElements": 3,
+  "learn": [
+    {
+      "title": "Open Circuit Faults",
+      "text": "Vibration or fatigue can snap wires. Check terminal connections to find where continuity is lost."
+    }
+  ],
+  "initialParts": [
+    {
+      "id": "btn1",
+      "type": "SWITCH",
+      "tag": "START",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "id": "mot1",
+      "type": "MOTOR",
+      "tag": "MOTOR",
+      "x": 3,
+      "y": 0
+    }
+  ],
+  "initialWires": [
+    {
+      "id": "w1",
+      "from": "L",
+      "to": "btn1:in"
+    },
+    {
+      "id": "w3",
+      "from": "mot1:out",
+      "to": "R"
+    }
+  ],
+  "tests": [
+    {
+      "name": "Motor runs when START is held",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "START": 0
+          },
+          "expect": {
+            "MOTOR": 0
+          }
+        },
+        {
+          "t": 50,
+          "set": {
+            "START": 1
+          },
+          "expect": {
+            "MOTOR": 1
+          }
+        },
+        {
+          "t": 100,
+          "set": {
+            "START": 0
+          },
+          "expect": {
+            "MOTOR": 0
+          }
+        }
+      ]
+    }
+  ],
+  "hiddenTests": [
+    {
+      "name": "Rapid toggle",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "START": 1
+          },
+          "expect": {
+            "MOTOR": 1
+          }
+        },
+        {
+          "t": 20,
+          "set": {
+            "START": 0
+          },
+          "expect": {
+            "MOTOR": 0
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Look for the pulsing red terminal between START and MOTOR.",
+    "Connect the right terminal of START to the left terminal of MOTOR.",
+    "Bridge btn1:out to mot1:in to complete the path."
+  ]
+}

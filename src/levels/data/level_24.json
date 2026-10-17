@@ -1,0 +1,116 @@
+{
+  "id": 24,
+  "mode": "write",
+  "unit": 5,
+  "unitTitle": "Memory & Logic",
+  "title": "Write: Start/Stop Seal-In with Priority",
+  "story": "Write a motor seal-in program: START starts MOTOR and it seals in. STOP (NC) stops it. STOP has priority over START.",
+  "concept": "Seal-in programming: (START OR MOTOR) AND STOP -> OTE MOTOR.",
+  "inputs": [
+    {
+      "tag": "START",
+      "type": "pushbutton NO",
+      "description": "Start"
+    },
+    {
+      "tag": "STOP",
+      "type": "pushbutton NC-wired",
+      "initialValue": 1,
+      "description": "Stop (NC)"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "MOTOR",
+      "type": "motor",
+      "description": "Motor"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "XIO",
+    "OTE"
+  ],
+  "scanMs": 10,
+  "parElements": 4,
+  "learn": [
+    {
+      "title": "Seal-In Logic",
+      "text": "Output coil's own contact is read back in parallel with start."
+    }
+  ],
+  "initialParts": [],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "Start, seal-in, stop, priority",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "START": 0,
+            "STOP": 1
+          },
+          "expect": {
+            "MOTOR": 0
+          }
+        },
+        {
+          "t": 30,
+          "set": {
+            "START": 1,
+            "STOP": 1
+          },
+          "expect": {
+            "MOTOR": 1
+          }
+        },
+        {
+          "t": 60,
+          "set": {
+            "START": 0,
+            "STOP": 1
+          },
+          "expect": {
+            "MOTOR": 1
+          }
+        },
+        {
+          "t": 90,
+          "set": {
+            "START": 0,
+            "STOP": 0
+          },
+          "expect": {
+            "MOTOR": 0
+          }
+        },
+        {
+          "t": 120,
+          "set": {
+            "START": 0,
+            "STOP": 1
+          },
+          "expect": {
+            "MOTOR": 0
+          }
+        },
+        {
+          "t": 150,
+          "set": {
+            "START": 1,
+            "STOP": 0
+          },
+          "expect": {
+            "MOTOR": 0
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Branch 1: XIC START, XIC STOP.",
+    "Branch 2: XIC MOTOR, XIC STOP.",
+    "Output: OTE MOTOR."
+  ]
+}

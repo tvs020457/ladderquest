@@ -1,0 +1,116 @@
+{
+  "id": 26,
+  "mode": "write",
+  "unit": 6,
+  "unitTitle": "Timing",
+  "title": "Write: On-Delay Conveyor Horn (TON)",
+  "story": "Conveyor warning sequence: On START, sound HORN for 3 seconds (3000 ms), then start CONVEYOR. STOP stops both immediately.",
+  "concept": "TON timer sequencing: TON accumulates virtual time. When .DN turns 1, downstream rungs start the conveyor.",
+  "inputs": [
+    {
+      "tag": "START",
+      "type": "pushbutton NO",
+      "description": "Start"
+    },
+    {
+      "tag": "STOP",
+      "type": "pushbutton NC-wired",
+      "initialValue": 1,
+      "description": "Stop (NC)"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "HORN",
+      "type": "horn",
+      "description": "Warning horn"
+    },
+    {
+      "tag": "CONVEYOR",
+      "type": "conveyor",
+      "description": "Conveyor"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "XIO",
+    "OTE",
+    "TON"
+  ],
+  "scanMs": 10,
+  "parElements": 6,
+  "learn": [
+    {
+      "title": "TON Sequences",
+      "text": "Use timer Done contact to sequence machine stages."
+    }
+  ],
+  "initialParts": [],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "Horn sounds immediately, conveyor starts after delay",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "START": 0,
+            "STOP": 1
+          },
+          "expect": {
+            "HORN": 0,
+            "CONVEYOR": 0
+          }
+        },
+        {
+          "t": 20,
+          "set": {
+            "START": 1,
+            "STOP": 1
+          },
+          "expect": {
+            "HORN": 1,
+            "CONVEYOR": 0
+          }
+        },
+        {
+          "t": 2900,
+          "set": {
+            "START": 1,
+            "STOP": 1
+          },
+          "expect": {
+            "HORN": 1,
+            "CONVEYOR": 0
+          }
+        },
+        {
+          "t": 3100,
+          "set": {
+            "START": 1,
+            "STOP": 1
+          },
+          "expect": {
+            "CONVEYOR": 1
+          }
+        },
+        {
+          "t": 3500,
+          "set": {
+            "START": 0,
+            "STOP": 0
+          },
+          "expect": {
+            "HORN": 0,
+            "CONVEYOR": 0
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Seal in START or hold with STOP in series.",
+    "Run TON T1 with preset 3000.",
+    "HORN runs while timing; XIC T1.DN runs CONVEYOR."
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "id": 28,
+  "mode": "write",
+  "unit": 7,
+  "unitTitle": "Counting",
+  "title": "Write: 5-Box Batch Counter (CTU)",
+  "story": "Batch boxing: Each pulse of BOX_SENS counts one box. After 5 boxes, close the GATE. A held sensor must count only ONCE. Pressing RESET clears the count.",
+  "concept": "Edge-triggered counting: CTU increments only on false-to-true transitions.",
+  "inputs": [
+    {
+      "tag": "BOX_SENS",
+      "type": "sensor",
+      "description": "Box sensor"
+    },
+    {
+      "tag": "RESET",
+      "type": "pushbutton NO",
+      "description": "Reset"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "GATE",
+      "type": "valve",
+      "description": "Batch gate"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "OTE",
+    "CTU",
+    "RES"
+  ],
+  "scanMs": 10,
+  "parElements": 4,
+  "learn": [
+    {
+      "title": "Pulse Counting",
+      "text": "Held inputs count once. RES instruction clears ACC."
+    }
+  ],
+  "initialParts": [],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "5 pulses close gate, reset clears",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "BOX_SENS": 0,
+            "RESET": 0
+          },
+          "expect": {
+            "GATE": 0
+          }
+        },
+        {
+          "t": 20,
+          "set": {
+            "BOX_SENS": 1
+          },
+          "expect": {
+            "GATE": 0
+          }
+        },
+        {
+          "t": 40,
+          "set": {
+            "BOX_SENS": 0
+          },
+          "expect": {
+            "GATE": 0
+          }
+        },
+        {
+          "t": 60,
+          "set": {
+            "BOX_SENS": 1
+          },
+          "expect": {
+            "GATE": 0
+          }
+        },
+        {
+          "t": 80,
+          "set": {
+            "BOX_SENS": 0
+          },
+          "expect": {
+            "GATE": 0
+          }
+        },
+        {
+          "t": 100,
+          "set": {
+            "BOX_SENS": 1
+          },
+          "expect": {
+            "GATE": 0
+          }
+        },
+        {
+          "t": 120,
+          "set": {
+            "BOX_SENS": 0
+          },
+          "expect": {
+            "GATE": 0
+          }
+        },
+        {
+          "t": 140,
+          "set": {
+            "BOX_SENS": 1
+          },
+          "expect": {
+            "GATE": 0
+          }
+        },
+        {
+          "t": 160,
+          "set": {
+            "BOX_SENS": 0
+          },
+          "expect": {
+            "GATE": 0
+          }
+        },
+        {
+          "t": 180,
+          "set": {
+            "BOX_SENS": 1
+          },
+          "expect": {
+            "GATE": 1
+          }
+        },
+        {
+          "t": 220,
+          "set": {
+            "BOX_SENS": 0,
+            "RESET": 1
+          },
+          "expect": {
+            "GATE": 0
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Rung 0: XIC BOX_SENS -> CTU C1 (preset 5).",
+    "Rung 1: XIC RESET -> RES C1.",
+    "Rung 2: XIC C1.DN -> OTE GATE."
+  ]
+}

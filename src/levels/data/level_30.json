@@ -1,0 +1,120 @@
+{
+  "id": 30,
+  "mode": "write",
+  "unit": 8,
+  "unitTitle": "Sequences",
+  "title": "Capstone: Tank with Pump Protection",
+  "story": "Final Capstone: Tank filling automation with safety protection. Pump refills when LOW is 0 and RUN is 1, stopping at HIGH. E_STOP kills everything immediately. Timeout protection: If pump runs > 20s without reaching HIGH, latch FAULT and stop pump.",
+  "concept": "Industrial Integration: Combining interlocks, latches, timers, and emergency stops into a cohesive control architecture.",
+  "inputs": [
+    {
+      "tag": "RUN",
+      "type": "switch",
+      "description": "Run master"
+    },
+    {
+      "tag": "E_STOP",
+      "type": "pushbutton NC-wired",
+      "initialValue": 1,
+      "description": "Emergency Stop (NC)"
+    },
+    {
+      "tag": "LOW",
+      "type": "sensor",
+      "initialValue": 0,
+      "description": "Low sensor"
+    },
+    {
+      "tag": "HIGH",
+      "type": "sensor",
+      "initialValue": 0,
+      "description": "High sensor"
+    },
+    {
+      "tag": "RESET",
+      "type": "pushbutton NO",
+      "description": "Fault reset"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "PUMP",
+      "type": "motor",
+      "description": "Refill pump"
+    },
+    {
+      "tag": "FAULT",
+      "type": "lamp",
+      "description": "Fault lamp"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "XIO",
+    "OTE",
+    "OTL",
+    "OTU",
+    "TON",
+    "RES"
+  ],
+  "scanMs": 10,
+  "parElements": 10,
+  "learn": [
+    {
+      "title": "Capstone Architecture",
+      "text": "Integrate e-stop safety, timeout diagnostics, and refill cycling."
+    }
+  ],
+  "initialParts": [],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "Normal fill, E_STOP safety, and timeout protection",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "RUN": 1,
+            "E_STOP": 1,
+            "LOW": 0,
+            "HIGH": 0
+          },
+          "expect": {
+            "PUMP": 1,
+            "FAULT": 0
+          }
+        },
+        {
+          "t": 50,
+          "set": {
+            "RUN": 1,
+            "E_STOP": 0,
+            "LOW": 0,
+            "HIGH": 0
+          },
+          "expect": {
+            "PUMP": 0
+          },
+          "explanation": "E_STOP must halt pump instantly!"
+        },
+        {
+          "t": 100,
+          "set": {
+            "RUN": 1,
+            "E_STOP": 1,
+            "LOW": 0,
+            "HIGH": 1
+          },
+          "expect": {
+            "PUMP": 0
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Put E_STOP in series with the PUMP rung.",
+    "Refill valve latches when LOW=0, unlatches at HIGH=1.",
+    "TON timer measures pump duration; if it hits 20s, latch FAULT."
+  ]
+}

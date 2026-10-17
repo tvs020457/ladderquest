@@ -1,0 +1,93 @@
+{
+  "id": 27,
+  "mode": "write",
+  "unit": 6,
+  "unitTitle": "Timing",
+  "title": "Write: Off-Delay Fan (TOF)",
+  "story": "Cooling fan logic: The FAN runs while the MOTOR runs, and continues running for 5 seconds (5000 ms) after the motor stops.",
+  "concept": "TOF Off-Delay: Output .DN stays true while enabled, and remains true for preset duration after input rung drops false.",
+  "inputs": [
+    {
+      "tag": "MOTOR_SW",
+      "type": "switch",
+      "description": "Motor switch"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "MOTOR",
+      "type": "motor",
+      "description": "Motor"
+    },
+    {
+      "tag": "FAN",
+      "type": "motor",
+      "description": "Cooling fan"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "OTE",
+    "TOF"
+  ],
+  "scanMs": 10,
+  "parElements": 4,
+  "learn": [
+    {
+      "title": "TOF Behavior",
+      "text": "TOF delays turning off. .DN stays 1 until delay expires."
+    }
+  ],
+  "initialParts": [],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "Fan runs during motor and 5s after",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "MOTOR_SW": 1
+          },
+          "expect": {
+            "MOTOR": 1,
+            "FAN": 1
+          }
+        },
+        {
+          "t": 100,
+          "set": {
+            "MOTOR_SW": 0
+          },
+          "expect": {
+            "MOTOR": 0,
+            "FAN": 1
+          }
+        },
+        {
+          "t": 4900,
+          "set": {
+            "MOTOR_SW": 0
+          },
+          "expect": {
+            "FAN": 1
+          }
+        },
+        {
+          "t": 5100,
+          "set": {
+            "MOTOR_SW": 0
+          },
+          "expect": {
+            "FAN": 0
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Rung 0: XIC MOTOR_SW -> OTE MOTOR.",
+    "Rung 1: XIC MOTOR_SW -> TOF T1 (preset 5000).",
+    "Rung 2: XIC T1.DN -> OTE FAN."
+  ]
+}

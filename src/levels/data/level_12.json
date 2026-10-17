@@ -1,0 +1,106 @@
+{
+  "id": 12,
+  "mode": "build",
+  "unit": 3,
+  "unitTitle": "Find the Fault",
+  "title": "Parallel Outputs: Lamp and Horn",
+  "story": "When an alert button is pressed, sound the HORN and light the WARNING LAMP simultaneously on the same rung.",
+  "concept": "Multiple output loads wired in parallel across the right rail share the same rung condition.",
+  "inputs": [
+    {
+      "tag": "ALERT",
+      "type": "pushbutton NO",
+      "description": "Alert pushbutton"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "LAMP",
+      "type": "lamp",
+      "description": "Warning lamp"
+    },
+    {
+      "tag": "HORN",
+      "type": "horn",
+      "description": "Alert horn"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "OTE"
+  ],
+  "scanMs": 10,
+  "parElements": 5,
+  "learn": [
+    {
+      "title": "Parallel Coils",
+      "text": "Outputs placed in parallel both energize whenever the controlling contact closes."
+    }
+  ],
+  "initialParts": [
+    {
+      "id": "btnAlert",
+      "type": "XIC",
+      "tag": "ALERT",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "id": "lamp1",
+      "type": "LAMP",
+      "tag": "LAMP",
+      "x": 3,
+      "y": 0
+    },
+    {
+      "id": "horn1",
+      "type": "HORN",
+      "tag": "HORN",
+      "x": 3,
+      "y": 1
+    }
+  ],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "Both lamp and horn activate together",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "ALERT": 0
+          },
+          "expect": {
+            "LAMP": 0,
+            "HORN": 0
+          }
+        },
+        {
+          "t": 50,
+          "set": {
+            "ALERT": 1
+          },
+          "expect": {
+            "LAMP": 1,
+            "HORN": 1
+          }
+        },
+        {
+          "t": 100,
+          "set": {
+            "ALERT": 0
+          },
+          "expect": {
+            "LAMP": 0,
+            "HORN": 0
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Connect Rail L to ALERT.",
+    "Connect ALERT output to both LAMP input and HORN input.",
+    "Connect both LAMP output and HORN output to Rail R."
+  ]
+}

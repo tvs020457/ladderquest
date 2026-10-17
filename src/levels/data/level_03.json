@@ -1,0 +1,49 @@
+{
+  "id": 3,
+  "mode": "build",
+  "unit": 1,
+  "unitTitle": "First Connections",
+  "title": "Build From Scratch",
+  "story": "The components are on the board with no wires at all. Connect the complete circuit from the left rail to the right rail.",
+  "concept": "A complete circuit requires three connections: Rail L to switch, switch to lamp, and lamp to Rail R.",
+  "inputs": [
+    { "tag": "START", "type": "pushbutton NO", "description": "Normally open start pushbutton" }
+  ],
+  "outputs": [
+    { "tag": "LAMP", "type": "lamp", "description": "Run indicator lamp" }
+  ],
+  "allowedElements": ["XIC", "OTE"],
+  "scanMs": 10,
+  "parElements": 3,
+  "learn": [
+    {
+      "title": "Three Wires",
+      "text": "Every basic rung connects: Left rail -> Input contact -> Output coil -> Right rail."
+    }
+  ],
+  "initialParts": [
+    { "id": "btn1", "type": "SWITCH", "tag": "START", "x": 1, "y": 0 },
+    { "id": "lamp1", "type": "LAMP", "tag": "LAMP", "x": 3, "y": 0 }
+  ],
+  "initialWires": [],
+  "expectedExactWires": [
+    { "id": "w1", "from": "L", "to": "btn1:in" },
+    { "id": "w2", "from": "btn1:out", "to": "lamp1:in" },
+    { "id": "w3", "from": "lamp1:out", "to": "R" }
+  ],
+  "tests": [
+    {
+      "name": "Full cycle: press, hold, release",
+      "steps": [
+        { "t": 0, "set": { "START": 0 }, "expect": { "LAMP": 0 }, "explanation": "Lamp is OFF when button is unpressed." },
+        { "t": 50, "set": { "START": 1 }, "expect": { "LAMP": 1 }, "explanation": "Lamp turns ON when button is pressed." },
+        { "t": 100, "set": { "START": 0 }, "expect": { "LAMP": 0 }, "explanation": "Lamp turns OFF when button is released." }
+      ]
+    }
+  ],
+  "hints": [
+    "Connect Rail L to the START button's left side.",
+    "Connect START button's right side to LAMP's left side.",
+    "Connect LAMP's right side to Rail R."
+  ]
+}

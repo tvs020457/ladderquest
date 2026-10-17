@@ -1,0 +1,48 @@
+{
+  "id": 6,
+  "mode": "build",
+  "unit": 2,
+  "unitTitle": "Contacts",
+  "title": "Two Contacts in Series (AND Logic)",
+  "story": "Safety press requirement: A stamping press must only cycle when the operator presses BOTH hand buttons simultaneously to keep their hands safe.",
+  "concept": "Contacts wired in series form an AND function. Both contacts must conduct for power to reach the load.",
+  "inputs": [
+    { "tag": "PB1", "type": "pushbutton NO", "description": "Left hand button" },
+    { "tag": "PB2", "type": "pushbutton NO", "description": "Right hand button" }
+  ],
+  "outputs": [
+    { "tag": "PRESS", "type": "motor", "description": "Press motor" }
+  ],
+  "allowedElements": ["XIC", "OTE"],
+  "scanMs": 10,
+  "parElements": 4,
+  "learn": [
+    {
+      "title": "Series = AND",
+      "text": "When contacts are connected end-to-end in line, current must pass through all of them. If any contact is open, power stops."
+    }
+  ],
+  "initialParts": [
+    { "id": "pb1", "type": "XIC", "tag": "PB1", "x": 1, "y": 0 },
+    { "id": "pb2", "type": "XIC", "tag": "PB2", "x": 2, "y": 0 },
+    { "id": "press1", "type": "MOTOR", "tag": "PRESS", "x": 4, "y": 0 }
+  ],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "Both buttons required to operate press",
+      "steps": [
+        { "t": 0, "set": { "PB1": 0, "PB2": 0 }, "expect": { "PRESS": 0 } },
+        { "t": 30, "set": { "PB1": 1, "PB2": 0 }, "expect": { "PRESS": 0 }, "explanation": "Only PB1 pressed: PRESS must NOT run." },
+        { "t": 60, "set": { "PB1": 0, "PB2": 1 }, "expect": { "PRESS": 0 }, "explanation": "Only PB2 pressed: PRESS must NOT run." },
+        { "t": 90, "set": { "PB1": 1, "PB2": 1 }, "expect": { "PRESS": 1 }, "explanation": "Both PB1 and PB2 pressed: PRESS runs!" },
+        { "t": 120, "set": { "PB1": 0, "PB2": 1 }, "expect": { "PRESS": 0 } }
+      ]
+    }
+  ],
+  "hints": [
+    "Wire Rail L to PB1.",
+    "Wire PB1's right terminal to PB2's left terminal (in series).",
+    "Wire PB2's right terminal to PRESS, then PRESS to Rail R."
+  ]
+}

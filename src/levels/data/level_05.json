@@ -1,0 +1,44 @@
+{
+  "id": 5,
+  "mode": "build",
+  "unit": 2,
+  "unitTitle": "Contacts",
+  "title": "Guard Door (Normally Closed)",
+  "story": "Safety convention: In industrial control, emergency stops and guard switches are wired Normally Closed (NC), meaning the bit is 1 when safe/closed, and 0 when opened. Wire an XIO contact to sound the buzzer when the door opens.",
+  "concept": "An XIO contact (Normally Closed) passes power when its bit is 0. Field wiring and logic are distinct: a physical closed door sends bit 1, so XIO turns off the buzzer.",
+  "inputs": [
+    { "tag": "DOOR", "type": "sensor", "initialValue": 1, "description": "Door sensor: 1=Closed, 0=Open" }
+  ],
+  "outputs": [
+    { "tag": "BUZZER", "type": "horn", "description": "Warning buzzer" }
+  ],
+  "allowedElements": ["XIC", "XIO", "OTE"],
+  "scanMs": 10,
+  "parElements": 3,
+  "learn": [
+    {
+      "title": "The Normally Closed (NC) Convention",
+      "text": "Fail-safe wiring uses NC contacts: if a wire breaks, the bit drops to 0 immediately. XIO conducts when the bit is 0 (door opened)."
+    }
+  ],
+  "initialParts": [
+    { "id": "sw1", "type": "XIO", "tag": "DOOR", "x": 1, "y": 0 },
+    { "id": "buzzer1", "type": "BUZZER", "tag": "BUZZER", "x": 3, "y": 0 }
+  ],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "Buzzer sounds only when door is open",
+      "steps": [
+        { "t": 0, "set": { "DOOR": 1 }, "expect": { "BUZZER": 0 }, "explanation": "Door is closed (bit 1) -> Buzzer must be SILENT." },
+        { "t": 50, "set": { "DOOR": 0 }, "expect": { "BUZZER": 1 }, "explanation": "Door opened (bit 0) -> Buzzer must SOUND!" },
+        { "t": 100, "set": { "DOOR": 1 }, "expect": { "BUZZER": 0 }, "explanation": "Door closed again (bit 1) -> Buzzer turns OFF." }
+      ]
+    }
+  ],
+  "hints": [
+    "Use the XIO contact for DOOR.",
+    "Wire Rail L to sw1:in, sw1:out to buzzer1:in, and buzzer1:out to Rail R.",
+    "When DOOR is 0, the XIO contact conducts power through to the buzzer."
+  ]
+}

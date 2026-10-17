@@ -1,0 +1,108 @@
+{
+  "id": 25,
+  "mode": "write",
+  "unit": 5,
+  "unitTitle": "Memory & Logic",
+  "title": "Write: Tank Latch / Unlatch (OTL / OTU)",
+  "story": "Tank fill control using latches: When level drops below LOW, latch the VALVE open (OTL). When full (HIGH=1), unlatch the valve (OTU). Put unlatch after latch so reset wins!",
+  "concept": "OTL (Latch) holds 1 indefinitely until an OTU (Unlatch) clears it.",
+  "inputs": [
+    {
+      "tag": "LOW",
+      "type": "sensor",
+      "initialValue": 0,
+      "description": "Low sensor (1 when submerged)"
+    },
+    {
+      "tag": "HIGH",
+      "type": "sensor",
+      "initialValue": 0,
+      "description": "High sensor (1 when full)"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "VALVE",
+      "type": "valve",
+      "description": "Fill valve"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "XIO",
+    "OTL",
+    "OTU"
+  ],
+  "scanMs": 10,
+  "parElements": 4,
+  "learn": [
+    {
+      "title": "Latches vs Seal-In",
+      "text": "OTL stays on even if its rung drops false. OTU turns it off."
+    }
+  ],
+  "initialParts": [],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "Empty triggers fill, holds until high",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "LOW": 0,
+            "HIGH": 0
+          },
+          "expect": {
+            "VALVE": 1
+          }
+        },
+        {
+          "t": 30,
+          "set": {
+            "LOW": 1,
+            "HIGH": 0
+          },
+          "expect": {
+            "VALVE": 1
+          }
+        },
+        {
+          "t": 60,
+          "set": {
+            "LOW": 1,
+            "HIGH": 1
+          },
+          "expect": {
+            "VALVE": 0
+          }
+        },
+        {
+          "t": 90,
+          "set": {
+            "LOW": 1,
+            "HIGH": 0
+          },
+          "expect": {
+            "VALVE": 0
+          }
+        },
+        {
+          "t": 120,
+          "set": {
+            "LOW": 0,
+            "HIGH": 0
+          },
+          "expect": {
+            "VALVE": 1
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Rung 0: XIO LOW -> OTL VALVE.",
+    "Rung 1: XIC HIGH -> OTU VALVE.",
+    "Place OTU on Rung 1 so reset wins."
+  ]
+}

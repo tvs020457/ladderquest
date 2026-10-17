@@ -1,0 +1,94 @@
+{
+  "id": 23,
+  "mode": "write",
+  "unit": 5,
+  "unitTitle": "Memory & Logic",
+  "title": "Write: Two Hand Safety AND Press",
+  "story": "Write a two-hand safety press program: Operator must press BOTH PB1 and PB2 for the PRESS to run.",
+  "concept": "Series contacts: Place two XIC contacts in the same series branch to perform logical AND.",
+  "inputs": [
+    {
+      "tag": "PB1",
+      "type": "pushbutton NO",
+      "description": "Hand 1"
+    },
+    {
+      "tag": "PB2",
+      "type": "pushbutton NO",
+      "description": "Hand 2"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "PRESS",
+      "type": "motor",
+      "description": "Press motor"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "OTE"
+  ],
+  "scanMs": 10,
+  "parElements": 3,
+  "learn": [
+    {
+      "title": "Series in Software",
+      "text": "Placing contacts side by side enforces all must be 1."
+    }
+  ],
+  "initialParts": [],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "Both buttons required",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "PB1": 0,
+            "PB2": 0
+          },
+          "expect": {
+            "PRESS": 0
+          }
+        },
+        {
+          "t": 30,
+          "set": {
+            "PB1": 1,
+            "PB2": 0
+          },
+          "expect": {
+            "PRESS": 0
+          }
+        },
+        {
+          "t": 60,
+          "set": {
+            "PB1": 0,
+            "PB2": 1
+          },
+          "expect": {
+            "PRESS": 0
+          }
+        },
+        {
+          "t": 90,
+          "set": {
+            "PB1": 1,
+            "PB2": 1
+          },
+          "expect": {
+            "PRESS": 1
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Place two XIC contacts in series in the same branch.",
+    "Assign PB1 to the first and PB2 to the second.",
+    "Assign PRESS to the OTE output coil."
+  ]
+}

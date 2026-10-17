@@ -1,0 +1,49 @@
+{
+  "id": 4,
+  "mode": "build",
+  "unit": 1,
+  "unitTitle": "First Connections",
+  "title": "Which Rail is Which?",
+  "story": "In PLC ladder logic, outputs always connect to the right neutral/return rail (R). If an output is connected directly to the left rail (L), it can cause a short circuit or fail standard PLC safety rules.",
+  "concept": "Outputs (coils, lamps, motors) must always return to Rail R on the right side of the diagram.",
+  "inputs": [
+    { "tag": "START", "type": "pushbutton NO", "description": "Start pushbutton" }
+  ],
+  "outputs": [
+    { "tag": "LAMP", "type": "lamp", "description": "Signal lamp" }
+  ],
+  "allowedElements": ["XIC", "OTE"],
+  "scanMs": 10,
+  "parElements": 3,
+  "learn": [
+    {
+      "title": "Rail Convention",
+      "text": "Rule: Input contacts go on the left, output loads go on the right! Connecting a lamp directly to L and button to R violates standard ladder structure."
+    }
+  ],
+  "initialParts": [
+    { "id": "btn1", "type": "SWITCH", "tag": "START", "x": 1, "y": 0 },
+    { "id": "lamp1", "type": "LAMP", "tag": "LAMP", "x": 3, "y": 0 }
+  ],
+  "initialWires": [],
+  "expectedExactWires": [
+    { "id": "w1", "from": "L", "to": "btn1:in" },
+    { "id": "w2", "from": "btn1:out", "to": "lamp1:in" },
+    { "id": "w3", "from": "lamp1:out", "to": "R" }
+  ],
+  "tests": [
+    {
+      "name": "Standard start button lamp behavior",
+      "steps": [
+        { "t": 0, "set": { "START": 0 }, "expect": { "LAMP": 0 } },
+        { "t": 50, "set": { "START": 1 }, "expect": { "LAMP": 1 } },
+        { "t": 100, "set": { "START": 0 }, "expect": { "LAMP": 0 } }
+      ]
+    }
+  ],
+  "hints": [
+    "Place the switch near Rail L and the lamp near Rail R.",
+    "Wire Rail L to START, START to LAMP, and LAMP to Rail R.",
+    "Never connect a coil or lamp to Rail L."
+  ]
+}

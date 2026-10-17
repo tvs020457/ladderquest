@@ -1,0 +1,18 @@
+{
+  "name": "LadderQuest - PLC Learning Game",
+  "short_name": "LadderQuest",
+  "description": "Master PLC Ladder Logic with 30 interactive connection and programming puzzles.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d161a",
+  "theme_color": "#0d161a",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

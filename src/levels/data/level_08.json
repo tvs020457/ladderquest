@@ -1,0 +1,51 @@
+{
+  "id": 8,
+  "mode": "build",
+  "unit": 2,
+  "unitTitle": "Contacts",
+  "title": "Combined Logic: (A or B) and C",
+  "story": "Conveyor interlock: The conveyor belt may run under MANUAL start OR AUTO enable, but in either case, the SAFETY GATE must be closed (GATE=1).",
+  "concept": "Combining parallel and series logic: wire MANUAL and AUTO in parallel branches, and place GATE in series after their junction.",
+  "inputs": [
+    { "tag": "MANUAL", "type": "pushbutton NO", "description": "Manual start button" },
+    { "tag": "AUTO", "type": "switch", "description": "Automatic run selector" },
+    { "tag": "GATE", "type": "sensor", "description": "Safety gate interlock switch (1=Closed)" }
+  ],
+  "outputs": [
+    { "tag": "CONVEYOR", "type": "conveyor", "description": "Main conveyor belt motor" }
+  ],
+  "allowedElements": ["XIC", "OTE"],
+  "scanMs": 10,
+  "parElements": 6,
+  "learn": [
+    {
+      "title": "Branching into Series",
+      "text": "To create (A OR B) AND C, parallel the A and B branches together first, then feed the combined wire through contact C before reaching the output."
+    }
+  ],
+  "initialParts": [
+    { "id": "btnManual", "type": "XIC", "tag": "MANUAL", "x": 1, "y": 0 },
+    { "id": "swAuto", "type": "XIC", "tag": "AUTO", "x": 1, "y": 1 },
+    { "id": "swGate", "type": "XIC", "tag": "GATE", "x": 2, "y": 0 },
+    { "id": "conv", "type": "MOTOR", "tag": "CONVEYOR", "x": 4, "y": 0 }
+  ],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "Conveyor runs when (MANUAL or AUTO) and GATE closed",
+      "steps": [
+        { "t": 0, "set": { "MANUAL": 0, "AUTO": 0, "GATE": 0 }, "expect": { "CONVEYOR": 0 } },
+        { "t": 30, "set": { "MANUAL": 1, "AUTO": 0, "GATE": 0 }, "expect": { "CONVEYOR": 0 }, "explanation": "MANUAL pressed but GATE open -> Must NOT run!" },
+        { "t": 60, "set": { "MANUAL": 1, "AUTO": 0, "GATE": 1 }, "expect": { "CONVEYOR": 1 }, "explanation": "MANUAL pressed with GATE closed -> CONVEYOR runs." },
+        { "t": 90, "set": { "MANUAL": 0, "AUTO": 1, "GATE": 0 }, "expect": { "CONVEYOR": 0 }, "explanation": "AUTO active but GATE open -> Must NOT run!" },
+        { "t": 120, "set": { "MANUAL": 0, "AUTO": 1, "GATE": 1 }, "expect": { "CONVEYOR": 1 }, "explanation": "AUTO active with GATE closed -> CONVEYOR runs." },
+        { "t": 150, "set": { "MANUAL": 0, "AUTO": 0, "GATE": 1 }, "expect": { "CONVEYOR": 0 } }
+      ]
+    }
+  ],
+  "hints": [
+    "Wire Rail L to both MANUAL and AUTO.",
+    "Join the right terminals of MANUAL and AUTO together, and connect to GATE's left terminal.",
+    "Connect GATE's right terminal to CONVEYOR, and CONVEYOR to Rail R."
+  ]
+}

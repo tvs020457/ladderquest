@@ -1,0 +1,157 @@
+{
+  "id": 14,
+  "mode": "complete",
+  "unit": 4,
+  "unitTitle": "Building Blocks",
+  "title": "Seal-In Holding Branch",
+  "story": "When an operator presses and releases a momentary pushbutton, the motor should continue running. The motor output contact is placed on the board; wire it in parallel with START to form a seal-in circuit.",
+  "concept": "Seal-in (latching): An auxiliary normally open contact of the output coil wired in parallel with the momentary start button keeps the rung true after the button is released.",
+  "inputs": [
+    {
+      "tag": "START",
+      "type": "pushbutton NO",
+      "description": "Momentary start"
+    },
+    {
+      "tag": "STOP",
+      "type": "pushbutton NC-wired",
+      "initialValue": 1,
+      "description": "Stop (1=Safe, 0=Pressed)"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "MOTOR",
+      "type": "motor",
+      "description": "Conveyor motor"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "OTE"
+  ],
+  "scanMs": 10,
+  "parElements": 6,
+  "learn": [
+    {
+      "title": "The Seal-In Circuit",
+      "text": "When the coil turns ON, its contact closes, creating an alternate path around START."
+    }
+  ],
+  "initialParts": [
+    {
+      "id": "btnStart",
+      "type": "XIC",
+      "tag": "START",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "id": "auxMotor",
+      "type": "XIC",
+      "tag": "MOTOR",
+      "x": 1,
+      "y": 1
+    },
+    {
+      "id": "btnStop",
+      "type": "XIC",
+      "tag": "STOP",
+      "x": 2,
+      "y": 0
+    },
+    {
+      "id": "mot1",
+      "type": "MOTOR",
+      "tag": "MOTOR",
+      "x": 4,
+      "y": 0
+    }
+  ],
+  "initialWires": [
+    {
+      "id": "w1",
+      "from": "L",
+      "to": "btnStart:in"
+    },
+    {
+      "id": "w2",
+      "from": "btnStart:out",
+      "to": "btnStop:in"
+    },
+    {
+      "id": "w3",
+      "from": "btnStop:out",
+      "to": "mot1:in"
+    },
+    {
+      "id": "w4",
+      "from": "mot1:out",
+      "to": "R"
+    }
+  ],
+  "tests": [
+    {
+      "name": "Motor seals in upon release of START",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "START": 0,
+            "STOP": 1
+          },
+          "expect": {
+            "MOTOR": 0
+          }
+        },
+        {
+          "t": 30,
+          "set": {
+            "START": 1,
+            "STOP": 1
+          },
+          "expect": {
+            "MOTOR": 1
+          }
+        },
+        {
+          "t": 60,
+          "set": {
+            "START": 0,
+            "STOP": 1
+          },
+          "expect": {
+            "MOTOR": 1
+          },
+          "explanation": "Motor must stay ON after START is released!"
+        },
+        {
+          "t": 90,
+          "set": {
+            "START": 0,
+            "STOP": 0
+          },
+          "expect": {
+            "MOTOR": 0
+          },
+          "explanation": "Pressing STOP must turn MOTOR off."
+        },
+        {
+          "t": 120,
+          "set": {
+            "START": 0,
+            "STOP": 1
+          },
+          "expect": {
+            "MOTOR": 0
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Wire the MOTOR contact (auxMotor) in parallel with START.",
+    "Connect auxMotor:in to btnStart:in, and auxMotor:out to btnStart:out.",
+    "When MOTOR turns on, auxMotor will keep power flowing to STOP."
+  ]
+}

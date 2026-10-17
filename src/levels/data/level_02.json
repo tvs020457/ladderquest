@@ -1,0 +1,51 @@
+{
+  "id": 2,
+  "mode": "complete",
+  "unit": 1,
+  "unitTitle": "First Connections",
+  "title": "Two Missing Wires",
+  "story": "Both the feed from the left rail and the switch wire are missing. Connect them without leaving any floating terminals.",
+  "concept": "Every device terminal must be connected into a closed circuit. Floating terminals cannot conduct power.",
+  "inputs": [
+    { "tag": "START", "type": "pushbutton NO", "description": "Normally open start pushbutton" }
+  ],
+  "outputs": [
+    { "tag": "LAMP", "type": "lamp", "description": "Run indicator lamp" }
+  ],
+  "allowedElements": ["XIC", "OTE"],
+  "scanMs": 10,
+  "parElements": 3,
+  "learn": [
+    {
+      "title": "Floating Terminals",
+      "text": "If a terminal has no wire attached, current cannot enter or exit. The checker detects floating terminals immediately."
+    }
+  ],
+  "initialParts": [
+    { "id": "btn1", "type": "SWITCH", "tag": "START", "x": 1, "y": 0 },
+    { "id": "lamp1", "type": "LAMP", "tag": "LAMP", "x": 3, "y": 0 }
+  ],
+  "initialWires": [
+    { "id": "w1", "from": "lamp1:out", "to": "R" }
+  ],
+  "expectedExactWires": [
+    { "id": "w_feed", "from": "L", "to": "btn1:in" },
+    { "id": "w_link", "from": "btn1:out", "to": "lamp1:in" },
+    { "id": "w1", "from": "lamp1:out", "to": "R" }
+  ],
+  "tests": [
+    {
+      "name": "Lamp lights up with button held",
+      "steps": [
+        { "t": 0, "set": { "START": 0 }, "expect": { "LAMP": 0 }, "explanation": "Lamp must be OFF initially." },
+        { "t": 50, "set": { "START": 1 }, "expect": { "LAMP": 1 }, "explanation": "Lamp must turn ON when button is pressed." },
+        { "t": 100, "set": { "START": 0 }, "expect": { "LAMP": 0 }, "explanation": "Lamp must turn OFF on button release." }
+      ]
+    }
+  ],
+  "hints": [
+    "Wire the left rail (L) to the left side of START.",
+    "Wire the right side of START to the left side of LAMP.",
+    "Check that neither terminal on START or LAMP is pulsing red."
+  ]
+}

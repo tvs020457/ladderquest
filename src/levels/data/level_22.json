@@ -1,0 +1,78 @@
+{
+  "id": 22,
+  "mode": "write",
+  "unit": 5,
+  "unitTitle": "Memory & Logic",
+  "title": "Write: Normally Closed Guard Door",
+  "story": "Place an XIO contact and OTE coil so the BUZZER sounds when the DOOR opens (bit drops to 0).",
+  "concept": "XIO logic: Evaluates true when the bit is 0. Field wiring sends 1 when closed; XIO inverts it for alarm control.",
+  "inputs": [
+    {
+      "tag": "DOOR",
+      "type": "sensor",
+      "initialValue": 1,
+      "description": "Safety door (1=Closed, 0=Open)"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "BUZZER",
+      "type": "horn",
+      "description": "Alarm buzzer"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "XIO",
+    "OTE"
+  ],
+  "scanMs": 10,
+  "parElements": 2,
+  "learn": [
+    {
+      "title": "XIO Instruction",
+      "text": "XIO is examine-if-open. Conducts when the memory bit is 0."
+    }
+  ],
+  "initialParts": [],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "Buzzer sounds when door is 0",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "DOOR": 1
+          },
+          "expect": {
+            "BUZZER": 0
+          }
+        },
+        {
+          "t": 50,
+          "set": {
+            "DOOR": 0
+          },
+          "expect": {
+            "BUZZER": 1
+          }
+        },
+        {
+          "t": 100,
+          "set": {
+            "DOOR": 1
+          },
+          "expect": {
+            "BUZZER": 0
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Select XIO from the tray.",
+    "Assign DOOR to XIO, and BUZZER to OTE.",
+    "When DOOR is 0, XIO conducts power to BUZZER."
+  ]
+}

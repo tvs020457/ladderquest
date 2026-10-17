@@ -1,0 +1,102 @@
+{
+  "id": 29,
+  "mode": "write",
+  "unit": 8,
+  "unitTitle": "Sequences",
+  "title": "Write: Traffic Light Sequencer",
+  "story": "Automated intersection: When ENABLE is active, cycle RED 5s, GREEN 4s, YELLOW 2s and repeat. With ENABLE off, all lights are off.",
+  "concept": "Chained timer sequencing: Multiple timers trigger in cascade, with the final timer restarting the cycle.",
+  "inputs": [
+    {
+      "tag": "ENABLE",
+      "type": "switch",
+      "description": "Enable switch"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "RED",
+      "type": "lamp",
+      "description": "Red lamp"
+    },
+    {
+      "tag": "GREEN",
+      "type": "lamp",
+      "description": "Green lamp"
+    },
+    {
+      "tag": "YELLOW",
+      "type": "lamp",
+      "description": "Yellow lamp"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "XIO",
+    "OTE",
+    "TON"
+  ],
+  "scanMs": 10,
+  "parElements": 8,
+  "learn": [
+    {
+      "title": "Cascading Timers",
+      "text": "Chain TON timers together so T1 done starts T2."
+    }
+  ],
+  "initialParts": [],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "Traffic light state transitions",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "ENABLE": 0
+          },
+          "expect": {
+            "RED": 0,
+            "GREEN": 0,
+            "YELLOW": 0
+          }
+        },
+        {
+          "t": 50,
+          "set": {
+            "ENABLE": 1
+          },
+          "expect": {
+            "RED": 1,
+            "GREEN": 0,
+            "YELLOW": 0
+          }
+        },
+        {
+          "t": 4900,
+          "set": {
+            "ENABLE": 1
+          },
+          "expect": {
+            "RED": 1
+          }
+        },
+        {
+          "t": 5100,
+          "set": {
+            "ENABLE": 1
+          },
+          "expect": {
+            "RED": 0,
+            "GREEN": 1
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Use TON T1 for RED delay.",
+    "When T1.DN turns 1, turn off RED and start GREEN.",
+    "Ensure ENABLE is in series with all rungs."
+  ]
+}

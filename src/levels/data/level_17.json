@@ -1,0 +1,148 @@
+{
+  "id": 17,
+  "mode": "complete",
+  "unit": 4,
+  "unitTitle": "Building Blocks",
+  "title": "On-Delay Timer (TON) Connection",
+  "story": "Wire a TON timer block into the diagram. When RUN is held, the timer accumulates 300 ms. Once done (.DN), turn on the CONVEYOR.",
+  "concept": "TON Timer Block: Current energizes the timer coil. When ACC reaches PRE, the timer's .DN contact closes.",
+  "inputs": [
+    {
+      "tag": "RUN",
+      "type": "switch",
+      "description": "Run switch"
+    }
+  ],
+  "outputs": [
+    {
+      "tag": "CONVEYOR",
+      "type": "conveyor",
+      "description": "Conveyor belt"
+    }
+  ],
+  "allowedElements": [
+    "XIC",
+    "OTE",
+    "TON"
+  ],
+  "scanMs": 10,
+  "parElements": 5,
+  "learn": [
+    {
+      "title": "TON Timers",
+      "text": "TON counts while input stays true. Its .DN bit energizes after preset delay."
+    }
+  ],
+  "initialParts": [
+    {
+      "id": "swRun",
+      "type": "XIC",
+      "tag": "RUN",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "id": "t1",
+      "type": "TON",
+      "tag": "T1",
+      "preset": 300,
+      "x": 3,
+      "y": 0
+    },
+    {
+      "id": "t1Dn",
+      "type": "XIC",
+      "tag": "T1.DN",
+      "x": 1,
+      "y": 1
+    },
+    {
+      "id": "conv",
+      "type": "MOTOR",
+      "tag": "CONVEYOR",
+      "x": 3,
+      "y": 1
+    }
+  ],
+  "initialWires": [
+    {
+      "id": "w1",
+      "from": "L",
+      "to": "swRun:in"
+    },
+    {
+      "id": "w2",
+      "from": "swRun:out",
+      "to": "t1:in"
+    },
+    {
+      "id": "w3",
+      "from": "t1:out",
+      "to": "R"
+    },
+    {
+      "id": "w4",
+      "from": "L",
+      "to": "t1Dn:in"
+    }
+  ],
+  "tests": [
+    {
+      "name": "Conveyor starts after timer delay",
+      "steps": [
+        {
+          "t": 0,
+          "set": {
+            "RUN": 0
+          },
+          "expect": {
+            "CONVEYOR": 0
+          }
+        },
+        {
+          "t": 10,
+          "set": {
+            "RUN": 1
+          },
+          "expect": {
+            "CONVEYOR": 0
+          }
+        },
+        {
+          "t": 200,
+          "set": {
+            "RUN": 1
+          },
+          "expect": {
+            "CONVEYOR": 0
+          },
+          "explanation": "Conveyor must wait until timer preset expires."
+        },
+        {
+          "t": 320,
+          "set": {
+            "RUN": 1
+          },
+          "expect": {
+            "CONVEYOR": 1
+          },
+          "explanation": "Conveyor must run after delay!"
+        },
+        {
+          "t": 400,
+          "set": {
+            "RUN": 0
+          },
+          "expect": {
+            "CONVEYOR": 0
+          }
+        }
+      ]
+    }
+  ],
+  "hints": [
+    "Connect t1Dn:out to conv:in.",
+    "Connect conv:out to Rail R.",
+    "When T1 finishes timing, T1.DN closes and starts CONVEYOR."
+  ]
+}

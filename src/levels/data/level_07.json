@@ -1,0 +1,49 @@
+{
+  "id": 7,
+  "mode": "build",
+  "unit": 2,
+  "unitTitle": "Contacts",
+  "title": "Two Contacts in Parallel (OR Logic)",
+  "story": "Service call bell: A bell must ring if EITHER station A or station B presses their call button. Wire two contacts in parallel so either path conducts.",
+  "concept": "Contacts wired in parallel form an OR branch. If any parallel branch conducts, power reaches the output. Wires sharing a connection node display a junction dot.",
+  "inputs": [
+    { "tag": "CALL_A", "type": "pushbutton NO", "description": "Station A call button" },
+    { "tag": "CALL_B", "type": "pushbutton NO", "description": "Station B call button" }
+  ],
+  "outputs": [
+    { "tag": "BELL", "type": "horn", "description": "Alert bell" }
+  ],
+  "allowedElements": ["XIC", "OTE"],
+  "scanMs": 10,
+  "parElements": 5,
+  "learn": [
+    {
+      "title": "Parallel = OR",
+      "text": "Parallel branches give electricity alternate routes. If either button conducts, power flows around the open button and rings the bell."
+    }
+  ],
+  "initialParts": [
+    { "id": "btnA", "type": "XIC", "tag": "CALL_A", "x": 1, "y": 0 },
+    { "id": "btnB", "type": "XIC", "tag": "CALL_B", "x": 1, "y": 1 },
+    { "id": "bell1", "type": "HORN", "tag": "BELL", "x": 3, "y": 0 }
+  ],
+  "initialWires": [],
+  "tests": [
+    {
+      "name": "Either button activates the bell",
+      "steps": [
+        { "t": 0, "set": { "CALL_A": 0, "CALL_B": 0 }, "expect": { "BELL": 0 } },
+        { "t": 30, "set": { "CALL_A": 1, "CALL_B": 0 }, "expect": { "BELL": 1 }, "explanation": "CALL_A pressed -> Bell rings!" },
+        { "t": 60, "set": { "CALL_A": 0, "CALL_B": 0 }, "expect": { "BELL": 0 } },
+        { "t": 90, "set": { "CALL_A": 0, "CALL_B": 1 }, "expect": { "BELL": 1 }, "explanation": "CALL_B pressed -> Bell rings!" },
+        { "t": 120, "set": { "CALL_A": 1, "CALL_B": 1 }, "expect": { "BELL": 1 }, "explanation": "Both pressed -> Bell rings!" },
+        { "t": 150, "set": { "CALL_A": 0, "CALL_B": 0 }, "expect": { "BELL": 0 } }
+      ]
+    }
+  ],
+  "hints": [
+    "Connect Rail L to both CALL_A and CALL_B.",
+    "Connect the right terminals of both CALL_A and CALL_B to the input of BELL.",
+    "Connect BELL's output to Rail R."
+  ]
+}
